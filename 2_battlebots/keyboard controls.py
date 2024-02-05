@@ -7,10 +7,6 @@ BODY = 0
 HEADTILT = 4
 HEADTURN = 3
 
-
-##def sendCommand(x):
-##    if(x == '8'):
-##        tango.setTarget(MOTOR, 6800)
 class KeyControl():
     def __init__(self,win):
         self.root = win
@@ -43,8 +39,6 @@ class KeyControl():
             if(self.headTilt < 1510):
                 self.headTilt = 1510
             self.tango.setTarget(HEADTILT, self.headTilt)
-                
-
 
     def waist(self, key):
         print(key.keycode)
@@ -61,7 +55,6 @@ class KeyControl():
                 self.body = 1510
             self.tango.setTarget(BODY, self.body)
             print ('waist left')
-   
     
     def arrow(self, key):
         print(key.keycode)
