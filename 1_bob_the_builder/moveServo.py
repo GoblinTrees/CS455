@@ -20,9 +20,11 @@ L_FORARM = 14
 L_WRIST = 15
 L_FINGERS = 16
 
-self.root = win
-self.tango = Controller()
+class Tango:
+    def __init__(self):
+        self.tango = Controller()
+        self.turn = 4500
+        self.tango.setTarget(HEADTURN, self.turn)
 
-def moveServo(self):  
-    self.L_BICEP = 6500
-    self.tango.setTarget(L_BICEP, self.headTilt)
+
+t = Tango()

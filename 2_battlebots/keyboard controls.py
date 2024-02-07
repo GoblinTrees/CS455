@@ -83,11 +83,16 @@ class KeyControl():
             print(self.turn)
             self.tango.setTarget(TURN, self.turn)
         
-        elif key.keycode == 65:
+        elif key.keycode == 27:
             self.motors = 6000
             self.turn = 6000
             self.tango.setTarget(MOTORS, self.motors)
             self.tango.setTarget(TURN, self.turn)
+    def l_arm(self, key):
+        print(key.keycode)
+    
+    def r_arm(self, key):
+        print(key.keycode)
 
 win = tk.Tk()
 keys = KeyControl(win)
@@ -103,5 +108,16 @@ win.bind('<w>', keys.head)
 win.bind('<s>', keys.head)
 win.bind('<a>', keys.head)
 win.bind('<d>', keys.head)
+win.bind('<y>', keys.l_arm)
+win.bind('<u>', keys.l_arm)
+win.bind('<i>', keys.l_arm)
+win.bind('<o>', keys.l_arm)
+win.bind('<p>', keys.l_arm)
+win.bind('<h>', keys.l_arm)
+win.bind('<j>', keys.l_arm)
+win.bind('<k>', keys.l_arm)
+win.bind('<l>', keys.l_arm)
+win.bind('<;>', keys.l_arm)
+win.bind('<esc>', keys.arrow)
 win.mainloop()
 keys = KeyControl(win)
