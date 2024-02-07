@@ -1,9 +1,9 @@
 import tkinter as tk
 from maestro import Controller                                                     
 
-BODY = 0
-L_MOTORS = 1
-R_MOTORS = 2
+L_MOTORS = 0
+R_MOTORS = 1
+BODY = 2
 HEADTURN = 3
 HEADTILT = 4
 R_SHOULDER = 5
@@ -102,7 +102,6 @@ class KeyControl():
             self.turn = 6000
             self.tango.setTarget(R_MOTORS, self.motors)
             self.tango.setTarget(L_MOTORS, self.turn)
-            exit
 
     def l_arm(self, key):
         print(key.keycode)
