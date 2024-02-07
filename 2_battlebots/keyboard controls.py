@@ -126,10 +126,26 @@ class KeyControl():
         
         # escape (estop)
         elif key.keycode == 9:
-            self.motors = 6000
-            self.turn = 6000
-            self.tango.setTarget(MOTORS, self.motors)
-            self.tango.setTarget(TURN, self.turn)
+            self.default = 6000
+            self.tango.setTarget(MOTORS, self.default)
+            self.tango.setTarget(TURN, self.default)
+            self.tango.setTarget(BODY, self.default)
+            self.tango.setTarget(HEADTILT, self.default)
+            self.tango.setTarget(HEADTURN, self.default)
+            self.tango.setTarget(L_SHOULDER, self.default)
+            self.tango.setTarget(L_BICEP, self.default)
+            self.tango.setTarget(L_ELBOW, self.default)
+            self.tango.setTarget(L_FORARM, self.default)
+            self.tango.setTarget(L_WRIST, self.default)
+            self.tango.setTarget(L_FINGERS, self.default)
+            self.tango.setTarget(R_SHOULDER, self.default)
+            self.tango.setTarget(R_BICEP, self.default)
+            self.tango.setTarget(R_ELBOW, self.default)
+            self.tango.setTarget(R_FORARM, self.default)
+            self.tango.setTarget(R_WRIST, self.default)
+            self.tango.setTarget(R_FINGERS, self.default)
+
+
             # self.tango.setTarget(R_MOTORS, self.motors)
             # self.tango.setTarget(L_MOTORS, self.turn)
 
