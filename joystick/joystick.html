@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Joystick and Sliders</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            padding: 20px;
+            height: 100vh;
+            margin: 0;
+        }
+
+        label {
+            background-color: cyan;
+        }
+
+        #joystick {
+            width: 100px;
+            height: 100px;
+            background-color: darkolivegreen;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            user-select: none;
+            touch-action: none;
+            background: black;
+            align-content: center;
+            margin: auto;
+            display: block;
+        }
+
+        #joystick_holder {
+            margin: auto;
+            display: block;
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            border-color: black;
+            width: 100px;
+            height: 100px;
+            background-color: chocolate;
+            border-radius: 25%;
+        }
+
+        #sliders {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: darkgreen;
+            border-radius: 25%;
+        }
+
+        #slider1, #slider2, #slider3 {
+            width: 200px;
+            margin: 10px;
+            background: lightblue;
+        }
+
+        #spacer {
+            width: 220px;
+            height: 10px;
+        }
+
+        #stop {
+            width: 220px;
+            height: 50px;
+            background-color: darkred;
+            color: black;
+            border-radius: 25%;
+        }
+
+        #body_content {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .arm {
+            display: flex;
+            flex-direction: column;
+            background-color: salmon;
+            width: 220px;
+            height: 250px;
+            border-radius: 30%;
+            align-content: center;
+            align-items: center;
+        }
+
+        .arm_sliders {
+            display: flex;
+            flex-direction: column;
+            contain: content;
+            text-align: center;
+        }
+
+        #quick_buttons {
+            align-content: center;
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+            width: 220px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="whole_panel">
+    <div id="joystick_holder">
+        <div id="joystick"></div>
+    </div>
+    <div id="spacer"></div>
+    <div id="body_content">
+        <div class="arm" id="left_arm">
+            <label>Left Arm</label>
+            <div class="arm_sliders">
+                Shoulder
+                <div class="range-slider">
+                    <input id="L_Shoulder" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
+                           value="5" width="20">
+                </div>
+                 Outward
+                <div class="range-slider">
+                    <input id="L_Outward" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
+                           value="5" width="20">
+                </div>
+                 Elbow
+                <div class="range-slider">
+                    <input id="L_Elbow" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
+                           value="5" width="20">
+                </div>
+                 Wrist
+                <div class="range-slider">
+                    <input id="L_Wrist" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
+                           value="5" width="20">
+                </div>
+                 Claw
+                <div class="range-slider">
+                    <input id="L_Claw" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
+                           value="5" width="20">
+                </div>
+
+
+            </div>
+
+        </div>
+        <div id="sliders">
+            <label>Head</label>
+            <input id="slider1" max="5" min="-5" step="0.1" type="range" value="0">
+            <label>Headtilt</label>
+            <input id="slider2" max="5" min="-5" step="0.1" type="range" value="0">
+            <label>Waist</label>
+            <input id="slider3" max="5" min="-5" step="0.1" type="range" value="0">
+        </div>
+        <div class="arm" id="right_arm">
+            <label>Right Arm</label>
+            <div class="arm_sliders">
+                Shoulder
+                <div class="range-slider">
+                    <input id="R_Shoulder" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
+                           value="5" width="20">
+                </div>
+                 Outward
+                <div class="range-slider">
+                    <input id="R_Outward" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
+                           value="5" width="20">
+                </div>
+                 Elbow
+                <div class="range-slider">
+                    <input id="R_Elbow" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
+                           value="5" width="20">
+                </div>
+                 Wrist
+                <div class="range-slider">
+                    <input id="R_Wrist" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
+                           value="5" width="20">
+                </div>
+                 Claw
+                <div class="range-slider">
+                    <input id="R_Claw" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
+                           value="5" width="20">
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div id="quick_buttons">
+        <button id="stop">Emergency Stop</button>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+<script>
+    const joystick = document.getElementById('joystick');
+    const slider1 = document.getElementById('slider1');
+    const slider2 = document.getElementById('slider2');
+    const slider3 = document.getElementById('slider3');
+
+    const LShoulder = document.getElementById('L_Shoulder');
+    const LOutward =document.getElementById('L_Outward');
+    const LElbow = document.getElementById('L_Elbow');
+    const LWrist = document.getElementById('L_Wrist');
+    const LClaw = document.getElementById('L_Claw');
+
+    const RShoulder = document.getElementById('R_Shoulder');
+    const ROutward =document.getElementById('R_Outward');
+    const RElbow = document.getElementById('R_Elbow');
+    const RWrist = document.getElementById('R_Wrist');
+    const RClaw = document.getElementById('R_Claw');
+
+    joystick.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mousemove', handleMouseMove);
+
+    function handleMouseDown(event) {
+        event.preventDefault();
+        joystick.dragging = true;
+    }
+
+    function handleMouseUp(event) {
+        event.preventDefault();
+        joystick.dragging = false;
+        updateValues();
+    }
+
+    function handleMouseMove(event) {
+        event.preventDefault();
+        if (joystick.dragging) {
+            const rect = joystick.getBoundingClientRect();
+            const x = event.clientX - rect.left - rect.width / 2;
+            const y = event.clientY - rect.top - rect.height / 2;
+
+            const distance = Math.min(Math.sqrt(x * x + y * y), rect.width / 2);
+
+            const angle = Math.atan2(y, x);
+            const newX = distance * Math.cos(angle);
+            const newY = distance * Math.sin(angle);
+
+            joystick.style.transform = `translate(${newX}px, ${newY}px)`;
+        }
+    }
+
+    function updateValues() {
+        const rect = joystick.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const x = joystick.getBoundingClientRect().left + joystick.offsetWidth / 2 - centerX;
+        const y = joystick.getBoundingClientRect().top + joystick.offsetHeight / 2 - centerY;
+
+        const normalizedX = x / (rect.width / 2);
+        const normalizedY = y / (rect.height / 2);
+
+        const joystickValue = {
+            x: normalizedX.toFixed(2),
+            y: normalizedY.toFixed(2)
+        };
+
+        const sliderValues = {
+            slider1: slider1.value,
+            slider2: slider2.value,
+            slider3: slider3.value
+        };
+
+        const L_ArmValues = {
+            LShoulder: LShoulder.value,
+            LOut: LOutward.value,
+            LElbow: LElbow.value,
+            LWrist: LWrist.value,
+            LClaw: LClaw.value
+        }
+        const R_ArmValues = {
+            RShoulder: RShoulder.value,
+            ROut: ROutward.value,
+            RElbow: RElbow.value,
+            RWrist: RWrist.value,
+            RClaw: RClaw.value
+        }
+
+        // Send values to Raspberry Pi backend server using AJAX
+        sendValuesToBackend({joystick: joystickValue, sliders: sliderValues, L_Arm: L_ArmValues, R_Arm:R_ArmValues)}
+    }
+
+    function sendValuesToBackend(data) {
+        // Replace the following URL with your Raspberry Pi backend server URL
+        const backendURL = 'http://your-raspberry-pi-ip:your-port/endpoint';
+
+        fetch(backendURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+</body>
+</html>
