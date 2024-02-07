@@ -160,11 +160,12 @@ win.bind('<o>', keys.l_arm)
 win.bind('<p>', keys.l_arm)
 
 # Right arm
+win.bind('<g>', keys.r_arm)
 win.bind('<h>', keys.r_arm)
 win.bind('<j>', keys.r_arm)
 win.bind('<k>', keys.r_arm)
 win.bind('<l>', keys.r_arm)
-win.bind('<Semicolon>', keys.r_arm)
+
 win.bind('<Escape>', keys.arrow)
 win.mainloop()
 keys = KeyControl(win)
