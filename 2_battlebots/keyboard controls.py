@@ -30,6 +30,23 @@ class KeyControl():
         self.headTilt = 6000
         self.motors = 6000
         self.turn = 6000
+
+        self.l_shoulder = 6000
+        self.l_bicep = 6000
+        self.l_elbow = 6000
+        self.l_forarm = 6000
+        self.l_wrist = 6000
+        self.l_fingers = 6000
+
+        self.r_shoulder = 6000
+        self.r_bicep = 6000
+        self.r_elbow = 6000
+        self.r_forarm = 6000
+        self.r_wrist = 6000
+        self.r_fingers = 6000
+
+
+        
         
     def head(self,key):
         print(key.keycode)
@@ -120,16 +137,88 @@ class KeyControl():
         print(key.keycode)
         if key.keycode == 29:
             print("Shoulder")
+            self.l_shoulder += 200
+            if(self.l_shoulder <2110):
+                self.l_shoulder = 2110
+            print(self.l_shoulder)
+            self.tango.setTarget(L_SHOULDER, self.l_shoulder)
         elif key.keycode == 30:
             print("Bicep")
+            self.l_bicep += 200
+            if(self.l_bicep <2110):
+                self.l_bicep = 2110
+            print(self.l_bicep)
+            self.tango.setTarget(L_BICEP, self.l_bicep)
         elif key.keycode == 31:
             print("Elbow")
+            self.l_elbow += 200
+            if(self.l_elbow <2110):
+                self.l_elbow = 2110
+            print(self.l_elbow)
+            self.tango.setTarget(L_ELBOW, self.l_elbow)
         elif key.keycode == 32:
             print("Forearm")
+            self.l_forarm += 200
+            if(self.l_forarm <2110):
+                self.l_forarm = 2110
+            print(self.l_forarm)
+            self.tango.setTarget(L_FORARM, self.l_forarm)
         elif key.keycode == 33:
             print("Wrist")
+            self.l_wrist += 200
+            if(self.l_wrist <2110):
+                self.l_wrist = 2110
+            print(self.l_wrist)
+            self.tango.setTarget(L_WRIST, self.l_wrist)
         elif key.keycode == 34:
             print("claw")
+            self.l_fingers += 200
+            if(self.l_fingers <2110):
+                self.l_fingers = 2110
+            print(self.l_fingers)
+            self.tango.setTarget(L_FINGERS, self.l_fingers)
+        elif key.keycode == 42:
+            print("Shoulder")
+            self.l_shoulder -= 200
+            if(self.l_shoulder <2110):
+                self.l_shoulder = 2110
+            print(self.l_shoulder)
+            self.tango.setTarget(L_SHOULDER, self.l_shoulder)
+        elif key.keycode == 43:
+            print("Bicep")
+            self.l_bicep -= 200
+            if(self.l_bicep <2110):
+                self.l_bicep = 2110
+            print(self.l_bicep)
+            self.tango.setTarget(L_BICEP, self.l_bicep)
+        elif key.keycode == 44:
+            print("Elbow")
+            self.l_elbow -= 200
+            if(self.l_elbow <2110):
+                self.l_elbow = 2110
+            print(self.l_elbow)
+            self.tango.setTarget(L_ELBOW, self.l_elbow)
+        elif key.keycode == 45:
+            print("Forearm")
+            self.l_forarm -= 200
+            if(self.l_forarm <2110):
+                self.l_forarm = 2110
+            print(self.l_forarm)
+            self.tango.setTarget(L_FORARM, self.l_forarm)
+        elif key.keycode == 46:
+            print("Wrist")
+            self.l_wrist -= 200
+            if(self.l_wrist <2110):
+                self.l_wrist = 2110
+            print(self.l_wrist)
+            self.tango.setTarget(L_WRIST, self.l_wrist)
+        elif key.keycode == 47:
+            print("claw")
+            self.l_fingers -= 200
+            if(self.l_fingers <2110):
+                self.l_fingers = 2110
+            print(self.l_fingers)
+            self.tango.setTarget(L_FINGERS, self.l_fingers)
     
     def r_arm(self, key):
         print(key.keycode)
@@ -174,11 +263,11 @@ win.bind('<o>', keys.l_arm)
 win.bind('<p>', keys.l_arm)
 
 # Right arm
-win.bind('<g>', keys.r_arm)
-win.bind('<h>', keys.r_arm)
-win.bind('<j>', keys.r_arm)
-win.bind('<k>', keys.r_arm)
-win.bind('<l>', keys.r_arm) 
+win.bind('<g>', keys.l_arm)
+win.bind('<h>', keys.l_arm)
+win.bind('<j>', keys.l_arm)
+win.bind('<k>', keys.l_arm)
+win.bind('<l>', keys.l_arm) 
 
 win.bind('<Escape>', keys.arrow)
 win.mainloop()
