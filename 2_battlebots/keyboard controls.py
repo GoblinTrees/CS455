@@ -75,31 +75,33 @@ class KeyControl():
             if(self.motors > 7900):
                 self.motors = 7900
             print(self.motors)
-            self.tango.setTarget(MOTORS, self.motors)
+            self.tango.setTarget(L_MOTORS, self.motors)
+            self.tango.setTarget(R_MOTORS, self.motors)
         elif key.keycode == 111:
             self.motors -= 200
             if(self.motors < 1510):
                 self.motors = 1510
             print(self.motors)
-            self.tango.setTarget(MOTORS, self.motors)
+            self.tango.setTarget(L_MOTORS, self.motors)
+            self.tango.setTarget(R_MOTORS, self.motors)
         elif key.keycode == 114:
             self.turn += 200
             if(self.turn > 7400):
                 self.turn = 7400
             print(self.turn)
-            self.tango.setTarget(TURN, self.turn)
+            self.tango.setTarget(R_MOTORS, self.turn)
         elif key.keycode == 113:
             self.turn -= 200
             if(self.turn <2110):
                 self.turn = 2110
             print(self.turn)
-            self.tango.setTarget(TURN, self.turn)
+            self.tango.setTarget(L_MOTORS, self.turn)
         
         elif key.keycode == 9:
             self.motors = 6000
             self.turn = 6000
-            self.tango.setTarget(MOTORS, self.motors)
-            self.tango.setTarget(TURN, self.turn)
+            self.tango.setTarget(R_MOTORS, self.motors)
+            self.tango.setTarget(L_MOTORS, self.turn)
             exit
 
     def l_arm(self, key):
@@ -164,7 +166,7 @@ win.bind('<g>', keys.r_arm)
 win.bind('<h>', keys.r_arm)
 win.bind('<j>', keys.r_arm)
 win.bind('<k>', keys.r_arm)
-win.bind('<l>', keys.r_arm)
+win.bind('<l>', keys.r_arm) 
 
 win.bind('<Escape>', keys.arrow)
 win.mainloop()
