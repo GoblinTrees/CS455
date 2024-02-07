@@ -74,7 +74,7 @@ class KeyControl():
         print(key.keycode)
 
         # backwards
-        if key.keycode == 116:
+        if key.keycode == 114:
             self.motors += 200
             if(self.motors > 7900):
                 self.motors = 7900
@@ -83,7 +83,7 @@ class KeyControl():
             # self.tango.setTarget(R_MOTORS, self.motors)
 
         # forwards
-        elif key.keycode == 111:
+        elif key.keycode == 113:
             self.motors -= 200
             if(self.motors < 1510):
                 self.motors = 1510
@@ -92,7 +92,7 @@ class KeyControl():
             # self.tango.setTarget(R_MOTORS, self.motors)
         
         # right
-        elif key.keycode == 114:
+        elif key.keycode == 111:
             self.turn += 200
             if(self.turn > 7400):
                 self.turn = 7400
@@ -100,7 +100,7 @@ class KeyControl():
             self.tango.setTarget(TURN, self.turn)
         
         # left
-        elif key.keycode == 113:
+        elif key.keycode == 116:
             self.turn -= 200
             if(self.turn <2110):
                 self.turn = 2110
