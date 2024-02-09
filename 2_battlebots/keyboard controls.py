@@ -128,7 +128,7 @@ class KeyControl():
                 if (self.r_motors < 1510):
                     self.r_motors = 1510
                 temp = abs(abs(self.r_motors) - 6000)
-                self.l_motors = 6000 - temp
+                self.l_motors = 6000 + temp
 
                 print(self.r_motors)
                 print(self.l_motors)
