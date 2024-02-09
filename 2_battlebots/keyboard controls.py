@@ -287,84 +287,84 @@ class KeyControl():
         print(key.keycode)
         print(key.keysym)
         match keysym:
-            case "t":
+            case 28:
                 print("Right Shoulder")
                 self.r_shoulder += 200
                 if (self.r_shoulder < 2110):
                     self.r_shoulder = 2110
                 print(self.r_shoulder)
                 self.tango.setTarget(R_SHOULDER, self.r_shoulder)
-            case "y":
+            case 29:
                 print("Left Bicep")
                 self.r_bicep += 200
                 if (self.r_bicep < 2110):
                     self.r_bicep = 2110
                 print(self.r_bicep)
                 self.tango.setTarget(R_BICEP, self.r_bicep)
-            case "u":
+            case 30:
                 print("Left Elbow")
                 self.r_elbow += 200
                 if (self.r_elbow < 2110):
                     self.r_elbow = 2110
                 print(self.r_elbow)
                 self.tango.setTarget(R_ELBOW, self.r_elbow)
-            case "i":
+            case 31:
                 print("Left Forarm")
                 self.r_forarm += 200
                 if (self.r_forarm < 2110):
                     self.r_forarm = 2110
                 print(self.r_forarm)
                 self.tango.setTarget(R_FORARM, self.r_forarm)
-            case "o":
+            case 32:
                 print("Left Wrist")
                 self.r_wrist += 200
                 if (self.r_wrist < 2110):
                     self.r_wrist = 2110
                 print(self.r_wrist)
                 self.tango.setTarget(R_WRIST, self.r_wrist)
-            case "p":
+            case 33:
                 print("Left Fingers")
                 self.r_fingers += 200
                 if (self.r_fingers < 2110):
                     self.r_fingers = 2110
                 print(self.r_fingers)
                 self.tango.setTarget(R_FINGERS, self.r_fingers)
-            case "t":
+            case 41:
                 print("Left Shoulder")
                 self.r_shoulder -= 200
                 if (self.r_shoulder < 2110):
                     self.r_shoulder = 2110
                 print(self.r_shoulder)
                 self.tango.setTarget(R_SHOULDER, self.r_shoulder)
-            case "y":
+            case 41:
                 print("Left Bicep")
                 self.r_bicep -= 200
                 if (self.r_bicep < 2110):
                     self.r_bicep = 2110
                 print(self.r_bicep)
                 self.tango.setTarget(R_BICEP, self.r_bicep)
-            case "u":
+            case 43:
                 print("Left Elbow")
                 self.r_elbow -= 200
                 if (self.r_elbow < 2110):
                     self.r_elbow = 2110
                 print(self.r_elbow)
                 self.tango.setTarget(R_ELBOW, self.r_elbow)
-            case "i":
+            case 44:
                 print("Left Forarm")
                 self.r_forarm -= 200
                 if (self.r_forarm < 2110):
                     self.r_forarm = 2110
                 print(self.r_forarm)
                 self.tango.setTarget(R_FORARM, self.r_forarm)
-            case "o":
+            case 45:
                 print("Left Wrist")
                 self.r_wrist -= 200
                 if (self.r_wrist < 2110):
                     self.r_wrist = 2110
                 print(self.r_wrist)
                 self.tango.setTarget(R_WRIST, self.r_wrist)
-            case "p":
+            case 46:
                 print("Left Fingers")
                 self.r_fingers -= 200
                 if (self.r_fingers < 2110):
@@ -416,12 +416,12 @@ win.bind('<I>', keys.r_arm)
 win.bind('<O>', keys.r_arm)
 win.bind('<P>', keys.r_arm)
 
-win.bind('<f>Shift', keys.r_arm)
-win.bind('<g>Shift', keys.r_arm)
-win.bind('<h>Shift', keys.r_arm)
-win.bind('<j>Shift', keys.r_arm)
-win.bind('<k>Shift', keys.r_arm)
-win.bind('<l>Shift', keys.r_arm)
+win.bind('<F>', keys.r_arm)
+win.bind('<G>', keys.r_arm)
+win.bind('<H>', keys.r_arm)
+win.bind('<J>', keys.r_arm)
+win.bind('<K>', keys.r_arm)
+win.bind('<L>', keys.r_arm)
 
 win.bind('<Escape>', keys.arrow)
 win.mainloop()
