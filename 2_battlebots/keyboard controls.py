@@ -57,118 +57,122 @@ class KeyControl():
 
     def head(self, key):
         print(key.keysym)
-        if key.keysym == "Up":
-            self.headTurn += 200
-            if self.headTurn > 7900:
-                self.headTurn = 7900
-            self.tango.setTarget(HEADTURN, self.headTurn)
-        elif key.keysym == "Down":
-            self.headTurn -= 200
-            if self.headTurn < 1510:
-                self.headTurn = 1510
-            self.tango.setTarget(HEADTURN, self.headTurn)
-        elif key.keysym == "Right":
-            self.headTilt += 200
-            if self.headTilt > 7900:
-                self.headTilt = 7900
-            self.tango.setTarget(HEADTILT, self.headTilt)
-        elif key.keysym == "Left":
-            self.headTilt -= 200
-            if self.headTilt < 1510:
-                self.headTilt = 1510
-            self.tango.setTarget(HEADTILT, self.headTilt)
+        match key:
+            case "Up":
+                self.headTurn += 200
+                if self.headTurn > 7900:
+                    self.headTurn = 7900
+                self.tango.setTarget(HEADTURN, self.headTurn)
+            case "Down":
+                self.headTurn -= 200
+                if self.headTurn < 1510:
+                    self.headTurn = 1510
+                self.tango.setTarget(HEADTURN, self.headTurn)
+            case "Right":
+                self.headTilt += 200
+                if self.headTilt > 7900:
+                    self.headTilt = 7900
+                self.tango.setTarget(HEADTILT, self.headTilt)
+            case "Left":
+                self.headTilt -= 200
+                if self.headTilt < 1510:
+                    self.headTilt = 1510
+                self.tango.setTarget(HEADTILT, self.headTilt)
 
     def waist(self, key):
         keysym = keycode_to_keysym.get(key.keycode)
         print(keysym)
 
-        if keysym == "Right":
-            self.body += 200
-            if (self.body > 7900):
-                self.body = 7900
-            self.tango.setTarget(BODY, self.body)
-            print("waist right")
-        elif keysym == "Left":
-            self.body -= 200
-            if (self.body < 1510):
-                self.body = 1510
-            self.tango.setTarget(BODY, self.body)
-            print('waist left')
+        match keysym:
+            case"Right":
+                self.body += 200
+                if (self.body > 7900):
+                    self.body = 7900
+                self.tango.setTarget(BODY, self.body)
+                print("waist right")
+            case "Left":
+                self.body -= 200
+                if (self.body < 1510):
+                    self.body = 1510
+                self.tango.setTarget(BODY, self.body)
+                print('waist left')
 
     def arrow(self, key):
         keysym = keycode_to_keysym.get(key.keycode)
         print(keysym)
 
-        # backwards
-        if keysym == "Down":
-            self.motors += 200
-            if (self.motors > 7900):
-                self.motors = 7900
-            print(self.motors)
-            self.tango.setTarget(MOTORS, self.motors)
-            # self.tango.setTarget(R_MOTORS, self.motors)
+        match keysym:
+            # backwards
+            case "Down":
+                self.motors += 200
+                if (self.motors > 7900):
+                    self.motors = 7900
+                print(self.motors)
+                self.tango.setTarget(MOTORS, self.motors)
+                # self.tango.setTarget(R_MOTORS, self.motors)
 
-        # forwards
-        elif keysym == "Up":
-            self.motors -= 200
-            if (self.motors < 1510):
-                self.motors = 1510
-            print(self.motors)
-            self.tango.setTarget(MOTORS, self.motors)
-            # self.tango.setTarget(R_MOTORS, self.motors)
+            # forwards
+            case "Up":
+                self.motors -= 200
+                if (self.motors < 1510):
+                    self.motors = 1510
+                print(self.motors)
+                self.tango.setTarget(MOTORS, self.motors)
+                # self.tango.setTarget(R_MOTORS, self.motors)
 
-        # right
-        elif keysym == "Right":
-            self.turn += 200
-            if (self.turn > 7400):
-                self.turn = 7400
-            print(self.turn)
-            self.tango.setTarget(TURN, self.turn)
+            # right
+            case "Right":
+                self.turn += 200
+                if (self.turn > 7400):
+                    self.turn = 7400
+                print(self.turn)
+                self.tango.setTarget(TURN, self.turn)
 
-        # left
-        elif keysym == "Left":
-            self.turn -= 200
-            if (self.turn < 2110):
-                self.turn = 2110
-            print(self.turn)
-            self.tango.setTarget(TURN, self.turn)
+            # left
+            case "Left":
+                self.turn -= 200
+                if (self.turn < 2110):
+                    self.turn = 2110
+                print(self.turn)
+                self.tango.setTarget(TURN, self.turn)
 
-        # escape (estop)
-        elif keysym == "Escape":
-            self.default = 6000
-            self.tango.setTarget(MOTORS, self.default)
-            self.tango.setTarget(TURN, self.default)
-            self.tango.setTarget(BODY, self.default)
-            self.tango.setTarget(HEADTILT, self.default)
-            self.tango.setTarget(HEADTURN, self.default)
-            self.tango.setTarget(L_SHOULDER, self.default)
-            self.tango.setTarget(L_BICEP, self.default)
-            self.tango.setTarget(L_ELBOW, self.default)
-            self.tango.setTarget(L_FORARM, self.default)
-            self.tango.setTarget(L_WRIST, self.default)
-            self.tango.setTarget(L_FINGERS, self.default)
-            self.tango.setTarget(R_SHOULDER, self.default)
-            self.tango.setTarget(R_BICEP, self.default)
-            self.tango.setTarget(R_ELBOW, self.default)
-            self.tango.setTarget(R_FORARM, self.default)
-            self.tango.setTarget(R_WRIST, self.default)
-            self.tango.setTarget(R_FINGERS, self.default)
+            # escape (estop)
+            case "Escape":
+                self.default = 6000
+                self.tango.setTarget(MOTORS, self.default)
+                self.tango.setTarget(TURN, self.default)
+                self.tango.setTarget(BODY, self.default)
+                self.tango.setTarget(HEADTILT, self.default)
+                self.tango.setTarget(HEADTURN, self.default)
+                self.tango.setTarget(L_SHOULDER, self.default)
+                self.tango.setTarget(L_BICEP, self.default)
+                self.tango.setTarget(L_ELBOW, self.default)
+                self.tango.setTarget(L_FORARM, self.default)
+                self.tango.setTarget(L_WRIST, self.default)
+                self.tango.setTarget(L_FINGERS, self.default)
+                self.tango.setTarget(R_SHOULDER, self.default)
+                self.tango.setTarget(R_BICEP, self.default)
+                self.tango.setTarget(R_ELBOW, self.default)
+                self.tango.setTarget(R_FORARM, self.default)
+                self.tango.setTarget(R_WRIST, self.default)
+                self.tango.setTarget(R_FINGERS, self.default)
 
     def l_arm(self, key):
         keysym = keycode_to_keysym.get(key.keycode)
         print(keysym)
-        if keysym == "s":
-            print("Shoulder")
-            self.l_shoulder += 200
-            if (self.l_shoulder < 2110):
-                self.l_shoulder = 2110
-            print(self.l_shoulder)
-            self.tango.setTarget(L_SHOULDER, self.l_shoulder)
+        match keysym:
+            case "s":
+                print("Shoulder")
+                self.l_shoulder += 200
+                if (self.l_shoulder < 2110):
+                    self.l_shoulder = 2110
+                print(self.l_shoulder)
+                self.tango.setTarget(L_SHOULDER, self.l_shoulder)
     
     def r_arm(self, key):
         print(key.keycode)
         print(key.keysym)
-        match key:
+        match key.keysym:
             case 42:
                 print("Shoulder")
             case 43:

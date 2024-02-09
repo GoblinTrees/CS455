@@ -6,9 +6,7 @@ app = Flask(__name__)
 def checkWorking():
     return "Hello from Flask"
 
-@app.route("/joyData")
-def checkWorking():
-    return "Hello from Flask"
+
 
 @app.route("/wheels/<int:value>")
 def getWheelsValue(value):
