@@ -126,7 +126,7 @@ class KeyControl():
                 self.r_motors -= 200
                 if (self.r_motors < 1510):
                     self.r_motors = 1510
-                temp = abs(self.r_motors - 6000)
+                temp = abs(abs(self.r_motors) - 6000)
                 self.l_motors = 6000 + temp
                 print(self.r_motors)
                 self.tango.setTarget(L_MOTORS, self.l_motors)
