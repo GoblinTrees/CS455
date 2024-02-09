@@ -117,6 +117,7 @@ class KeyControl():
                 self.l_motors = 6000 - temp
 
                 print(self.r_motors)
+                print(self.l_motors)
                 self.tango.setTarget(L_MOTORS, self.l_motors)
                 self.tango.setTarget(R_MOTORS, self.r_motors)
                 # self.tango.setTarget(R_MOTORS, self.motors)
@@ -129,6 +130,7 @@ class KeyControl():
                 temp = abs(abs(self.r_motors) - 6000)
                 self.l_motors = 6000 + temp
                 print(self.r_motors)
+                print(self.l_motors)
                 self.tango.setTarget(L_MOTORS, self.l_motors)
                 self.tango.setTarget(R_MOTORS, self.r_motors)
 
