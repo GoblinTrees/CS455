@@ -150,6 +150,27 @@ class KeyControl():
 
             # escape (estop)
             case 9:
+                self.body = 6000
+                self.headTurn = 6000
+                self.headTilt = 6000
+                self.r_motors = 6000
+                self.l_motors = 6000
+                #self.motors = 6000
+                #self.turn = 6000
+
+                self.l_shoulder = 6000
+                self.l_bicep = 6000
+                self.l_elbow = 6000
+                self.l_forarm = 6000
+                self.l_wrist = 6000
+                self.l_fingers = 6000
+
+                self.r_shoulder = 6000
+                self.r_bicep = 6000
+                self.r_elbow = 6000
+                self.r_forarm = 6000
+                self.r_wrist = 6000
+                self.r_fingers = 6000
                 self.default = 6000
                 self.tango.setTarget(R_MOTORS, self.default)
                 self.tango.setTarget(L_MOTORS, self.default)
