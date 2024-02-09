@@ -137,9 +137,9 @@ class KeyControl():
 
             # right
             case 114:
-                self.r_motors -= 200
-                if (self.r_motors < 2110):
-                    self.r_motors = 2110
+                self.r_motors += 200
+                if (self.r_motors < 7900):
+                    self.r_motors = 7900
                 print(self.r_motors)
                 self.tango.setTarget(R_MOTORS, self.r_motors)
 
