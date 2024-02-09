@@ -40,7 +40,7 @@ class KeyControl():
         self.headTilt = 6000
         self.r_motors = 6000
         self.l_motors = 6000
-        self.motors = 6000
+        #self.motors = 6000
         #self.turn = 6000
 
         self.l_shoulder = 6000
@@ -61,22 +61,22 @@ class KeyControl():
         print(key.keycode)
         print(key.keysym)
         match key:
-            case "w":
+            case 38:
                 self.headTurn += 200
                 if self.headTurn > 7900:
                     self.headTurn = 7900
                 self.tango.setTarget(HEADTURN, self.headTurn)
-            case "d":
+            case 40:
                 self.headTurn -= 200
                 if self.headTurn < 1510:
                     self.headTurn = 1510
                 self.tango.setTarget(HEADTURN, self.headTurn)
-            case "w":
+            case 25:
                 self.headTilt += 200
                 if self.headTilt > 7900:
                     self.headTilt = 7900
                 self.tango.setTarget(HEADTILT, self.headTilt)
-            case "s":
+            case 39:
                 self.headTilt -= 200
                 if self.headTilt < 1510:
                     self.headTilt = 1510
@@ -109,23 +109,24 @@ class KeyControl():
         match key.keycode:
             # backwards
             case 116:
-                self.motors += 200
-                if (self.motors > 7900):
-                    self.motors = 7900
-                print(self.motors)
-                self.tango.setTarget(L_MOTORS, self.motors)
-                self.tango.setTarget(R_MOTORS, self.motors)
+                self.r_motors += 200
+                if (self.r_motors > 7900):
+                    self.r_motors = 7900
+                self.l_motors = self.r_motors
+                print(self.r_motors)
+                self.tango.setTarget(L_MOTORS, self.l_motors)
+                self.tango.setTarget(R_MOTORS, self.r_motors)
                 # self.tango.setTarget(R_MOTORS, self.motors)
 
             # forwards
             case 111:
-                self.motors -= 200
-                if (self.motors < 1510):
-                    self.motors = 1510
-                print(self.motors)
-                self.tango.setTarget(L_MOTORS, self.motors)
-                self.tango.setTarget(R_MOTORS, self.motors)
-                # self.tango.setTarget(R_MOTORS, self.motors)
+                self.r_motors -= 200
+                if (self.r_motors < 1510):
+                    self.r_motors = 1510
+                self.l_motors = self.r_motors
+                print(self.r_motors)
+                self.tango.setTarget(L_MOTORS, self.l_motors)
+                self.tango.setTarget(R_MOTORS, self.r_motors)
 
             # right
             case 114:
