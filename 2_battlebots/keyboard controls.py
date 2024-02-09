@@ -409,12 +409,12 @@ win.bind('<k>', keys.l_arm)
 win.bind('<l>', keys.l_arm) 
 
 # Right arm
-win.bind('<t>Shift', keys.r_arm)
-win.bind('<y>Shift', keys.r_arm)
-win.bind('<u>Shift', keys.r_arm)
-win.bind('<i>Shift', keys.r_arm)
-win.bind('<o>Shift', keys.r_arm)
-win.bind('<p>Shift', keys.r_arm)
+win.bind('<Shift + t>', keys.r_arm)
+win.bind('<Shift + y>', keys.r_arm)
+win.bind('<Shift + u>', keys.r_arm)
+win.bind('<Shift + i>', keys.r_arm)
+win.bind('<Shift + o>Shift', keys.r_arm)
+win.bind('<P>', keys.r_arm)
 
 win.bind('<f>Shift', keys.r_arm)
 win.bind('<g>Shift', keys.r_arm)
