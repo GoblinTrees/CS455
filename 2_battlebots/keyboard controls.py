@@ -85,14 +85,14 @@ class KeyControl():
         print(key.keycode)
         print(keysym)
 
-        match keysym:
-            case"c":
+        match key.keycode:
+            case 54:
                 self.body += 200
                 if (self.body > 7900):
                     self.body = 7900
                 self.tango.setTarget(BODY, self.body)
                 print("waist right")
-            case "z":
+            case 52:
                 self.body -= 200
                 if (self.body < 1510):
                     self.body = 1510
@@ -104,9 +104,9 @@ class KeyControl():
         print(key.keycode)
         print(keysym)
 
-        match keysym:
+        match key.keycode:
             # backwards
-            case "Down":
+            case 116:
                 self.motors += 200
                 if (self.motors > 7900):
                     self.motors = 7900
@@ -115,7 +115,7 @@ class KeyControl():
                 # self.tango.setTarget(R_MOTORS, self.motors)
 
             # forwards
-            case "Up":
+            case 111:
                 self.motors -= 200
                 if (self.motors < 1510):
                     self.motors = 1510
@@ -124,7 +124,7 @@ class KeyControl():
                 # self.tango.setTarget(R_MOTORS, self.motors)
 
             # right
-            case "Right":
+            case 114:
                 self.turn += 200
                 if (self.turn > 7400):
                     self.turn = 7400
@@ -132,7 +132,7 @@ class KeyControl():
                 self.tango.setTarget(TURN, self.turn)
 
             # left
-            case "Left":
+            case 113:
                 self.turn -= 200
                 if (self.turn < 2110):
                     self.turn = 2110
@@ -140,7 +140,7 @@ class KeyControl():
                 self.tango.setTarget(TURN, self.turn)
 
             # escape (estop)
-            case "Escape":
+            case 9:
                 self.default = 6000
                 self.tango.setTarget(MOTORS, self.default)
                 self.tango.setTarget(TURN, self.default)
@@ -164,85 +164,85 @@ class KeyControl():
         keysym = keycode_to_keysym.get(key.keycode)
         print(key.keycode)
         print(keysym)
-        match keysym:
-            case "t":
+        match key.keycode:
+            case 28:
                 print("Left Shoulder")
                 self.l_shoulder += 200
                 if (self.l_shoulder < 2110):
                     self.l_shoulder = 2110
                 print(self.l_shoulder)
                 self.tango.setTarget(L_SHOULDER, self.l_shoulder)
-            case "y":
+            case 29:
                 print("Left Bicep")
                 self.l_bicep += 200
                 if (self.l_bicep < 2110):
                     self.l_bicep = 2110
                 print(self.l_bicep)
                 self.tango.setTarget(L_BICEP, self.l_bicep)
-            case "u":
+            case 30:
                 print("Left Elbow")
                 self.l_elbow += 200
                 if (self.l_elbow < 2110):
                     self.l_elbow = 2110
                 print(self.l_elbow)
                 self.tango.setTarget(L_ELBOW, self.l_elbow)
-            case "i":
+            case 31:
                 print("Left Forarm")
                 self.l_forarm += 200
                 if (self.l_forarm < 2110):
                     self.l_forarm = 2110
                 print(self.l_forarm)
                 self.tango.setTarget(L_FORARM, self.l_forarm)
-            case "o":
+            case 32:
                 print("Left Wrist")
                 self.l_wrist += 200
                 if (self.l_wrist < 2110):
                     self.l_wrist = 2110
                 print(self.l_wrist)
                 self.tango.setTarget(L_WRIST, self.l_wrist)
-            case "p":
+            case 33:
                 print("Left Fingers")
                 self.l_fingers += 200
                 if (self.l_fingers < 2110):
                     self.l_fingers = 2110
                 print(self.l_fingers)
                 self.tango.setTarget(L_FINGERS, self.l_fingers)
-            case "t":
+            case 41:
                 print("Left Shoulder")
                 self.l_shoulder -= 200
                 if (self.l_shoulder < 2110):
                     self.l_shoulder = 2110
                 print(self.l_shoulder)
                 self.tango.setTarget(L_SHOULDER, self.l_shoulder)
-            case "y":
+            case 42:
                 print("Left Bicep")
                 self.l_bicep -= 200
                 if (self.l_bicep < 2110):
                     self.l_bicep = 2110
                 print(self.l_bicep)
                 self.tango.setTarget(L_BICEP, self.l_bicep)
-            case "u":
+            case 43:
                 print("Left Elbow")
                 self.l_elbow -= 200
                 if (self.l_elbow < 2110):
                     self.l_elbow = 2110
                 print(self.l_elbow)
                 self.tango.setTarget(L_ELBOW, self.l_elbow)
-            case "i":
+            case 44:
                 print("Left Forarm")
                 self.l_forarm -= 200
                 if (self.l_forarm < 2110):
                     self.l_forarm = 2110
                 print(self.l_forarm)
                 self.tango.setTarget(L_FORARM, self.l_forarm)
-            case "o":
+            case 45:
                 print("Left Wrist")
                 self.l_wrist -= 200
                 if (self.l_wrist < 2110):
                     self.l_wrist = 2110
                 print(self.l_wrist)
                 self.tango.setTarget(L_WRIST, self.l_wrist)
-            case "p":
+            case 46:
                 print("Left Fingers")
                 self.l_fingers -= 200
                 if (self.l_fingers < 2110):
@@ -360,6 +360,7 @@ win.bind('<a>', keys.head)
 win.bind('<d>', keys.head)
 
 # Left arm
+win.bind('<t>', keys.l_arm)
 win.bind('<y>', keys.l_arm)
 win.bind('<u>', keys.l_arm)
 win.bind('<i>', keys.l_arm)
@@ -367,6 +368,7 @@ win.bind('<o>', keys.l_arm)
 win.bind('<p>', keys.l_arm)
 
 # Left arm, other direction
+win.bind('<f>', keys.l_arm)
 win.bind('<g>', keys.l_arm)
 win.bind('<h>', keys.l_arm)
 win.bind('<j>', keys.l_arm)
@@ -374,12 +376,14 @@ win.bind('<k>', keys.l_arm)
 win.bind('<l>', keys.l_arm) 
 
 # Right arm
+win.bind('<t>Shift', keys.r_arm)
 win.bind('<y>Shift', keys.r_arm)
 win.bind('<u>Shift', keys.r_arm)
 win.bind('<i>Shift', keys.r_arm)
 win.bind('<o>Shift', keys.r_arm)
 win.bind('<p>Shift', keys.r_arm)
 
+win.bind('<f>Shift', keys.r_arm)
 win.bind('<g>Shift', keys.r_arm)
 win.bind('<h>Shift', keys.r_arm)
 win.bind('<j>Shift', keys.r_arm)
