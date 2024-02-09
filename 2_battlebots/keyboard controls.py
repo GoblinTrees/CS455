@@ -38,8 +38,8 @@ class KeyControl():
         self.body = 6000
         self.headTurn = 6000
         self.headTilt = 6000
-        self.r_motor = 6000
-        self.l_motor = 6000
+        self.r_motors = 6000
+        self.l_motors = 6000
         self.motors = 6000
         #self.turn = 6000
 
