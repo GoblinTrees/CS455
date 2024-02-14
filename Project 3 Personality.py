@@ -5,6 +5,8 @@ import pyttsx3
 from random import uniform
 from tkinter import *
 from time import sleep
+import threading
+from threading import Thread
 
 # width of the animation window
 animation_window_width=800
@@ -39,6 +41,7 @@ language = 'en'
 # delay between successive frames in seconds
 animation_refresh_seconds = 0.01
 
+
 def create_animation_window():
   window = tkinter.Tk()
   window.title("I'm awake")
@@ -62,18 +65,25 @@ def create_animation_canvas(window):
   pupil_R = canvas.create_oval(RLstart,RUstart,RRstart,RBstart,width=3,fill="black")
   return canvas
 
-def speak(window,canvas):
+def speakThread(command):
   engine = pyttsx3.init()
+  engine.say(command)
+  engine.runAndWait()
+def speak():
+  #engine = pyttsx3.init()
   for x in (command1, command2, command3):
     temp = ''
+    t1 = threading.Thread(target=speakThread, args=(x,))
+    t1.start()
     for y in x:
       temp = temp + y
       captions.delete("1.0", "end")
       captions.insert(END,temp)
       captions.update()
       sleep(uniform(0.1, 0.4))
-    engine.say(x)
-    engine.runAndWait()
+    t1.join()
+    #engine.say(x)
+    #engine.runAndWait()
 ##    if x != command3:
 ##      sleep(1)
 
@@ -115,6 +125,6 @@ while True:
       animation_window.destroy()
       break
     elif keyboard.is_pressed("space"):
-      speak(animation_window, animation_canvas)
+      speak()
     else: reset(animation_window, animation_canvas)
 print("Task ended")
