@@ -110,8 +110,8 @@ class KeyControl():
             # backwards
             case 116:
                 if (self.l_motors == 6000):
-                    self.r_motors = 5600
-                    self.l_motors = 6200
+                    self.r_motors = 6400
+                    self.l_motors = 5800
                 else:
                     self.r_motors += 200
                     if (self.r_motors > 7900):
@@ -128,8 +128,8 @@ class KeyControl():
             # forwards
             case 111:
                 if (self.l_motors == 6000):
-                    self.r_motors = 6400
-                    self.l_motors = 5800
+                    self.r_motors = 5600
+                    self.l_motors = 6200
                 else:
                     self.r_motors -= 200
                     if (self.r_motors < 1510):
