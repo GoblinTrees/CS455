@@ -107,7 +107,7 @@ class KeyControl():
         print(keysym)
 
         match key.keycode:
-            # backwards
+            # forward
             case 111:
                 if self.l_motors == 6000:
                     self.r_motors = 6400
@@ -124,8 +124,7 @@ class KeyControl():
                 self.tango.setTarget(L_MOTORS, self.l_motors)
                 self.tango.setTarget(R_MOTORS, self.r_motors)
 
-            # ...
-
+            # backwards
             case 116:
                 if self.l_motors == 6000:
                     self.r_motors = 5600
@@ -136,13 +135,18 @@ class KeyControl():
                         self.r_motors = 1510
                     # Increment speed by 200 in the reverse direction
                     self.r_motors -= 200
-
+                    self.l_motors -= 200
+                    self.r_motors += 200
+                    if (self.r_motors > 7900):
+                        self.r_motors = 7900
+                    if (self.l_motors < 2110):
+                        self.l_motors = 2110
                 print(self.r_motors)
                 print(self.l_motors)
                 self.tango.setTarget(L_MOTORS, self.l_motors)
                 self.tango.setTarget(R_MOTORS, self.r_motors)
 
-            # right
+            # left
             case 113:
                 self.r_motors += 200
                 if (self.r_motors > 7900):
@@ -150,7 +154,7 @@ class KeyControl():
                 print(self.r_motors)
                 self.tango.setTarget(R_MOTORS, self.r_motors)
 
-            # left
+            # right
             case 114:
                 self.l_motors -= 200
                 if (self.l_motors < 2110):
