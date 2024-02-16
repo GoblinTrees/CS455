@@ -111,33 +111,31 @@ class KeyControl():
             case 116:
                 if self.l_motors == 6000:
                     self.r_motors = 6400
-                    self.l_motors = 5600  # Set equidistant from 6000
+                    self.l_motors = 5800
                 else:
+                    self.l_motors -= 200
                     if self.r_motors > 7900:
                         self.r_motors = 7900
-                    # Adjust both motors equidistant from 6000
-                    temp = abs(abs(self.r_motors) - 6000)
-                    self.r_motors = 6000 + temp + 200
-                    self.l_motors = 6000 - temp - 200
+                    # Increment speed by 200 in the forward direction
+                    self.r_motors += 200
 
                 print(self.r_motors)
                 print(self.l_motors)
                 self.tango.setTarget(L_MOTORS, self.l_motors)
                 self.tango.setTarget(R_MOTORS, self.r_motors)
 
-            # forward
+            # ...
 
             case 111:
                 if self.l_motors == 6000:
                     self.r_motors = 5600
-                    self.l_motors = 6400  # Set equidistant from 6000
+                    self.l_motors = 6200
                 else:
+                    self.l_motors += 200
                     if self.r_motors < 1510:
                         self.r_motors = 1510
-                    # Adjust both motors equidistant from 6000
-                    temp = abs(abs(self.r_motors) - 6000)
-                    self.r_motors = 6000 - temp - 200
-                    self.l_motors = 6000 + temp + 200
+                    # Increment speed by 200 in the reverse direction
+                    self.r_motors -= 200
 
                 print(self.r_motors)
                 print(self.l_motors)
