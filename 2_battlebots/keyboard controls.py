@@ -113,7 +113,6 @@ class KeyControl():
                     self.r_motors = 6400
                     self.l_motors = 5600  # Set equidistant from 6000
                 else:
-                    self.l_motors -= 200
                     if self.r_motors > 7900:
                         self.r_motors = 7900
                     # Adjust both motors equidistant from 6000
@@ -133,7 +132,6 @@ class KeyControl():
                     self.r_motors = 5600
                     self.l_motors = 6400  # Set equidistant from 6000
                 else:
-                    self.l_motors += 200
                     if self.r_motors < 1510:
                         self.r_motors = 1510
                     # Adjust both motors equidistant from 6000
