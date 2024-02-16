@@ -110,7 +110,7 @@ class KeyControl():
             # Forwards
             case 111:
                 if self.l_motors == 6000:
-                    self.r_motors = 6200
+                    self.r_motors = 6600
                     self.l_motors = 5800
                 else:
                     self.l_motors -= 200
@@ -128,7 +128,7 @@ class KeyControl():
 
             case 116:
                 if self.l_motors == 6000:
-                    self.r_motors = 5800
+                    self.r_motors = 5400
                     self.l_motors = 6200
                 else:
                     self.l_motors += 200
