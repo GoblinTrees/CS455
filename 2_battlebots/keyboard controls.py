@@ -39,7 +39,7 @@ class KeyControl():
         self.headTurn = 6000
         self.headTilt = 6000
         self.r_motors = 6000
-        self.l_motors = 6000
+        self.l_motors = 6200
         #self.motors = 6000
         #self.turn = 6000
 
@@ -114,7 +114,7 @@ class KeyControl():
                     self.r_motors = 7900
                 # since wheels are controlled separately they are reversed (one is positive forward while the other is negative forward)
                 temp = abs(abs(self.r_motors) - 6000)
-                self.l_motors = 6000 + temp
+                self.l_motors = 6000 + temp 
 
                 print(self.r_motors)
                 print(self.l_motors)
@@ -157,7 +157,7 @@ class KeyControl():
                 self.headTurn = 6000
                 self.headTilt = 6000
                 self.r_motors = 6000
-                self.l_motors = 6000
+                self.l_motors = 6200
                 #self.motors = 6000
                 #self.turn = 6000
 
