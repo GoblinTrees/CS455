@@ -1,361 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Joystick and Sliders</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: auto;
-            padding: 20px;
-            height: 100vh;
-            margin: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robot Control</title>
+<script>
+  var ip_add = "{{ ip_address }}"; // Get the IP address from Flask
+  var form_send = ip_add + "/control";
+  function sendData() {
+    var form = document.getElementById("robotControlForm");
+    var sliders = form.getElementsByTagName("input");
+    var joystickX = document.getElementById("joystickX").value;
+    var joystickY = document.getElementById("joystickY").value;
+    var formData = new FormData();
 
-        label {
-            background-color: cyan;
-        }
+    // Loop through sliders, add their values to formData
+    for (var i = 0; i < sliders.length; i++) {
+      if (sliders[i].type === "range") {
+        formData.append(sliders[i].name, sliders[i].value);
+      }
+    }
 
-        #joystick {
-            width: 100px;
-            height: 100px;
-            background-color: darkolivegreen;
-            border-radius: 50%;
-            position: absolute;
-            cursor: pointer;
-            user-select: none;
-            touch-action: none;
-            background: black;
-            align-content: center;
-            margin: auto;
-            display: block;
-        }
+    // Add joystick values to formData
+    formData.append("joystickX", joystickX);
+    formData.append("joystickY", joystickY);
 
-        #joystick_holder {
-            margin: auto;
-            display: block;
-            display: flex;
-            flex-direction: row;
-            align-content: center;
-            border-color: black;
-            width: 100px;
-            height: 100px;
-            background-color: chocolate;
-            border-radius: 25%;
-        }
+    // Send formData to the Flask backend
+    fetch("/control", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.text();
+    })
+    .then(data => {
+      console.log(data); // Log the response from the backend
+    })
+    .catch(error => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+  }
 
-        #sliders {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: darkgreen;
-            border-radius: 25%;
-        }
+  // Function to call sendData() whenever the input event occurs on sliders or joysticks
+  function bindInputEvents() {
+    var form = document.getElementById("robotControlForm");
+    form.action = form_send;
+    var inputs = form.getElementsByTagName("input");
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].type === "range") {
+        inputs[i].addEventListener("input", sendData);
+      }
+    }
+  }
 
-        #slider1, #slider2, #slider3 {
-            width: 200px;
-            margin: 10px;
-            background: lightblue;
-        }
-
-        #spacer {
-            width: 220px;
-            height: 10px;
-        }
-
-        #stop {
-            width: 220px;
-            height: 50px;
-            background-color: darkred;
-            color: black;
-            border-radius: 25%;
-        }
-
-        #body_content {
-            display: flex;
-            flex-direction: row;
-        }
-
-        .arm {
-            display: flex;
-            flex-direction: column;
-            background-color: salmon;
-            width: 220px;
-            height: 250px;
-            border-radius: 30%;
-            align-content: center;
-            align-items: center;
-        }
-
-        .arm_sliders {
-            display: flex;
-            flex-direction: column;
-            contain: content;
-            text-align: center;
-        }
-
-        #quick_buttons {
-            align-content: center;
-            display: flex;
-            flex-direction: column;
-            margin: auto;
-            width: 220px;
-        }
-
-
-    </style>
+  // Bind input events when the document is loaded
+  document.addEventListener("DOMContentLoaded", bindInputEvents);
+</script>
 </head>
 <body>
-<div id="whole_panel">
-    <div id="joystick_holder">
-        <div id="joystick"></div>
-    </div>
-    <div id="spacer"></div>
-    <div id="body_content">
-        <div class="arm" id="left_arm">
-            <label>Left Arm</label>
-            <div class="arm_sliders">
-                Shoulder
-                <div class="range-slider">
-                    <input id="L_Shoulder" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
-                           value="5" width="20">
-                </div>
-                 Outward
-                <div class="range-slider">
-                    <input id="L_Outward" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
-                           value="5" width="20">
-                </div>
-                 Elbow
-                <div class="range-slider">
-                    <input id="L_Elbow" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
-                           value="5" width="20">
-                </div>
-                 Wrist
-                <div class="range-slider">
-                    <input id="L_Wrist" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
-                           value="5" width="20">
-                </div>
-                 Claw
-                <div class="range-slider">
-                    <input id="L_Claw" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
-                           value="5" width="20">
-                </div>
+<h2>Robot Control Interface</h2>
+<form id="robotControlForm" action="http://192.168.88.58:3245/control" method="post">
+  <label for="slider1">HeadTilt:</label>
+  <input type="range" id="slider1" name="slider1" min="3000" max="9000" value="6000" step="200"><br>
 
+  <label for="slider2">HeadTurn:</label>
+  <input type="range" id="slider2" name="slider2" min="3000" max="9000" value="6000" step="200"><br>
 
-            </div>
+  <label for="slider3">LShoulder:</label>
+  <input type="range" id="slider3" name="slider3" min="3000" max="9000" value="6000" step="200"><br>
 
-        </div>
-        <div id="sliders">
-            <label>Head</label>
-            <input id="slider1" max="5" min="-5" step="0.1" type="range" value="0">
-            <label>Headtilt</label>
-            <input id="slider2" max="5" min="-5" step="0.1" type="range" value="0">
-            <label>Waist</label>
-            <input id="slider3" max="5" min="-5" step="0.1" type="range" value="0">
-        </div>
-        <div class="arm" id="right_arm">
-            <label>Right Arm</label>
-            <div class="arm_sliders">
-                Shoulder
-                <div class="range-slider">
-                    <input id="R_Shoulder" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
-                           value="5" width="20">
-                </div>
-                 Outward
-                <div class="range-slider">
-                    <input id="R_Outward" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
-                           value="5" width="20">
-                </div>
-                 Elbow
-                <div class="range-slider">
-                    <input id="R_Elbow" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
-                           value="5" width="20">
-                </div>
-                 Wrist
-                <div class="range-slider">
-                    <input id="R_Wrist" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
-                           value="5" width="20">
-                </div>
-                 Claw
-                <div class="range-slider">
-                    <input id="R_Claw" class="input-range" height="80" max="10" min="1" orient="vertical" step="0.5" type="range"
-                           value="5" width="20">
-                </div>
+  <label for="slider4">LBicep</label>
+  <input type="range" id="slider4" name="slider4" min="3000" max="9000" value="6000" step="200"><br>
 
+  <label for="slider5">Lelbow</label>
+  <input type="range" id="slider5" name="slider5" min="3000" max="9000" value="6000" step="200"><br>
 
-            </div>
+  <label for="slider6">Lwrist</label>
+  <input type="range" id="slider6" name="slider6" min="3000" max="9000" value="6000" step="200"><br>
 
-        </div>
-    </div>
-    <div id="quick_buttons">
-        <button id="stop">Emergency Stop</button>
-    </div>
-</div>
+  <label for="slider7">Lclaw</label>
+  <input type="range" id="slider7" name="slider7" min="3000" max="9000" value="6000" step="200"><br>
 
+  <label for="slider8">RShoulder</label>
+  <input type="range" id="slider8" name="slider8" min="3000" max="9000" value="6000" step="200"><br>
 
-</body>
-</html>
+  <label for="slider9">RBicep</label>
+  <input type="range" id="slider9" name="slider9" min="3000" max="9000" value="6000" step="200"><br>
 
-<script>
-    const joystick = document.getElementById('joystick');
-    const slider1 = document.getElementById('slider1');
-    const slider2 = document.getElementById('slider2');
-    const slider3 = document.getElementById('slider3');
+  <label for="slider10">Relbow</label>
+  <input type="range" id="slider10" name="slider10" min="3000" max="9000" value="6000" step="200"><br>
 
-    const LShoulder = document.getElementById('L_Shoulder');
-    const LOutward =document.getElementById('L_Outward');
-    const LElbow = document.getElementById('L_Elbow');
-    const LWrist = document.getElementById('L_Wrist');
-    const LClaw = document.getElementById('L_Claw');
+  <label for="slider11">Rwrist</label>
+  <input type="range" id="slider11" name="slider11" min="3000" max="9000" value="6000" step="200"><br>
 
-    const RShoulder = document.getElementById('R_Shoulder');
-    const ROutward =document.getElementById('R_Outward');
-    const RElbow = document.getElementById('R_Elbow');
-    const RWrist = document.getElementById('R_Wrist');
-    const RClaw = document.getElementById('R_Claw');
+  <label for="slider12">Rclaw</label>
+  <input type="range" id="slider12" name="slider12" min="3000" max="9000" value="6000" step="200"><br>
 
-    joystick.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('mousemove', handleMouseMove);
+  <label for="slider13">Waist:</label>
+  <input type="range" id="slider13" name="slider13" min="3000" max="9000" value="6000" step="200"><br>
 
-    function handleMouseDown(event) {
-        event.preventDefault();
-        joystick.dragging = true;
+  <!-- Joystick -->
+  <label for="joystickX">Joystick X:</label>
+  <input type="range" id="joystickX" name="joystickX" min="-100" max="100" value="0" step="1"><br>
+  <label for="joystickY">Joystick Y:</label>
+  <input type="range" id="joystickY" name="joystickY" min="-100" max="100" value="0" step="1"><br>
 
-    }
-
-    function handleMouseUp(event) {
-        event.preventDefault();
-        joystick.dragging = false;
-        console.log(("Joystick: " + document.getElementById(joystick.value)))
-        updateValues();
-    }
-
-    function getJoyVals(){
-        const rect = joystick.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        const x = joystick.getBoundingClientRect().left + joystick.offsetWidth / 2 - centerX;
-        const y = joystick.getBoundingClientRect().top + joystick.offsetHeight / 2 - centerY;
-
-        const normalizedX = x / (rect.width / 2);
-        const normalizedY = y / (rect.height / 2);
-
-        const joystickValue = {
-            x: normalizedX.toFixed(2),
-            y: normalizedY.toFixed(2)
-        }
-
-        return toString(joystickValue)
-
-    }
-    function handleMouseMove(event) {
-        event.preventDefault();
-        if (joystick.dragging) {
-            const rect = joystick.getBoundingClientRect();
-            const x = event.clientX - rect.left - rect.width / 2;
-            const y = event.clientY - rect.top - rect.height / 2;
-
-            const distance = Math.min(Math.sqrt(x * x + y * y), rect.width / 2);
-
-            const angle = Math.atan2(y, x);
-            const newX = distance * Math.cos(angle);
-            const newY = distance * Math.sin(angle);
-
-            joystick.style.transform = `translate(${newX}px, ${newY}px)`;
-        }
-    }
-
-    function updateValues() {
-        const rect = joystick.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        const x = joystick.getBoundingClientRect().left + joystick.offsetWidth / 2 - centerX;
-        const y = joystick.getBoundingClientRect().top + joystick.offsetHeight / 2 - centerY;
-
-        const normalizedX = x / (rect.width / 2);
-        const normalizedY = y / (rect.height / 2);
-
-        const joystickValue = {
-            x: normalizedX.toFixed(2),
-            y: normalizedY.toFixed(2)
-        };
-
-        const sliderValues = {
-            slider1: slider1.value,
-            slider2: slider2.value,
-            slider3: slider3.value
-        };
-
-        const L_ArmValues = {
-            LShoulder: LShoulder.value,
-            LOut: LOutward.value,
-            LElbow: LElbow.value,
-            LWrist: LWrist.value,
-            LClaw: LClaw.value
-        }
-        const R_ArmValues = {
-            RShoulder: RShoulder.value,
-            ROut: ROutward.value,
-            RElbow: RElbow.value,
-            RWrist: RWrist.value,
-            RClaw: RClaw.value
-        }
-
-        // Send values to Raspberry Pi backend server using AJAX
-        sendValuesToBackend({joystick: joystickValue, sliders: sliderValues, L_Arm: L_ArmValues, R_Arm:R_ArmValues})
-    }
-
-    // Function to log element values when they change
-    function logValueOnChange(element) {
-        element.addEventListener('input', function() {
-            console.log(`${element.id}: ${element.value}`);
-        });
-    }
-
-    // Attach event listeners to each input element
-    logValueOnChange(joystick);
-    logValueOnChange(slider1);
-    logValueOnChange(slider2);
-    logValueOnChange(slider3);
-    logValueOnChange(LShoulder);
-    logValueOnChange(LOutward);
-    logValueOnChange(LElbow);
-    logValueOnChange(LWrist);
-    logValueOnChange(LClaw);
-    logValueOnChange(RShoulder);
-    logValueOnChange(ROutward);
-    logValueOnChange(RElbow);
-    logValueOnChange(RWrist);
-    logValueOnChange(RClaw);
-    function sendValuesToBackend(data) {
-        // Replace the following URL with your Raspberry Pi backend server URL
-
-        const backendURL_ORIGINAL = 'http://your-raspberry-pi-ip:your-port/endpoint';
-        const backendURL = 'http://192.168.88.58:3245/recieving';
-
-        fetch(backendURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    }
-
-</script>
-
+  <input type="button" value="Submit" onclick="sendData()">
+</form>
 </body>
 </html>
