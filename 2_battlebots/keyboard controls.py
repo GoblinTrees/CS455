@@ -108,7 +108,7 @@ class KeyControl():
 
         match key.keycode:
             # backwards
-            case 116:
+            case 111:
                 if self.l_motors == 6000:
                     self.r_motors = 6400
                     self.l_motors = 5800
@@ -126,7 +126,7 @@ class KeyControl():
 
             # ...
 
-            case 111:
+            case 116:
                 if self.l_motors == 6000:
                     self.r_motors = 5600
                     self.l_motors = 6200
@@ -143,7 +143,7 @@ class KeyControl():
                 self.tango.setTarget(R_MOTORS, self.r_motors)
 
             # right
-            case 114:
+            case 113:
                 self.r_motors += 200
                 if (self.r_motors > 7900):
                     self.r_motors = 7900
@@ -151,7 +151,7 @@ class KeyControl():
                 self.tango.setTarget(R_MOTORS, self.r_motors)
 
             # left
-            case 113:
+            case 114:
                 self.l_motors -= 200
                 if (self.l_motors < 2110):
                     self.l_motors = 2110
