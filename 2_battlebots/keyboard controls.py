@@ -13,8 +13,8 @@ for name in dir(XK):
 
 #MOTORS = 0
 #TURN = 1
-L_MOTORS = 0
-R_MOTORS = 1
+L_MOTORS = 1
+R_MOTORS = 0
 BODY = 2
 HEADTURN = 3
 HEADTILT = 4
