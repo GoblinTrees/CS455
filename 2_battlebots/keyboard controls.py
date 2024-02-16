@@ -109,33 +109,37 @@ class KeyControl():
         match key.keycode:
             # backwards
             case 116:
-                if (self.l_motors == 6000):
+                if self.l_motors == 6000:
                     self.r_motors = 6400
                     self.l_motors = 5800
                 else:
-                    self.r_motors += 200
-                    if (self.r_motors > 7900):
+                    self.l_motors -= 200
+                    if self.r_motors > 7900:
                         self.r_motors = 7900
-                    # since wheels are controlled separately they are reversed (one is positive forward while the other is negative forward)
+                    # Adjust both motors to go in the same direction
                     temp = abs(abs(self.r_motors) - 6000)
-                    self.l_motors = 6000 + temp
+                    self.r_motors = 6000 + temp + 400
+                    self.l_motors = 6000 + temp + 400
+
                 print(self.r_motors)
                 print(self.l_motors)
                 self.tango.setTarget(L_MOTORS, self.l_motors)
                 self.tango.setTarget(R_MOTORS, self.r_motors)
-                # self.tango.setTarget(R_MOTORS, self.motors)
 
-            # forwards
+                # ...
+
             case 111:
-                if (self.l_motors == 6000):
+                if self.l_motors == 6000:
                     self.r_motors = 5600
                     self.l_motors = 6200
                 else:
-                    self.r_motors -= 200
-                    if (self.r_motors < 1510):
+                    self.l_motors += 200
+                    if self.r_motors < 1510:
                         self.r_motors = 1510
+                    # Adjust both motors to go in the same direction
                     temp = abs(abs(self.r_motors) - 6000)
-                    self.l_motors = 6000 + temp
+                    self.r_motors = 6000 + temp - 400
+                    self.l_motors = 6000 + temp - 400
 
                 print(self.r_motors)
                 print(self.l_motors)
