@@ -39,7 +39,7 @@ class KeyControl():
         self.headTurn = 6000
         self.headTilt = 6000
         self.r_motors = 6000
-        self.l_motors = 6400
+        self.l_motors = 6000
         #self.motors = 6000
         #self.turn = 6000
 
@@ -109,13 +109,16 @@ class KeyControl():
         match key.keycode:
             # backwards
             case 116:
-                self.r_motors += 200
-                if (self.r_motors > 7900):
-                    self.r_motors = 7900
-                # since wheels are controlled separately they are reversed (one is positive forward while the other is negative forward)
-                temp = abs(abs(self.r_motors) - 6000)
-                self.l_motors = 6000 + temp + 400
-
+                if (self.l_motors == 6000):
+                    self.r_motors = 5600
+                    self.l_motors = 6200
+                else:
+                    self.r_motors += 200
+                    if (self.r_motors > 7900):
+                        self.r_motors = 7900
+                    # since wheels are controlled separately they are reversed (one is positive forward while the other is negative forward)
+                    temp = abs(abs(self.r_motors) - 6000)
+                    self.l_motors = 6000 + temp
                 print(self.r_motors)
                 print(self.l_motors)
                 self.tango.setTarget(L_MOTORS, self.l_motors)
@@ -124,11 +127,15 @@ class KeyControl():
 
             # forwards
             case 111:
-                self.r_motors -= 200
-                if (self.r_motors < 1510):
-                    self.r_motors = 1510
-                temp = abs(abs(self.r_motors) - 6000)
-                self.l_motors = 6000 + temp + 400
+                if (self.l_motors == 6000):
+                    self.r_motors = 6400
+                    self.l_motors = 5800
+                else:
+                    self.r_motors -= 200
+                    if (self.r_motors < 1510):
+                        self.r_motors = 1510
+                    temp = abs(abs(self.r_motors) - 6000)
+                    self.l_motors = 6000 + temp
 
                 print(self.r_motors)
                 print(self.l_motors)
@@ -157,7 +164,7 @@ class KeyControl():
                 self.headTurn = 6000
                 self.headTilt = 6000
                 self.r_motors = 6000
-                self.l_motors = 6400
+                self.l_motors = 6000
                 #self.motors = 6000
                 #self.turn = 6000
 
