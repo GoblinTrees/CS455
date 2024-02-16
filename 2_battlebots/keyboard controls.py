@@ -39,7 +39,7 @@ class KeyControl():
         self.headTurn = 6000
         self.headTilt = 6000
         self.r_motors = 6000
-        self.l_motors = 6200
+        self.l_motors = 6400
         #self.motors = 6000
         #self.turn = 6000
 
@@ -157,7 +157,7 @@ class KeyControl():
                 self.headTurn = 6000
                 self.headTilt = 6000
                 self.r_motors = 6000
-                self.l_motors = 6200
+                self.l_motors = 6400
                 #self.motors = 6000
                 #self.turn = 6000
 
