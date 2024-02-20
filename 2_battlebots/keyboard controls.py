@@ -377,7 +377,7 @@ class KeyControl():
                 if (self.r_fingers < 2110):
                     self.r_fingers = 2110
                 print(self.r_fingers)
-                self.tango.setTarget(_RFINGERS, self.r_fingers)
+                self.tango.setTarget(R_FINGERS, self.r_fingers)
 
 win = tk.Tk()
 keys = KeyControl(win)

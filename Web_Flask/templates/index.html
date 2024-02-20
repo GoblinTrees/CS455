@@ -1,114 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Robot Control</title>
-<script>
-  var ip_add = "{{ ip_address }}"; // Get the IP address from Flask
-  var form_send = ip_add + "/control";
-  function sendData() {
-    var form = document.getElementById("robotControlForm");
-    var sliders = form.getElementsByTagName("input");
-    var joystickX = document.getElementById("joystickX").value;
-    var joystickY = document.getElementById("joystickY").value;
-    var formData = new FormData();
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Robot Control</title>
+    <script>
+        var ip_add = "{{ ip_address }}"; // Get the IP address from Flask
+        var form_send = ip_add + "/control";
 
-    // Loop through sliders, add their values to formData
-    for (var i = 0; i < sliders.length; i++) {
-      if (sliders[i].type === "range") {
-        formData.append(sliders[i].name, sliders[i].value);
-      }
+        function sendData() {
+            var form = document.getElementById("robotControlForm");
+            var sliders = form.getElementsByTagName("input");
+            var joystickX = document.getElementById("joystickX").value;
+            var joystickY = document.getElementById("joystickY").value;
+            var formData = new FormData();
+
+            // Loop through sliders, add their values to formData
+            for (var i = 0; i < sliders.length; i++) {
+                if (sliders[i].type === "range") {
+                    formData.append(sliders[i].name, sliders[i].value);
+                }
+            }
+
+            // Add joystick values to formData
+            formData.append("joystickX", joystickX);
+            formData.append("joystickY", joystickY);
+
+            // Send formData to the Flask backend
+            fetch("/control", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(data); // Log the response from the backend
+                })
+                .catch(error => {
+                    console.error("There was a problem with the fetch operation:", error);
+                });
+        }
+
+        // Function to call sendData() whenever the input event occurs on sliders or joysticks
+        function bindInputEvents() {
+            var form = document.getElementById("robotControlForm");
+            form.action = form_send;
+            var inputs = form.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type === "range") {
+                    inputs[i].addEventListener("input", sendData);
+                }
+            }
+        }
+
+        // Bind input events when the document is loaded
+        document.addEventListener("DOMContentLoaded", bindInputEvents);
+    </script>
+    <style>
+    /* Styles for head sliders */
+    #head_sliders {
+        background-color: chocolate;
+        width: 250px;
+        margin-bottom: 20px;
     }
 
-    // Add joystick values to formData
-    formData.append("joystickX", joystickX);
-    formData.append("joystickY", joystickY);
-
-    // Send formData to the Flask backend
-    fetch("/control", {
-      method: "POST",
-      body: formData
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.text();
-    })
-    .then(data => {
-      console.log(data); // Log the response from the backend
-    })
-    .catch(error => {
-      console.error("There was a problem with the fetch operation:", error);
-    });
-  }
-
-  // Function to call sendData() whenever the input event occurs on sliders or joysticks
-  function bindInputEvents() {
-    var form = document.getElementById("robotControlForm");
-    form.action = form_send;
-    var inputs = form.getElementsByTagName("input");
-    for (var i = 0; i < inputs.length; i++) {
-      if (inputs[i].type === "range") {
-        inputs[i].addEventListener("input", sendData);
-      }
+    /* Styles for left arm sliders */
+    #L_arm_sliders {
+        background-color: salmon;
+        width: 250px;
+        margin-right: 20px;
     }
-  }
 
-  // Bind input events when the document is loaded
-  document.addEventListener("DOMContentLoaded", bindInputEvents);
-</script>
+    /* Styles for right arm sliders */
+    #R_arm_sliders {
+        background-color: salmon;
+        width: 250px;
+    }
+
+    /* Styles for body sliders */
+    #body_sliders {
+        background-color: dodgerblue;
+        width: 250px;
+        margin-bottom: 20px;
+    }
+
+    /* Styles for wheel sliders */
+    #Wheel_Sliders {
+        background-color: darkgreen;
+        width: 250px;
+    }
+
+    #outer {
+        background-color: darkgray;
+        width: 600px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #upper {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
+</style>
 </head>
 <body>
 <h2>Robot Control Interface</h2>
-<form id="robotControlForm" action="http://192.168.88.58:3245/control" method="post">
-  <label for="slider1">HeadTilt:</label>
-  <input type="range" id="slider1" name="slider1" min="3000" max="9000" value="6000" step="200"><br>
+<form action="http://192.168.88.58:3245/control" id="robotControlForm" method="post">
+    <div id="outer">
+        <div id="head_sliders">
+            <label for="slider1">HeadTilt:</label>
+            <input id="slider1" max="9000" min="3000" name="slider1" step="200" type="range" value="6000"><br>
 
-  <label for="slider2">HeadTurn:</label>
-  <input type="range" id="slider2" name="slider2" min="3000" max="9000" value="6000" step="200"><br>
+            <label for="slider2">HeadTurn:</label>
+            <input id="slider2" max="9000" min="3000" name="slider2" step="200" type="range" value="6000"><br>
+        </div>
+        <div id="upper">
+            <div id="L_arm_sliders">
+                <label for="slider3">LShoulder:</label>
+                <input id="slider3" max="9000" min="3000" name="slider3" step="200" type="range" value="6000"><br>
 
-  <label for="slider3">LShoulder:</label>
-  <input type="range" id="slider3" name="slider3" min="3000" max="9000" value="6000" step="200"><br>
+                <label for="slider4">LBicep</label>
+                <input id="slider4" max="9000" min="3000" name="slider4" step="200" type="range" value="6000"><br>
 
-  <label for="slider4">LBicep</label>
-  <input type="range" id="slider4" name="slider4" min="3000" max="9000" value="6000" step="200"><br>
+                <label for="slider5">Lelbow</label>
+                <input id="slider5" max="9000" min="3000" name="slider5" step="200" type="range" value="6000"><br>
 
-  <label for="slider5">Lelbow</label>
-  <input type="range" id="slider5" name="slider5" min="3000" max="9000" value="6000" step="200"><br>
+                <label for="slider6">Lwrist</label>
+                <input id="slider6" max="9000" min="3000" name="slider6" step="200" type="range" value="6000"><br>
 
-  <label for="slider6">Lwrist</label>
-  <input type="range" id="slider6" name="slider6" min="3000" max="9000" value="6000" step="200"><br>
+                <label for="slider7">Lclaw</label>
+                <input id="slider7" max="9000" min="3000" name="slider7" step="200" type="range" value="6000"><br>
+            </div>
 
-  <label for="slider7">Lclaw</label>
-  <input type="range" id="slider7" name="slider7" min="3000" max="9000" value="6000" step="200"><br>
+            <div id="R_arm_sliders">
+                <label for="slider8">RShoulder</label>
+                <input id="slider8" max="9000" min="3000" name="slider8" step="200" type="range" value="6000"><br>
 
-  <label for="slider8">RShoulder</label>
-  <input type="range" id="slider8" name="slider8" min="3000" max="9000" value="6000" step="200"><br>
+                <label for="slider9">RBicep</label>
+                <input id="slider9" max="9000" min="3000" name="slider9" step="200" type="range" value="6000"><br>
 
-  <label for="slider9">RBicep</label>
-  <input type="range" id="slider9" name="slider9" min="3000" max="9000" value="6000" step="200"><br>
+                <label for="slider10">Relbow</label>
+                <input id="slider10" max="9000" min="3000" name="slider10" step="200" type="range" value="6000"><br>
 
-  <label for="slider10">Relbow</label>
-  <input type="range" id="slider10" name="slider10" min="3000" max="9000" value="6000" step="200"><br>
+                <label for="slider11">Rwrist</label>
+                <input id="slider11" max="9000" min="3000" name="slider11" step="200" type="range" value="6000"><br>
 
-  <label for="slider11">Rwrist</label>
-  <input type="range" id="slider11" name="slider11" min="3000" max="9000" value="6000" step="200"><br>
+                <label for="slider12">Rclaw</label>
+                <input id="slider12" max="9000" min="3000" name="slider12" step="200" type="range" value="6000"><br>
+            </div>
 
-  <label for="slider12">Rclaw</label>
-  <input type="range" id="slider12" name="slider12" min="3000" max="9000" value="6000" step="200"><br>
-
-  <label for="slider13">Waist:</label>
-  <input type="range" id="slider13" name="slider13" min="3000" max="9000" value="6000" step="200"><br>
-
-  <!-- Joystick -->
-  <label for="joystickX">Joystick X:</label>
-  <input type="range" id="joystickX" name="joystickX" min="-100" max="100" value="0" step="1"><br>
-  <label for="joystickY">Joystick Y:</label>
-  <input type="range" id="joystickY" name="joystickY" min="-100" max="100" value="0" step="1"><br>
-
-  <input type="button" value="Submit" onclick="sendData()">
+        </div>
+        <div id="Wheel_Sliders">
+            <!-- Joystick -->
+          <div id="body_sliders">
+                <label for="slider13">Waist:</label>
+                <input id="slider13" max="9000" min="3000" name="slider13" step="200" type="range" value="6000"><br>
+            </div>
+            <label for="joystickX">Joystick X:</label>
+            <input id="joystickX" max="100" min="-100" name="joystickX" step="1" type="range" value="0"><br>
+            <label for="joystickY">Joystick Y:</label>
+            <input id="joystickY" max="100" min="-100" name="joystickY" step="1" type="range" value="0"><br>
+        </div>
+        <input onclick="sendData()" type="button" value="Send">
+    </div>
 </form>
 </body>
 </html>

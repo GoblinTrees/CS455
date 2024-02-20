@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request
-import maestro
 import serial
-import time
-import sys, termios, tty, os
+
+from CS455.Web_Flask import maestro
+#from maestro import Controller
 from sys import version_info
+from concurrent.futures import ThreadPoolExecutor
 
 
 #FlaskIO code-----------------------------------------------------------
@@ -36,6 +37,10 @@ def control_robot():
     Rwrist = int(request.form['slider11'])
     Rclaw = int(request.form['slider12'])
     Waist = int(request.form['slider13'])
+    XJoy = int(request.form['joystickX'])
+    YJoy = int(request.form['joystickY'])
+
+
 
     body_dict = {
         "Headtilt": HeadTilt,
@@ -51,29 +56,42 @@ def control_robot():
         "Rwrist": Rwrist,
         "Rclaw": Rclaw,
         "Waist": Waist,
+        "XJoy": XJoy,
+        "YJoy": YJoy
     }
-    #print(body_dict)
+    print(body_dict)
 
     # Process the data (you can add your robot control logic here)
-    kore.update(body_dict)
 
 
     # You can send a response if needed
     return "Received the control data successfully!"
 #End of FlaskIO---------------------------------------------------------
 
+
+
+
+
 #Maestro ControllerIO---------------------------------------------------
 
-
+PY2 = version_info[0] == 2   #Running Python 2.x?
 
 #End of Mastro ControllerIO---------------------------------------------------------
 
 #Class def for Kore Processies
 class Kore():
+
+
     def init(self):
+        #super().__init__(self,ttyStr='/dev/ttyACM0',device=0x0c)
         #The tango object to send data to the servo controller
+        #<with super, i don't think we need to do the following line-FG>
         self.tango = maestro.Controller()
-        #The default tango object values
+
+        #The taskmaster executor
+        exec = ThreadPoolExecutor(max_workers=8)
+
+        #the actual values to be manipultated for the system
         self.tango_values = {
         "Headtilt": 6000,
         "Headturn": 6000,
@@ -88,6 +106,23 @@ class Kore():
         "Rwrist": 6000,
         "Rclaw": 6000,
         "Waist": 6000,
+        }
+
+        #default values reference
+        self.tango_default = {
+            "Headtilt": 6000,
+            "Headturn": 6000,
+            "Lshoulder": 6000,
+            "Lbicep": 6000,
+            "Lelbow": 6000,
+            "Lwrist": 6000,
+            "Lclaw": 6000,
+            "RShoulder": 6000,
+            "Rbicep": 6000,
+            "Relbow": 6000,
+            "Rwrist": 6000,
+            "Rclaw": 6000,
+            "Waist": 6000,
         }
 
         #mapping for the channels of the maestro->copied from keyboard controls
@@ -108,37 +143,41 @@ class Kore():
         #Need to add the values for Motors later
         }
 
-        def getChan(key):
-            return self.tango_channels.get(key)
+    def getChan(self,key):
+        return self.tango_channels.get(key)
 
-        def getVal(key):
-            return self.tango_values.get(key)
+    def getVal(self,key):
+        return self.tango_values.get(key)
 
-        def update(newVals):
-            #Arg type catch to ensure arg is a dict
-            if (type(newVals) != dict):
-                print("Err: update()-> function arg passed to update() is not a dictionary")
-                try:
-                    print("Arg type: " + type(newVals))
-                    print("Arg passed: " + str(newVals))
-                except:
-                    print("Cannot rep. arg as string.")
-                finally: return
-            #Dict format catch to ensure proper format->length and keys
-            if (len(newVals) != len(self.tango_values)):
-                print("Err: update()-> LENGTH of tango values and update values don't match")
-                return
-            if (newVals.keys() != self.tango.keys):
-                print("Err: update()-> KEYS of tango values and update values don't match")
-                return
+    def update(self,newVals):
+        #Arg type catch to ensure arg is a dict
+        if (type(newVals) != dict):
+            print("Err: update()-> function arg passed to update() is not a dictionary")
+            try:
+                print("Arg type: " + type(newVals))
+                print("Arg passed: " + str(newVals))
+            except:
+                print("Cannot rep. arg as string.")
+            finally: return
+        #Dict format catch to ensure proper format->length and keys
+        if (len(newVals) != len(self.tango_values)):
+            print("Err: update()-> LENGTH of tango values and update values don't match")
+            return
+        if (newVals.keys() != self.tango.keys):
+            print("Err: update()-> KEYS of tango values and update values don't match")
+            return
 
-            #Passed parameter testing -> compare and test vals, then update
-            for key in self.tango_values:
-                if (self.tango_values.get(key) != newVals.get(key)):
-                    print("Updating " + key + " from " +self.tango_values.get(key) + " to " + newVals.get(key))
-                    self.tango_values.update(key,newVals.get(key))
-                    self.tango.setTarget(getChan(key), getVal(key))
+        #Passed parameter testing -> compare and test vals, then update
+        for key in self.tango_values:
+            if (self.tango_values.get(key) != newVals.get(key)):
+                print("Updating " + key + " from " +self.tango_values.get(key) + " to " + newVals.get(key))
+                self.tango_values.update(key,newVals.get(key))
+                self.tango.setTarget(self.getChan(key), self.getVal(key))
+                print("Updated Key-Value:" + key + "-" + self.getVal(key))
 
+
+    def ping(self):
+        return print("Pinged Kore")
 
 
 

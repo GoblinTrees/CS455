@@ -29,6 +29,10 @@ def control_robot():
     Rwrist = int(request.form['slider11'])
     Rclaw = int(request.form['slider12'])
     Waist = int(request.form['slider13'])
+    XJoy = int(request.form['joystickX'])
+    YJoy = int(request.form['joystickY'])
+
+
 
     body_dict = {
         "Headtilt": HeadTilt,
@@ -44,6 +48,8 @@ def control_robot():
         "Rwrist": Rwrist,
         "Rclaw": Rclaw,
         "Waist": Waist,
+        "XJoy": XJoy,
+        "YJoy": YJoy
     }
     print(body_dict)
 
