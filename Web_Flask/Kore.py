@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import serial
 
-from CS455.Web_Flask import maestro
+import maestro
 #from maestro import Controller
 from sys import version_info
 from concurrent.futures import ThreadPoolExecutor
@@ -59,10 +59,11 @@ def control_robot():
         "XJoy": XJoy,
         "YJoy": YJoy
     }
-    print(body_dict)
+    #print(body_dict)
 
     # Process the data (you can add your robot control logic here)
-
+    print("updating values")
+    kore.update(body_dict)
 
     # You can send a response if needed
     return "Received the control data successfully!"
