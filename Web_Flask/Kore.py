@@ -162,8 +162,8 @@ class Kore():
         #Dict format catch to ensure proper format->length and keys
         if (len(newVals.keys()) != len(self.tango_values.keys())):
             print("Err: update()-> LENGTH of tango values and update values don't match")
-            print("len newVals keys: " +len(newVals))
-            print("len tangoVals keys: " +len(self.tango_values.keys()))
+            print("len newVals keys: " + str(len(newVals)))
+            print("len tangoVals keys: " +str(len(self.tango_values.keys())))
             print("newVals keys: " +str(newVals.keys()))
             print("tangoVals keys: " +str(self.tango_values.keys()))
 
