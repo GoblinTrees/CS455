@@ -18,6 +18,10 @@ def checkWorking():
 def home():
     print(request.host)
     ip_add = request.host
+
+    #set default positions
+    kore.update(kore.tango_default)
+
     return render_template('index.html', ip_address=ip_add)
 
 @app.route('/control', methods=['POST'])
