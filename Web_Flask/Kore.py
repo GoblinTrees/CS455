@@ -82,8 +82,7 @@ PY2 = version_info[0] == 2   #Running Python 2.x?
 #Class def for Kore Processies
 class Kore():
 
-
-    def init(self):
+    def __init__(self):
         #super().__init__(self,ttyStr='/dev/ttyACM0',device=0x0c)
         #The tango object to send data to the servo controller
         #<with super, i don't think we need to do the following line-FG>
