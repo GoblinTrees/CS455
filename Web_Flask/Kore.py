@@ -106,6 +106,8 @@ class Kore():
         "Rwrist": 6000,
         "Rclaw": 6000,
         "Waist": 6000,
+        "XJoy": 0,
+        "YJoy": 0,
         }
 
         #default values reference
@@ -123,6 +125,8 @@ class Kore():
             "Rwrist": 6000,
             "Rclaw": 6000,
             "Waist": 6000,
+            "XJoy": 0,
+            "YJoy": 0,
         }
 
         #mapping for the channels of the maestro->copied from keyboard controls
@@ -141,6 +145,8 @@ class Kore():
         "Rclaw": 10,
         "Waist": 2,
         #Need to add the values for Motors later
+        "XJoy": 0,
+        "YJoy": 1,
         }
 
     def getChan(self,key):
