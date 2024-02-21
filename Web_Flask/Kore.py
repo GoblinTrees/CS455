@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 import serial
 
-import maestro
-#from maestro import Controller
+#import maestro
+from maestro import Controller
 from sys import version_info
 from concurrent.futures import ThreadPoolExecutor
 
@@ -62,7 +62,7 @@ def control_robot():
     #print(body_dict)
 
     # Process the data (you can add your robot control logic here)
-    print("updating values")
+    print("updating values...")
     kore.update(body_dict)
 
     # You can send a response if needed
@@ -87,7 +87,7 @@ class Kore():
         #super().__init__(self,ttyStr='/dev/ttyACM0',device=0x0c)
         #The tango object to send data to the servo controller
         #<with super, i don't think we need to do the following line-FG>
-        self.tango = maestro.Controller()
+        self.tango = Controller()
 
         #The taskmaster executor
         exec = ThreadPoolExecutor(max_workers=8)
@@ -161,7 +161,7 @@ class Kore():
                 print("Cannot rep. arg as string.")
             finally: return
         #Dict format catch to ensure proper format->length and keys
-        if (len(newVals) != len(self.tango_values)):
+        if (len(newVals) != len(self.tango_values.keys())):
             print("Err: update()-> LENGTH of tango values and update values don't match")
             return
         if (newVals.keys() != self.tango.keys):
