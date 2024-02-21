@@ -160,8 +160,13 @@ class Kore():
                 print("Cannot rep. arg as string.")
             finally: return
         #Dict format catch to ensure proper format->length and keys
-        if (len(newVals) != len(self.tango_values.keys())):
+        if (len(newVals.keys()) != len(self.tango_values.keys())):
             print("Err: update()-> LENGTH of tango values and update values don't match")
+            print("len newVals keys: " +len(newVals))
+            print("len tangoVals keys: " +len(self.tango_values.keys()))
+            print("newVals keys: " +str(newVals.keys()))
+            print("tangoVals keys: " +str(self.tango_values.keys()))
+
             return
         if (newVals.keys() != self.tango.keys):
             print("Err: update()-> KEYS of tango values and update values don't match")
