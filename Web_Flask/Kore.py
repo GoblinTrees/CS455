@@ -174,7 +174,7 @@ class Kore():
             print("tangoVals keys: " +str(self.tango_values.keys()))
 
             return
-        if (newVals.keys() != self.tango.keys()):
+        if (newVals.keys() != self.tango_values.keys()):
             print("Err: update()-> KEYS of tango values and update values don't match")
             return
 
