@@ -172,7 +172,7 @@ class Kore():
         for key in self.tango_values:
             if (self.tango_values.get(key) != newVals.get(key)):
                 print("Updating " + key + " from " +self.tango_values.get(key) + " to " + newVals.get(key))
-                self.tango_values.update(key,newVals.get(key))
+                self.tango_values[key] = newVals.get(key)
                 self.tango.setTarget(self.getChan(key), self.getVal(key))
                 print("Updated Key-Value:" + key + "-" + self.getVal(key))
 
