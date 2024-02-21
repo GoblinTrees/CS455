@@ -181,10 +181,11 @@ class Kore():
         #Passed parameter testing -> compare and test vals, then update
         for key in self.tango_values:
             if (self.tango_values.get(key) != newVals.get(key)):
-                print("Updating " + key + " from " +self.tango_values.get(key) + " to " + newVals.get(key))
+                print("Updating " + str(key) + " from " + str(self.tango_values.get(key)) + " to " + str(newVals.get(key)))
                 self.tango_values[key] = newVals.get(key)
                 self.tango.setTarget(self.getChan(key), self.getVal(key))
-                print("Updated Key-Value:" + key + "-" + self.getVal(key))
+                print("Updated Key-Value:" + str(key) + "-" + str(self.getVal(key)))
+
 
 
     def ping(self):
