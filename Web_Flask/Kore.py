@@ -41,8 +41,8 @@ def control_robot():
     Rwrist = int(request.form['slider11'])
     Rclaw = int(request.form['slider12'])
     Waist = int(request.form['slider13'])
-    XJoy = int(request.form['joystickX'])
-    YJoy = int(request.form['joystickY'])
+    L_motors = int(request.form['L_Motors'])
+    R_motors = int(request.form['R_Motors'])
 
 
 
@@ -60,8 +60,8 @@ def control_robot():
         "Rwrist": Rwrist,
         "Rclaw": Rclaw,
         "Waist": Waist,
-        "XJoy": XJoy,
-        "YJoy": YJoy
+        "XJoy": L_motors,
+        "YJoy": R_motors
     }
     #print(body_dict)
 
@@ -71,6 +71,14 @@ def control_robot():
 
     # You can send a response if needed
     return "Received the control data successfully!"
+
+@app.route("/voice", methods=['GET', 'POST'])
+def voice():
+
+    data = request.data
+    return "Hello from Flask"
+
+
 #End of FlaskIO---------------------------------------------------------
 
 
@@ -110,8 +118,8 @@ class Kore():
         "Rwrist": 6000,
         "Rclaw": 6000,
         "Waist": 6000,
-        "XJoy": 0,
-        "YJoy": 0,
+        "L_Motors": 6000,
+        "R_Motors": 6000,
         }
 
         #default values reference
@@ -129,8 +137,8 @@ class Kore():
             "Rwrist": 6000,
             "Rclaw": 6000,
             "Waist": 6000,
-            "XJoy": 0,
-            "YJoy": 0,
+            "L_Motors": 6000,
+            "R_Motors": 6000,
         }
 
         #mapping for the channels of the maestro->copied from keyboard controls
@@ -148,9 +156,8 @@ class Kore():
         "Rwrist": 9,
         "Rclaw": 10,
         "Waist": 2,
-        #Need to add the values for Motors later
-        "XJoy": 0,
-        "YJoy": 1,
+        "L_Motors": 0,
+        "R_Motors": 1,
         }
 
     def getChan(self,key):
@@ -214,3 +221,8 @@ class Kore():
 if __name__ == "__main__":
     kore = Kore()
     app.run(host="0.0.0.0", port=5245, debug=True)
+
+    #TODO need to add control logic to wheels so as to start/stop/accelerate correctly ->keyboard .py
+    #TODO need to fill out exec branches: update function, and template for voice protocols
+    #TODO make joystick for index page
+    #TODO general purpose I/O
