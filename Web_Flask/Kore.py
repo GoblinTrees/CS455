@@ -105,7 +105,7 @@ class Kore():
         self.tango = Controller()
 
         #The taskmaster executor
-        exec = ThreadPoolExecutor(max_workers=8)
+        self.exec = ThreadPoolExecutor(max_workers=8)
 
         #the actual values to be manipultated for the system
         self.tango_values = {
@@ -207,13 +207,16 @@ class Kore():
     def ping(self):
         return print("Pinged Kore")
 
-
+    def execute(self, order):
+        self.exec.submit(order)
 
 
 
 
 
 #Bootup function----------------------------------------------------------
+def boot():
+    app.run(host="0.0.0.0", port=5245, debug=True)
 
 
 
@@ -225,7 +228,7 @@ class Kore():
 #main executable funtion
 if __name__ == "__main__":
     kore = Kore()
-    app.run(host="0.0.0.0", port=5245, debug=True)
+    kore.execute(boot)
 
     #TODO need to add control logic to wheels so as to accelerate correctly -> no L/R function, same speed each
     #TODO need to fill out exec branches: update function, and template for voice protocols

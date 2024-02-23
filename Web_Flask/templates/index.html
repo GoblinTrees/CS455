@@ -260,6 +260,7 @@
         document.addEventListener('touchmove', drag);
 
         function startDrag(e) {
+            console.log("starting drag...");
             e.preventDefault();
             isDragging = true;
             updateDashboard();
@@ -267,14 +268,29 @@
 
         function endDrag() {
             isDragging = false;
+            cosole.log("ending drag...")
 
             // Get joystick handle position
             var handlePositionX = parseFloat(handle.style.left) || 0;
             var handlePositionY = parseFloat(handle.style.top) || 0;
+            console.log("X pos: " + handlePositionX);
+            console.log("Y pos: " + handlePositionY)    
 
-            // Map joystick position to slider values (assuming -50 to 50 range for joystick)
-            var L_Motors = 6000 + 80 * (handlePositionY / 100); // assuming -50 to 50 range for joystick
-            var R_Motors = 6000 + 80 * (handlePositionY / 100); // assuming -50 to 50 range for joystick
+            // Determine the direction of joystick movement
+            var directionX = handlePositionX > 0 ? 1 : -1; // Right (positive) or Left (negative)
+            var directionY = handlePositionY > 0 ? 1 : -1; // Down (positive) or Up (negative)
+
+            // Calculate L_Motors and R_Motors based on joystick movement
+            var L_Motors, R_Motors;
+            if (Math.abs(handlePositionX) > Math.abs(handlePositionY)) {
+                // Horizontal movement
+                L_Motors = 6000 + 6000 * directionX; // Right: 9000, Left: 3000
+                R_Motors = 6000;
+            } else {
+                // Vertical movement
+                L_Motors = 6000;
+                R_Motors = 6000 + 6000 * directionY; // Down: 3000, Up: 9000
+            }
 
             // Update slider values
             document.getElementById("L_Motors").value = L_Motors;
@@ -288,6 +304,7 @@
             sendData();
             updateDashboard();
         }
+
 
         function drag(e) {
             if (!isDragging) return;
