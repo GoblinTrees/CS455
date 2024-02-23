@@ -45,7 +45,7 @@ def control_robot():
     R_motors = int(request.form['R_Motors'])
 
     #map the L_motors in reverse
-    L_motors = int(1200) - L_motors
+    L_motors = int(12000) - L_motors
 
     body_dict = {
         "Headtilt": HeadTilt,
