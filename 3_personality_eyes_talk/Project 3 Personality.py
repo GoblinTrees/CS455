@@ -1,4 +1,4 @@
-import tkinter
+import tkinter as tk
 import time
 import pyttsx3
 from random import uniform
@@ -45,14 +45,14 @@ language = 'en'
 animation_refresh_seconds = 0.01
 
 def create_animation_window():
-  window = tkinter.Tk()
+  window = tk.Tk()
   window.title("I'm awake")
   # Uses python 3.6+ string interpolation
   window.geometry(f'{animation_window_width}x{animation_window_height}')
   return window
 
 def create_animation_canvas(window):
-  canvas = tkinter.Canvas(window)
+  canvas = tk.Canvas(window)
   canvas.configure(bg="gray")
   canvas.pack(fill="both", expand=True)
   global captions
