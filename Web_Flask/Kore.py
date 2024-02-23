@@ -44,8 +44,8 @@ def control_robot():
     L_motors = int(request.form['L_Motors'])
     R_motors = int(request.form['R_Motors'])
 
-    #map the L_motors in reverse
-    L_motors = int(12000) - L_motors
+    #Motor Mapping
+    R_motors = int(12000) - R_motors
 
     body_dict = {
         "Headtilt": HeadTilt,
@@ -65,7 +65,6 @@ def control_robot():
         "R_Motors": R_motors,
     }
     #print(body_dict)
-
     # Process the data (you can add your robot control logic here)
     print("updating values...")
     kore.update(body_dict)
@@ -136,7 +135,7 @@ class Kore():
             "Lwrist": 6000,
             "Lclaw": 6000,
             "RShoulder": 6000,
-            "Rbicep": 6000,
+            "Rbicep": 6600,
             "Relbow": 6000,
             "Rwrist": 6000,
             "Rclaw": 6000,
