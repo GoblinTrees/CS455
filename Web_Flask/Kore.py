@@ -207,16 +207,17 @@ class Kore():
     def ping(self):
         return print("Pinged Kore")
 
-    def execute(self, order):
-        self.exec.submit(order)
+    # def execute(self, order):
+    #     self.exec.submit(order)
 
 
 
 
 
 #Bootup function----------------------------------------------------------
-def boot():
-    app.run(host="0.0.0.0", port=5245, debug=True)
+    def boot(self):
+        self.exec.submit(app.run(host="0.0.0.0", port=5245, debug=True))
+
 
 
 #End of Bootup function
@@ -227,8 +228,8 @@ def boot():
 #main executable funtion
 if __name__ == "__main__":
     kore = Kore()
-    #kore.execute(boot)
-    app.run(host="0.0.0.0", port=5245, debug=True)
+    kore.boot()
+    #app.run(host="0.0.0.0", port=5245, debug=True)
 
     #TODO need to add control logic to wheels so as to accelerate correctly -> no L/R function, same speed each
     #TODO need to fill out exec branches: update function, and template for voice protocols
