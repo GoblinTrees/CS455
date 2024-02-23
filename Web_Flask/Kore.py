@@ -45,7 +45,7 @@ def control_robot():
     R_motors = int(request.form['R_Motors'])
 
     #Motor Mapping
-    #L_motors = int(12000) - L_motors
+    R_motors = int(12000) - R_motors
 
     body_dict = {
         "Headtilt": HeadTilt,
