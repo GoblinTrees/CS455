@@ -135,7 +135,7 @@ class Kore():
             "Lwrist": 6000,
             "Lclaw": 6000,
             "RShoulder": 6000,
-            "Rbicep": 6000,
+            "Rbicep": 6600,
             "Relbow": 6000,
             "Rwrist": 6000,
             "Rclaw": 6000,
