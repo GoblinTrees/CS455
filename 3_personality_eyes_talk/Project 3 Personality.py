@@ -1,10 +1,15 @@
 import tkinter
 import time
-import keyboard
 import pyttsx3
 from random import uniform
 from tkinter import *
 from time import sleep
+from maestro import Controller
+
+class KeyControl():
+   def __init__(self,win):
+      self.headTurn = 6000
+        self.headTilt = 6000
 
 # width of the animation window
 animation_window_width=800
@@ -96,6 +101,56 @@ def reset(window, canvas):
 
 animation_window = create_animation_window()
 animation_canvas = create_animation_canvas(animation_window)
+
+win = tk.Tk()
+keys = KeyControl(win)
+win.mainloop()
+
+#Initialize Ports
+HEADTURN = 3
+HEADTILT = 4
+
+# Head
+win.bind('<w>', keys.head)
+win.bind('<s>', keys.head)
+win.bind('<a>', keys.head)
+win.bind('<d>', keys.head)
+win.bind('<Escape>', keys.head)
+win.bind('<space>', keys.head) # currently unbound to a function
+
+
+def head(self, key):
+        print(key.keycode)
+        print(key.keysym)
+        match key:
+           # a 
+            case 38:
+                self.headTurn += 200
+                if self.headTurn > 7900:
+                    self.headTurn = 7900
+                self.tango.setTarget(HEADTURN, self.headTurn)
+            # d
+            case 40:
+                self.headTurn -= 200
+                if self.headTurn < 1510:
+                    self.headTurn = 1510
+                self.tango.setTarget(HEADTURN, self.headTurn)
+            # w
+            case 25:
+                self.headTilt += 200
+                if self.headTilt > 7900:
+                    self.headTilt = 7900
+                self.tango.setTarget(HEADTILT, self.headTilt)
+            # s
+            case 39:
+                self.headTilt -= 200
+                if self.headTilt < 1510:
+                    self.headTilt = 1510
+                self.tango.setTarget(HEADTILT, self.headTilt)
+            case 9: 
+              self.headTilt = 6000
+              self.tango.setTarget(HEADTILT, self.headTilt)
+
 
 while True:
     animation_window.update()
