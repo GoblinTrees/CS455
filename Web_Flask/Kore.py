@@ -44,7 +44,8 @@ def control_robot():
     L_motors = int(request.form['L_Motors'])
     R_motors = int(request.form['R_Motors'])
 
-
+    #map the L_motors in reverse
+    L_motors = int(1200) - L_motors
 
     body_dict = {
         "Headtilt": HeadTilt,
@@ -60,8 +61,8 @@ def control_robot():
         "Rwrist": Rwrist,
         "Rclaw": Rclaw,
         "Waist": Waist,
-        "XJoy": L_motors,
-        "YJoy": R_motors
+        "L_Motors": L_motors,
+        "R_Motors": R_motors,
     }
     #print(body_dict)
 
@@ -74,8 +75,11 @@ def control_robot():
 
 @app.route("/voice", methods=['GET', 'POST'])
 def voice():
+    #send the data by form request in the dashboard
+    data = request.form
 
-    data = request.data
+    #Submit data to the exec Executor
+    exec.map()
     return "Hello from Flask"
 
 
@@ -190,6 +194,7 @@ class Kore():
             return
 
         #Passed parameter testing -> compare and test vals, then update
+
         for key in self.tango_values:
             if (self.tango_values.get(key) != newVals.get(key)):
                 print("Updating " + str(key) + " from " + str(self.tango_values.get(key)) + " to " + str(newVals.get(key)))
@@ -222,7 +227,7 @@ if __name__ == "__main__":
     kore = Kore()
     app.run(host="0.0.0.0", port=5245, debug=True)
 
-    #TODO need to add control logic to wheels so as to start/stop/accelerate correctly ->keyboard .py
+    #TODO need to add control logic to wheels so as to accelerate correctly -> no L/R function, same speed each
     #TODO need to fill out exec branches: update function, and template for voice protocols
-    #TODO make joystick for index page
-    #TODO general purpose I/O
+    #TODO make joystick for index page (there, but needs to be connected right
+    #TODO general purpose I/O page
