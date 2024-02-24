@@ -63,7 +63,7 @@
         // Bind input events when the document is loaded
         document.addEventListener("DOMContentLoaded", bindInputEvents);
 
-        function updateDas  hboard() {
+        function updateDashboard() {
             var sliders = document.querySelectorAll('input[type="range"]');
 
 
@@ -172,70 +172,96 @@
             margin: 5px 0;
         }
 
+        .button-container {
+            text-align: center;
+            background-color: #575757;
+        }
+
+        .button-container button {
+            margin: 0 5px; /* Adjust the margin as needed */
+            background-color: #2d2a2a;
+            color: darkgoldenrod;
+        }
     </style>
 </head>
 <body>
 <h2>Robot Control Interface</h2>
 <div id="base">
-    <iframe id="dummyframe" name="dummyframe" style="display: none;"></iframe>
-    <form action="http://192.168.88.58:3245/control" id="robotControlForm" method="post" target="dummyframe">
-        <div id="outer">
-            <div id="head_sliders">
-                <label for="slider1">HeadTilt:</label>
-                <input id="slider1" max="9000" min="3000" name="HeadTilt" step="200" type="range" value="6000"><br>
+    <div>
+        <iframe id="dummyframe" name="dummyframe" style="display: none;"></iframe>
+        <form action="http://192.168.88.58:3245/control" id="robotControlForm" method="post" target="dummyframe">
+            <div id="outer">
+                <div id="head_sliders">
+                    <label for="slider1">HeadTilt:</label>
+                    <input id="slider1" max="9000" min="3000" name="HeadTilt" step="200" type="range" value="6000"><br>
 
-                <label for="slider2">HeadTurn:</label>
-                <input id="slider2" max="9000" min="3000" name="HeadTurn" step="200" type="range" value="6000"><br>
-            </div>
-            <div id="upper">
-                <div id="L_arm_sliders">
-                    <label for="slider3">LShoulder:</label>
-                    <input id="slider3" max="9000" min="3000" name="LShoulder" step="200" type="range" value="6000"><br>
-
-                    <label for="slider4">LBicep</label>
-                    <input id="slider4" max="9000" min="3000" name="LBicep" step="200" type="range" value="6000"><br>
-
-                    <label for="slider5">Lelbow</label>
-                    <input id="slider5" max="9000" min="3000" name="Lelbow" step="200" type="range" value="6000"><br>
-
-                    <label for="slider6">Lwrist</label>
-                    <input id="slider6" max="9000" min="3000" name="Lwrist" step="200" type="range" value="6000"><br>
-
-                    <label for="slider7">Lclaw</label>
-                    <input id="slider7" max="9000" min="3000" name="Lclaw" step="200" type="range" value="6000"><br>
+                    <label for="slider2">HeadTurn:</label>
+                    <input id="slider2" max="9000" min="3000" name="HeadTurn" step="200" type="range" value="6000"><br>
                 </div>
+                <div id="upper">
+                    <div id="L_arm_sliders">
+                        <label for="slider3">LShoulder:</label>
+                        <input id="slider3" max="9000" min="3000" name="LShoulder" step="200" type="range" value="6000"><br>
 
-                <div id="R_arm_sliders">
-                    <label for="slider8">RShoulder</label>
-                    <input id="slider8" max="9000" min="3000" name="Rshoulder" step="200" type="range" value="6000"><br>
+                        <label for="slider4">LBicep</label>
+                        <input id="slider4" max="9000" min="3000" name="LBicep" step="200" type="range"
+                               value="6000"><br>
 
-                    <label for="slider9">RBicep</label>
-                    <input id="slider9" max="9000" min="3000" name="RBicep" step="200" type="range" value="6600"><br>
+                        <label for="slider5">Lelbow</label>
+                        <input id="slider5" max="9000" min="3000" name="Lelbow" step="200" type="range"
+                               value="6000"><br>
 
-                    <label for="slider10">Relbow</label>
-                    <input id="slider10" max="9000" min="3000" name="Relbow" step="200" type="range" value="6000"><br>
+                        <label for="slider6">Lwrist</label>
+                        <input id="slider6" max="9000" min="3000" name="Lwrist" step="200" type="range"
+                               value="6000"><br>
 
-                    <label for="slider11">Rwrist</label>
-                    <input id="slider11" max="9000" min="3000" name="Rwrist" step="200" type="range" value="6000"><br>
+                        <label for="slider7">Lclaw</label>
+                        <input id="slider7" max="9000" min="3000" name="Lclaw" step="200" type="range" value="6000"><br>
+                    </div>
 
-                    <label for="slider12">Rclaw</label>
-                    <input id="slider12" max="9000" min="3000" name="Rclaw" step="200" type="range" value="6000"><br>
+                    <div id="R_arm_sliders">
+                        <label for="slider8">RShoulder</label>
+                        <input id="slider8" max="9000" min="3000" name="Rshoulder" step="200" type="range" value="6000"><br>
+
+                        <label for="slider9">RBicep</label>
+                        <input id="slider9" max="9000" min="3000" name="RBicep" step="200" type="range"
+                               value="6600"><br>
+
+                        <label for="slider10">Relbow</label>
+                        <input id="slider10" max="9000" min="3000" name="Relbow" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider11">Rwrist</label>
+                        <input id="slider11" max="9000" min="3000" name="Rwrist" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider12">Rclaw</label>
+                        <input id="slider12" max="9000" min="3000" name="Rclaw" step="200" type="range"
+                               value="6000"><br>
+                    </div>
+
                 </div>
-
-            </div>
-            <div id="Wheel_Sliders">
-                <div id="body_sliders">
-                    <label for="slider13">Waist:</label>
-                    <input id="slider13" max="9000" min="3000" name="Waist" step="200" type="range" value="6000"><br>
+                <div id="Wheel_Sliders">
+                    <div id="body_sliders">
+                        <label for="slider13">Waist:</label>
+                        <input id="slider13" max="9000" min="3000" name="Waist" step="200" type="range"
+                               value="6000"><br>
+                    </div>
+                    <label for="L_Motors">L_Motor</label>
+                    <input id="L_Motors" max="9000" min="3000" name="L_Motors" step="200" type="range" value="6000"><br>
+                    <label for="R_Motors">R_Motor</label>
+                    <input id="R_Motors" max="9000" min="3000" name="R_Motors" step="200" type="range" value="6000"><br>
                 </div>
-                <label for="L_Motors">L_Motor</label>
-                <input id="L_Motors" max="9000" min="3000" name="L_Motors" step="200" type="range" value="6000"><br>
-                <label for="R_Motors">R_Motor</label>
-                <input id="R_Motors" max="9000" min="3000" name="R_Motors" step="200" type="range" value="6000"><br>
+                <input onclick="sendData()" type="button" value="Send">
             </div>
-            <input onclick="sendData()" type="button" value="Send">
+        </form>
+        <div class="button-container">
+            <button onclick="window.location.href='url1';">Button 1</button>
+            <button onclick="window.location.href='url2';">Button 2</button>
+            <button onclick="window.location.href='url3';">Button 3</button>
+            <button onclick="window.location.href='url4';">Button 4</button>
         </div>
-    </form>
+    </div>
     <div id="strip">
         <div id="dashboard">
             <h3>Slider Values</h3>
@@ -348,9 +374,9 @@
 
                     // Check if angle is between 0 and pi or between pi and 2*pi
                     if (angle >= 0 && angle <= Math.PI) {
-                        return -1;
+                        return -1 * Math.sin(angle);
                     } else {
-                        return 1;
+                        return 1 * Math.abs(Math.sin(angle));
                     }
                 }
 
@@ -388,6 +414,7 @@
         </div>
 
     </div>
+
 </div>
 </body>
 </html>
