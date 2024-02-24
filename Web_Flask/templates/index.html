@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Robot Control</title>
+    <link href="joy.css" rel="stylesheet" type="text/css"> <!-- Include the CSS file for the joystick -->
+
     <script>
         var ip_add = "{{ ip_address }}"; // Get the IP address from Flask
         var form_send = ip_add + "/control";
@@ -43,7 +45,6 @@
                 .catch(error => {
                     console.error("There was a problem with the fetch operation:", error);
                 });
-            updateDashboard();
         }
 
         // Function to call sendData() whenever the input event occurs on sliders or joysticks
@@ -61,6 +62,27 @@
 
         // Bind input events when the document is loaded
         document.addEventListener("DOMContentLoaded", bindInputEvents);
+
+        function updateDas  hboard() {
+            var sliders = document.querySelectorAll('input[type="range"]');
+
+
+            var dashboardContent = "";
+            sliders.forEach(function (slider) {
+                dashboardContent += "<p>" + slider.name + ": " + slider.value + "</p>";
+            });
+
+
+            document.getElementById("sliderValues").innerHTML = dashboardContent;
+            sendData();
+        }
+
+
+        // Bind input events when the document is loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            bindInputEvents();
+            updateDashboard(); // Update dashboard initially
+        });
     </script>
     <style>
         /* Styles for head sliders */
@@ -118,26 +140,6 @@
             align-items: center;
         }
 
-        #joystick {
-            width: 200px;
-            height: 200px;
-            background: #f0f0f0;
-            border-radius: 50%;
-            position: relative;
-            cursor: pointer;
-            touch-action: none;
-        }
-
-        #joystick-handle {
-            width: 50px;
-            height: 50px;
-            background: #333;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
 
         #strip {
             display: flex;
@@ -241,125 +243,151 @@
                 <!-- Slider values will be displayed here dynamically -->
             </div>
         </div>
-        <div id="joystick">
-            <div id="joystick-handle"></div>
+        <div id="joyDiv" style=" width: 100px; height: 100px; background-color: #7700FF">
+            <script src="joy.js"></script>
+            <script>
+                var joy = new JoyStick('joyDiv', {
+                    // The ID of canvas element
+                    title: 'joystick',
+                    // width/height
+                    width: undefined,
+                    height: undefined,
+                    // Internal color of Stick
+                    internalFillColor: '#00AA00',
+                    // Border width of Stick
+                    internalLineWidth: 2,
+                    // Border color of Stick
+                    internalStrokeColor: '#003300',
+                    // External reference circonference width
+                    externalLineWidth: 2,
+                    //External reference circonference color
+                    externalStrokeColor: '#008000',
+                    // Sets the behavior of the stick
+                    autoReturnToCenter: true
+
+                });
+
+                // Get the joystick element
+                var joyStickElement = document.getElementById("joyDiv");
+
+                // Variable to track whether the joystick is being dragged
+                var isDragging = false;
+
+                // Add mousedown event listener to start tracking drag
+                joyStickElement.addEventListener("mousedown", function (event) {
+                    isDragging = true;
+                    <!---add async while loop here-->
+                });
+
+                // Add mousemove event listener to update motor values while dragging
+                document.addEventListener("mousemove", function (event) {
+                    if (isDragging) {
+                        // Extract the joystick values based on mouse position
+                        var joyStickRect = joyStickElement.getBoundingClientRect();
+                        var xValue = event.clientX - joyStickRect.left;
+                        var yValue = event.clientY - joyStickRect.top;
+
+                        // Update the "L_Motors" and "R_Motors" values based on joystick position
+                        var {L_Motors, R_Motors} = mapJoystickToMotors(xValue, yValue);
+
+                        // Update the input fields with the new values
+                        document.getElementById("L_Motors").value = L_Motors;
+                        document.getElementById("R_Motors").value = R_Motors;
+                        updateDashboard();
+                    }
+                });
+
+                // Add mouseup event listener to stop tracking drag
+                document.addEventListener("mouseup", function (event) {
+                    isDragging = false;
+                    document.getElementById("L_Motors").value = 6000;
+                    document.getElementById("R_Motors").value = 6000;
+                    updateDashboard();
+                });
+
+                function RsmoothStep(angle) {
+                    // Normalize angle to be between 0 and 2*pi
+                    angle = ((angle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+
+                    // Check which range the angle falls into
+                    if (angle >= -Math.PI / 4 && angle <= Math.PI / 4) {
+                        return 0;
+                    } else if (angle > Math.PI / 4 && angle < 3 * Math.PI / 4) {
+                        return (angle - Math.PI / 4) / (Math.PI / 2);
+                    } else if (angle >= 3 * Math.PI / 4 && angle <= 5 * Math.PI / 4) {
+                        return 1;
+                    } else if (angle > 5 * Math.PI / 4 && angle < 7 * Math.PI / 4) {
+                        return 1 - ((angle - 5 * Math.PI / 4) / (Math.PI / 2));
+                    } else {
+                        return 0;
+                    }
+                }
+
+                function LsmoothStep(angle) {
+                    // Normalize angle to be between 0 and 2*pi
+                    angle = ((angle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+
+                    // Check which range the angle falls into
+                    if (angle >= -Math.PI / 4 && angle <= Math.PI / 4) {
+                        return 1;
+                    } else if (angle > Math.PI / 4 && angle < 3 * Math.PI / 4) {
+                        return 1 - (angle - Math.PI / 4) / (Math.PI / 2);
+                    } else if (angle >= 3 * Math.PI / 4 && angle <= 5 * Math.PI / 4) {
+                        return 0;
+                    } else if (angle > 5 * Math.PI / 4 && angle < 7 * Math.PI / 4) {
+                        return (angle - 5 * Math.PI / 4) / (Math.PI / 2);
+                    } else {
+                        return 1;
+                    }
+                }
+
+
+                function signFunction(angle) {
+                    // Normalize angle to be between 0 and 2*pi
+                    angle = ((angle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+
+                    // Check if angle is between 0 and pi or between pi and 2*pi
+                    if (angle >= 0 && angle <= Math.PI) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                }
+
+
+                // Define your logic to map joystick position to motor values
+                function mapJoystickToMotors(x, y) {
+                    // Example logic:
+                    // Map x and y values to motor speeds
+
+                    // Calculate the maximum distance from the center (radius) of the joystick
+                    var radius = joyStickElement.offsetWidth / 2;
+
+                    // Calculate the distance of the joystick from the center
+                    var distance = Math.sqrt(Math.pow(x - radius, 2) + Math.pow(y - radius, 2));
+
+                    // Normalize the distance to be within the range of 0 to 1
+                    var normalizedDistance = distance / radius;
+                    // console.log("Norm.Distance: " + normalizedDistance)
+                    // Calculate the angle of the joystick (in radians)
+                    var angle = Math.atan2(y - radius, x - radius);
+                    // console.log("Angle(rad): " + angle)
+
+                    // Map x and y values to motor speeds
+                    // For simplicity, let's assume full power is 8000
+                    var L_Motors = 6000 + 2000 * normalizedDistance * LsmoothStep(angle) * signFunction(angle);
+                    var R_Motors = 6000 + 2000 * normalizedDistance * RsmoothStep(angle) * signFunction(angle);
+
+                    // Adjust motor values if they go beyond the range of 3000 to 9000
+                    updateDashboard();
+                    return {L_Motors: L_Motors, R_Motors: R_Motors};
+                }
+
+
+            </script>
         </div>
+
     </div>
-    <script>
-        const joystick = document.getElementById('joystick');
-        const handle = document.getElementById('joystick-handle');
-        let isDragging = false;
-
-        joystick.addEventListener('mousedown', startDrag);
-        joystick.addEventListener('touchstart', startDrag);
-
-        document.addEventListener('mouseup', endDrag);
-        document.addEventListener('touchend', endDrag);
-
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('touchmove', drag);
-
-        function startDrag(e) {
-            console.log("starting drag...");
-            e.preventDefault();
-            isDragging = true;
-            updateDashboard();
-        }
-
-        function endDrag() {
-            isDragging = false;
-            console.log("ending drag...")
-
-            // Get joystick handle position
-            var handlePositionX = parseFloat(handle.style.left) || 0;
-            var handlePositionY = parseFloat(handle.style.top) || 0;
-            console.log("X pos: " + handlePositionX);
-            console.log("Y pos: " + handlePositionY)    
-
-            // Determine the direction of joystick movement
-            var directionX = handlePositionX > 0 ? 1 : -1; // Right (positive) or Left (negative)
-            var directionY = handlePositionY > 0 ? 1 : -1; // Down (positive) or Up (negative)
-
-            // Calculate L_Motors and R_Motors based on joystick movement
-            var L_Motors, R_Motors;
-            if (Math.abs(handlePositionX) > Math.abs(handlePositionY)) {
-                // Horizontal movement
-                L_Motors = 6000 + 6000 * directionX; // Right: 9000, Left: 3000
-                R_Motors = 6000;
-            } else {
-                // Vertical movement
-                L_Motors = 6000;
-                R_Motors = 6000 + 6000 * directionY; // Down: 3000, Up: 9000
-            }
-
-            // Update slider values
-            document.getElementById("L_Motors").value = L_Motors;
-            document.getElementById("R_Motors").value = R_Motors;
-
-            //Submit form data
-            document.getElementById("robotControlForm").submit();
-
-            // Reset joystick handle position
-            handle.style.transform = 'translate(-50%, -50%)';
-            sendData();
-            updateDashboard();
-        }
-
-
-        function drag(e) {
-            if (!isDragging) return;
-
-            let posX, posY;
-            if (e.type === 'touchmove') {
-                posX = e.touches[0].clientX - joystick.offsetLeft;
-                posY = e.touches[0].clientY - joystick.offsetTop;
-            } else {
-                posX = e.clientX - joystick.offsetLeft;
-                posY = e.clientY - joystick.offsetTop;
-            }
-
-            const joystickRect = joystick.getBoundingClientRect();
-            const handleSize = handle.offsetWidth;
-
-            // Calculate the joystick position relative to its center
-            let newX = posX - joystickRect.width / 2;
-            let newY = posY - joystickRect.height / 2;
-
-            // Ensure the handle stays within the bounds of the joystick
-            const distance = Math.sqrt(newX * newX + newY * newY);
-            if (distance > joystickRect.width / 2 - handleSize / 2) {
-                const angle = Math.atan2(newY, newX);
-                newX = Math.cos(angle) * (joystickRect.width / 2 - handleSize / 2);
-                newY = Math.sin(angle) * (joystickRect.height / 2 - handleSize / 2);
-            }
-            updateDashboard();
-            // Move the handle
-            handle.style.transform = `translate(${newX}px, ${newY}px)`;
-        }
-
-
-        function updateDashboard() {
-            var sliders = document.querySelectorAll('input[type="range"]');
-
-
-            var dashboardContent = "";
-            sliders.forEach(function (slider) {
-                dashboardContent += "<p>" + slider.name + ": " + slider.value + "</p>";
-            });
-
-
-            document.getElementById("sliderValues").innerHTML = dashboardContent;
-        }
-
-
-        // Bind input events when the document is loaded
-        document.addEventListener("DOMContentLoaded", function () {
-            bindInputEvents();
-            updateDashboard(); // Update dashboard initially
-        });
-    </script>
-
-</div>
 </div>
 </body>
 </html>
