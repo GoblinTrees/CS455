@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-import serial
 
 #import maestro
 from maestro import Controller
@@ -75,7 +74,15 @@ def control_robot():
 @app.route("/voice", methods=['GET', 'POST'])
 def voice():
     #send the data by form request in the dashboard
-    data = request.form
+    if request.method == 'POST':
+        # Retrieve the data from the request
+        data = request.get_json()
+
+        # Extract the text from the received data
+        text = data.get('text')
+
+        #send the data to the vocals
+
 
     #Submit data to the exec Executor
     exec.map()
@@ -208,6 +215,10 @@ class Kore():
 
     # def execute(self, order):
     #     self.exec.submit(order)
+
+    def speak(self, text):
+        pass
+
 
 
 
