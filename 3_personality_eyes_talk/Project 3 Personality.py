@@ -10,6 +10,69 @@ class KeyControl():
    def __init__(self,win):
       self.headTurn = 6000
       self.headTilt = 6000
+  
+
+  #Initialize Ports
+HEADTURN = 3
+HEADTILT = 4
+
+# Head
+win.bind('<w>', keys.head)
+win.bind('<s>', keys.head)
+win.bind('<a>', keys.head)
+win.bind('<d>', keys.head)
+win.bind('<Escape>', keys.head)
+win.bind('<space>', keys.head) # currently unbound to a function
+
+
+def head(self, key):
+        print(key.keycode)
+        print(key.keysym)
+        while true:
+          match key:
+            # a 
+              case 38:
+                  self.headTurn += 200
+                  if self.headTurn > 7900:
+                      self.headTurn = 7900
+                  self.tango.setTarget(HEADTURN, self.headTurn)
+                  look_left(animation_window, animation_canvas)
+              # d
+              case 40:
+                  self.headTurn -= 200
+                  if self.headTurn < 1510:
+                      self.headTurn = 1510
+                  self.tango.setTarget(HEADTURN, self.headTurn)
+                  look_right(animation_window, animation_canvas)
+              # w
+              case 25:
+                  self.headTilt += 200
+                  if self.headTilt > 7900:
+                      self.headTilt = 7900
+                  self.tango.setTarget(HEADTILT, self.headTilt)
+                  look_up(animation_window, animation_canvas)
+              # s
+              case 39:
+                  self.headTilt -= 200
+                  if self.headTilt < 1510:
+                      self.headTilt = 1510
+                  self.tango.setTarget(HEADTILT, self.headTilt)
+                  look_down(animation_window, animation_canvas)
+              case 9: 
+                self.headTilt = 6000
+                self.tango.setTarget(HEADTILT, self.headTilt)
+                animation_window.destroy()
+                break
+            # Space Bar is to speak
+              case 21:
+                speak(animation_window, animation_canvas)
+            # base case
+              case _:
+                reset(animation_window, animation_canvas)
+
+win = tk.Tk()
+keys = KeyControl(win)
+win.mainloop()
 
 # width of the animation window
 animation_window_width=800
@@ -101,68 +164,6 @@ def reset(window, canvas):
 
 animation_window = create_animation_window()
 animation_canvas = create_animation_canvas(animation_window)
-
-win = tk.Tk()
-keys = KeyControl(win)
-win.mainloop()
-
-#Initialize Ports
-HEADTURN = 3
-HEADTILT = 4
-
-# Head
-win.bind('<w>', keys.head)
-win.bind('<s>', keys.head)
-win.bind('<a>', keys.head)
-win.bind('<d>', keys.head)
-win.bind('<Escape>', keys.head)
-win.bind('<space>', keys.head) # currently unbound to a function
-
-
-def head(self, key):
-        print(key.keycode)
-        print(key.keysym)
-        while true:
-          match key:
-            # a 
-              case 38:
-                  self.headTurn += 200
-                  if self.headTurn > 7900:
-                      self.headTurn = 7900
-                  self.tango.setTarget(HEADTURN, self.headTurn)
-                  look_left(animation_window, animation_canvas)
-              # d
-              case 40:
-                  self.headTurn -= 200
-                  if self.headTurn < 1510:
-                      self.headTurn = 1510
-                  self.tango.setTarget(HEADTURN, self.headTurn)
-                  look_right(animation_window, animation_canvas)
-              # w
-              case 25:
-                  self.headTilt += 200
-                  if self.headTilt > 7900:
-                      self.headTilt = 7900
-                  self.tango.setTarget(HEADTILT, self.headTilt)
-                  look_up(animation_window, animation_canvas)
-              # s
-              case 39:
-                  self.headTilt -= 200
-                  if self.headTilt < 1510:
-                      self.headTilt = 1510
-                  self.tango.setTarget(HEADTILT, self.headTilt)
-                  look_down(animation_window, animation_canvas)
-              case 9: 
-                self.headTilt = 6000
-                self.tango.setTarget(HEADTILT, self.headTilt)
-                animation_window.destroy()
-                break
-             # Space Bar is to speak
-              case 21:
-                speak(animation_window, animation_canvas)
-             # base case
-              case _:
-                reset(animation_window, animation_canvas)
    
       
 
