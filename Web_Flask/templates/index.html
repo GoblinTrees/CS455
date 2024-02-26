@@ -9,6 +9,7 @@
     <script>
         var ip_add = "{{ ip_address }}"; // Get the IP address from Flask
         var form_send = ip_add + "/control";
+        var voice_send = ip_add + "/voice";
 
         function sendData() {
             var form = document.getElementById("robotControlForm");
@@ -85,6 +86,20 @@
         });
     </script>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif; /* You can change the font-family if needed */
+            background-color: #f0f0f0; /* Set a background color for the body */
+        }
+
         /* Styles for head sliders */
         #head_sliders {
             background-color: chocolate;
@@ -186,11 +201,35 @@
             width: 40px;
             height: auto;
         }
+
+        .input-container {
+            height: 60px; /* Minimum height */
+            max-height: 200px; /* Maximum height */
+            overflow-y: auto; /* Add scroll if content exceeds height */
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            resize: none; /* Prevent resizing horizontally */
+            font-size: 16px;
+        }
+
+
     </style>
 </head>
 <body>
-<h2>Robot Control Interface</h2>
 <div id="base">
+    <div id="dashboard">
+        <h3>Slider Values</h3>
+        <div id="sliderValues">
+            <!-- Slider values will be displayed here dynamically -->
+        </div>
+    </div>
     <div>
         <iframe id="dummyframe" name="dummyframe" style="display: none;"></iframe>
         <form action="http://192.168.88.58:3245/control" id="robotControlForm" method="post" target="dummyframe">
@@ -259,6 +298,9 @@
                 <input onclick="sendData()" type="button" value="Send">
             </div>
         </form>
+        <div class="input-container">
+            <textarea class="input-field" placeholder="Speak friend and enter" rows="1"></textarea>
+        </div>
         <div class="button-container">
             <button onclick="window.location.href='url1';">Button 1</button>
             <button onclick="window.location.href='url2';">Button 2</button>
@@ -266,18 +308,13 @@
             <button onclick="window.location.href='url4';">Button 4</button>
             <button onclick="window.location.href='url5';">Button 5</button>
             <button onclick="window.location.href='url6';">Button 6</button>
-            <button onclick="window.location.href='url7';">Button 7</button>
-            <button onclick="window.location.href='url8';">Button 8</button>
+            <button onclick="sendVoice()">Speak</button>
+            <button onclick="window.location.href='index.html';">E_stop</button>
         </div>
 
     </div>
     <div id="strip">
-        <div id="dashboard">
-            <h3>Slider Values</h3>
-            <div id="sliderValues">
-                <!-- Slider values will be displayed here dynamically -->
-            </div>
-        </div>
+
         <div id="joyDiv" style=" width: 100px; height: 100px; background-color: #7700FF">
             <script src="joy.js"></script>
             <script>
@@ -417,6 +454,38 @@
                     updateDashboard();
                     return {L_Motors: L_Motors, R_Motors: R_Motors};
                 }
+
+                function sendVoice() {
+                    var textInput = document.getElementById("textInput").value;
+
+                    // Create a new XMLHttpRequest object
+                    var xhr = new XMLHttpRequest();
+
+                    // Specify the POST method and the URL
+                    xhr.open("POST", "http://" + voice_send, true);
+
+                    // Set the Content-Type header for the request
+                    xhr.setRequestHeader("Content-Type", "application/json");
+
+                    // Define what happens on successful data submission
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            console.log("Data sent successfully!");
+                        }
+                    };
+
+                    // Define what happens in case of error
+                    xhr.onerror = function () {
+                        console.error("Error occurred while sending data.");
+                    };
+
+                    // Convert the data to JSON format
+                    var data = JSON.stringify({text: textInput});
+
+                    // Send the request
+                    xhr.send(data);
+                }
+
 
 
             </script>
