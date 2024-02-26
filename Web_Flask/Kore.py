@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from flask_cors import CORS
 
 #import maestro
 from maestro import Controller
@@ -8,6 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 #FlaskIO code-----------------------------------------------------------
 app = Flask(__name__)
+CORS(app)  # This will enable CORS for all routes in your Flask app
 
 @app.route("/check")
 def checkWorking():
@@ -76,7 +78,7 @@ def voice():
     #send the data by form request in the dashboard
     if request.method == 'POST':
         # Retrieve the data from the request
-        data = request.get_json()
+        data = request  .get_json()
 
         # Extract the text from the received data
         text = data.get('text')
@@ -217,6 +219,7 @@ class Kore():
     #     self.exec.submit(order)
 
     def speak(self, text):
+
         pass
 
 
