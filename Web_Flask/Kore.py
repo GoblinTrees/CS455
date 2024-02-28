@@ -6,7 +6,7 @@ import pyttsx3
 from maestro import Controller
 from sys import version_info
 from concurrent.futures import ThreadPoolExecutor
-import Personality
+# import Personality
 
 # FlaskIO code-----------------------------------------------------------
 app = Flask(__name__)
