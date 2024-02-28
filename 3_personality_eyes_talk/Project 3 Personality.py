@@ -28,7 +28,7 @@ win.bind('<space>', keys.head) # currently unbound to a function
 def head(self, key):
         print(key.keycode)
         print(key.keysym)
-        while true:
+        while True:
           match key:
             # a 
               case 38:
