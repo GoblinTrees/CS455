@@ -73,7 +73,7 @@ def head(self, key):
             # base case
               case _:
                 reset(animation_window, animation_canvas)
-
+        animation_window.update()
 
 
 # width of the animation window
