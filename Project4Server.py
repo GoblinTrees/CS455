@@ -7,6 +7,10 @@ import time
 host = 'localhost'
 port = 5000
 
+global token
+token = 110
+
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 s.bind((host, port))
@@ -27,38 +31,42 @@ script = {0: [("send", "Hi", 1), ("send", "I was just going to say the same thin
               ("rec", "What are the odds. Two robots run into to each other from the same state,and the same town, and the same room, with the same name?", 0)]}
 
 def receive_token():
-    return int.from_bytes(c.recv(3), 'big')
+    global token
+    token = int.from_bytes(c.recv(3), 'big')
 
 def send_token(token):
     c.send(token.to_bytes(3, 'big'))
     
-def execute_script(scriptid, token, script):
+def execute_script(scriptid, script):
+    global token
     if scriptid in script:
         actions = script[scriptid]
         if actions:
             action, data, dest = actions[0]
             if token == 110:
                 token = 111
+                #never receiving token 110
                 print("Server: ", data)
-                send_token(token)
-                c.send(data.encode())
+                send_token(111)
+                #c.send(data.encode())
                 actions.pop(0)
             elif token == 111:
                 print("Client: ", data)
                 token = 110
-                send_token(token)
+                send_token(110)
                 actions.pop(0)
-                
-    return token
-
-# Define the initial token value
-token = 111
 
 # Define a loop to run the program
 while True:
-    token = execute_script(0, token, script)
-    token = receive_token()
-    token = execute_script(1, token, script)
-    token = receive_token()
+    execute_script(0, script)
+    if len(script[1]) == 0:
+        time.sleep(5)
+        break
+    time.sleep(1)
+    receive_token()
+    #doesn't receive token during second loop
+    execute_script(1, script)
+    time.sleep(1)
+    receive_token()
 # Close the connection with the client
 c.close()
