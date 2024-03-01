@@ -16,6 +16,10 @@ class KeyControl():
 HEADTURN = 3
 HEADTILT = 4
 
+win = tk.Tk()
+keys = KeyControl(win)
+win.mainloop()
+
 # Head
 win.bind('<w>', keys.head)
 win.bind('<s>', keys.head)
@@ -70,9 +74,7 @@ def head(self, key):
               case _:
                 reset(animation_window, animation_canvas)
 
-win = tk.Tk()
-keys = KeyControl(win)
-win.mainloop()
+
 
 # width of the animation window
 animation_window_width=800
