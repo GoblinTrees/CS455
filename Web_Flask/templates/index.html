@@ -25,8 +25,9 @@
             }
 
             // Add joystick values to formData
-            formData.append("L_Motors", L_Motors);
-            formData.append("R_Motors", R_Motors);
+            //edited here
+            formData.append("L_Motors", R_Motors);
+            formData.append("R_Motors", L_Motors);
 
             // Send formData to the Flask backend
             fetch("/control", {
