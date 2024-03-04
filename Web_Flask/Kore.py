@@ -173,8 +173,8 @@ class Kore():
             "Rwrist": 9,
             "Rclaw": 10,
             "Waist": 2,
-            "L_Motors": 1,
-            "R_Motors": 0,
+            "L_Motors": 0,
+            "R_Motors": 1,
         }
 
     def getChan(self, key):
