@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 #from flask_cors import CORS
 import pyttsx3
 
-import Personality
 from maestro import Controller
 from sys import version_info
 from concurrent.futures import ThreadPoolExecutor
