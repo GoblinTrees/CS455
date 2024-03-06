@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_cors import CORS
 import pyttsx3
 
+from CS455.Web_Flask import Personality
 # import maestro
 from maestro import Controller
 from sys import version_info
@@ -173,8 +174,8 @@ class Kore():
             "Rwrist": 9,
             "Rclaw": 10,
             "Waist": 2,
-            "L_Motors": 0,
-            "R_Motors": 1,
+            "L_Motors": 1,
+            "R_Motors": 0,
         }
 
     def getChan(self, key):
@@ -237,7 +238,7 @@ class Kore():
     def boot(self):
         # This line boots the FlaskIO
         self.exec.submit(app.run(host="0.0.0.0", port=5245, debug=True))
-
+        self.exec.submit(screen = Personality.HttpControl())
 
 
 # End of Bootup function
@@ -247,6 +248,5 @@ class Kore():
 if __name__ == "__main__":
     kore = Kore()
     kore.boot()
-    # This line boots the Personality from the local directory
-    # screen = Personality.HttpControl()
+
 
