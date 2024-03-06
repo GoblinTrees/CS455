@@ -146,10 +146,10 @@ def reset(window, canvas):
     canvas.coords(pupil_L, LLstart, LUstart, LRstart, LBstart)
     canvas.coords(pupil_R, RLstart, RUstart, RRstart, RBstart)
 
-
 animation_window = create_animation_window()
 animation_canvas = create_animation_canvas(animation_window)
 
 win = tk.Tk()
-win.after(2000, look())
+#win.after(2000, look())
 win.mainloop()
+

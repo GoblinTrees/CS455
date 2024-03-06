@@ -1,17 +1,15 @@
 from flask import Flask, render_template, request
-from flask_cors import CORS
+#from flask_cors import CORS
 import pyttsx3
 
 import Personality
-# import maestro
 from maestro import Controller
 from sys import version_info
 from concurrent.futures import ThreadPoolExecutor
-# import Personality
 
 # FlaskIO code-----------------------------------------------------------
 app = Flask(__name__)
-CORS(app)  # This will enable CORS for all routes in your Flask app
+#CORS(app)  # This will enable CORS for all routes in your Flask app
 
 
 @app.route("/check")
@@ -238,7 +236,7 @@ class Kore():
     def boot(self):
         # This line boots the FlaskIO
         self.exec.submit(app.run(host="0.0.0.0", port=5245, debug=True))
-        self.exec.submit(screen = Personality.HttpControl())
+        #Personality stuff
 
 
 # End of Bootup function

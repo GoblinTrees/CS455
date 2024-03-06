@@ -1,12 +1,10 @@
 import tkinter
-import time
-import keyboard
+#import keyboard
 import pyttsx3
 from random import uniform
 from tkinter import *
 from time import sleep
 import threading
-from threading import Thread
 
 # width of the animation window
 animation_window_width=800
