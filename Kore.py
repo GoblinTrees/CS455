@@ -114,6 +114,8 @@ class Kore():
 
         # vocals
         self.vocal_engine = pyttsx3.init()
+        # the personality window
+        self.win = tk.Tk()
 
         # the actual values to be manipultated for the system
         self.tango_values = {
@@ -172,8 +174,7 @@ class Kore():
             "R_Motors": 0,
         }
 
-        #the personality window
-        win = tk.Tk()
+
     def getChan(self, key):
         return self.tango_channels.get(key)
 
