@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from flask_cors import CORS
 import pyttsx3
 
-from CS455.Web_Flask import Personality
+import Personality
 # import maestro
 from maestro import Controller
 from sys import version_info
