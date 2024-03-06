@@ -261,7 +261,6 @@ def PersonalityRun():
         # This line boots the FlaskIO
         self.exec.submit(app.run(host="0.0.0.0", port=5245, debug=True))
 
-        self.exec.submit(self.win.mainloop())
 # End of Bootup function
 
 #Personality stuff
@@ -394,11 +393,13 @@ command3 = 'test3'
 language = 'en'
 # delay between successive frames in seconds
 animation_refresh_seconds = 0.01
-animation_window = create_animation_window()
-animation_canvas = create_animation_canvas(animation_window)
+
 # main executable funtion
 if __name__ == "__main__":
     kore = Kore()
+    animation_window = create_animation_window()
+    kore.exec.submit(kore.win.mainloop())
+    animation_canvas = create_animation_canvas(animation_window)
     kore.boot()
 
 
