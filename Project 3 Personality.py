@@ -1,10 +1,13 @@
-import tkinter
+import tkinter as tk
+from itertools import cycle
+import time
 #import keyboard
 import pyttsx3
 from random import uniform
 from tkinter import *
 from time import sleep
 import threading
+
 
 # width of the animation window
 animation_window_width=800
@@ -39,6 +42,28 @@ language = 'en'
 # delay between successive frames in seconds
 animation_refresh_seconds = 0.01
 
+def spin_text(text):
+    root = tk.Tk()
+    root.title("Spinning Text")
+
+    canvas = tk.Canvas(root, width=400, height=200)
+    canvas.pack()
+
+    text_obj = canvas.create_text(200, 100, text=text, font=("Helvetica", 20))
+
+    angles = cycle(range(0, 360, 10))
+
+def spin():
+    angle = next(angles)
+    canvas.coords(text_obj, 200, 100)
+    canvas.after(100, spin)
+    canvas.move(text_obj, 2 * angle, 0)
+# method calls to actually make it run
+# spin()
+# root.mainloop()
+
+# Example usage:
+spin_text("Hello, spinning text!")
 
 def create_animation_window():
   window = tkinter.Tk()
