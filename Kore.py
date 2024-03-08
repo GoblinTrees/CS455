@@ -5,7 +5,6 @@ from tkinter import *
 from maestro import Controller
 from sys import version_info
 from concurrent.futures import ThreadPoolExecutor
-from concurrent.futures import ProcessPoolExecutor
 
 
 app = Flask(__name__)
@@ -113,7 +112,6 @@ class Kore():
 
         # The taskmaster executor
         self.exec = ThreadPoolExecutor(max_workers=8)
-        # self.pexec = ProcessPoolExecutor(max_workers=4)
 
 
         # vocals
@@ -245,25 +243,8 @@ class Kore():
 def PersonalityRun(bot: Kore):
     while True:
         animation_window.update()
-        look()
-        # if keyboard.is_pressed("a"):
-        #   look_left(animation_window, animation_canvas)
-        # elif keyboard.is_pressed("w"):
-        #   look_up(animation_window, animation_canvas)
-        # elif keyboard.is_pressed("d"):
-        #   look_right(animation_window, animation_canvas)
-        # elif keyboard.is_pressed("s"):
-        #   look_down(animation_window, animation_canvas)
-        # elif keyboard.is_pressed("left"):
-        #   look_left(animation_window, animation_canvas)
-        # elif keyboard.is_pressed("right"):
-        #   look_right(animation_window, animation_canvas)
-        # elif keyboard.is_pressed("ESC"):
-        #   animation_window.destroy()
-        #   break
-        # elif keyboard.is_pressed("space"):
-        #   speak()
-        # else: reset(animation_window, animation_canvas)
+        look(bot)
+
     print("Task ended")
 
 
@@ -401,7 +382,7 @@ if __name__ == "__main__":
 
     print("---mainloop ended ---")
 
-    print("---End of Tasks-da--")
+    print("---End of Tasks---")
     kore.exec.shutdown(wait=True)
 
 
