@@ -388,12 +388,12 @@ if __name__ == "__main__":
     kore = Kore()
 
     # Submit the boot function to the ProcessPoolExecutor
-    kore.pexec.submit(kore.boot())
+    kore.exec.submit(kore.boot())
     print("---kore booted---")
 
     # Submit the mainloop function to the ProcessPoolExecutor
     print("---mainloop started ---")
-    kore.exec.submit(kore.win.mainloop())
+    kore.pexec.submit(kore.win.mainloop())
     print("---mainloop ended ---")
 
     print("---End of Tasks---")
