@@ -385,5 +385,6 @@ if __name__ == "__main__":
     print("---mainloop ended ---\n")
 
     print("---End of Tasks---")
+    kore.exec.shutdown(wait=True)
 
 
