@@ -233,7 +233,7 @@ class Kore():
 # Bootup function----------------------------------------------------------
     def boot(self):
         # This line boots the FlaskIO
-        self.exec.submit(app.run(host="0.0.0.0", port=5245, debug=True))
+        app.run(host="0.0.0.0", port=5245, debug=True)
 
 # End of Bootup function
 
@@ -397,12 +397,11 @@ animation_refresh_seconds = 0.01
 
 # main executable funtion
 if __name__ == "__main__":
-    kore = Kore()
-    #The Flask start
-    kore.exec.submit(app.run(host="0.0.0.0", port=5245, debug=True))
     animation_window = create_animation_window()
     animation_canvas = create_animation_canvas(animation_window)
-
+    kore = Kore()
+    #The Flask start
+    kore.exec.submit(kore.boot())
     # Run Tkinter main loop directly in the main thread
     kore.win.mainloop()
 
