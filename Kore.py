@@ -402,5 +402,6 @@ if __name__ == "__main__":
     animation_window = create_animation_window()
     animation_canvas = create_animation_canvas(animation_window)
     kore.win.mainloop()
+    PersonalityRun()
 
 
