@@ -242,7 +242,7 @@ class Kore():
 # End of Bootup function
 
 
-def PersonalityRun():
+def PersonalityRun(bot: Kore):
     while True:
         animation_window.update()
         look()
@@ -297,24 +297,6 @@ def speakThread(command):
     engine.say(command)
     engine.runAndWait()
 
-# def speak():
-#     # engine = pyttsx3.init()
-#     for x in (command1, command2, command3):
-#         temp = ''
-#         t1 = threading.Thread(target=speakThread, args=(x,))
-#         t1.start()
-#         for y in x:
-#             temp = temp + y
-#             captions.delete("1.0", "end")
-#             captions.insert(END, temp)
-#             captions.update()
-#             sleep(uniform(0.1, 0.4))
-#         t1.join()
-#         # engine.say(x)
-#         # engine.runAndWait()
-
-##    if x != command3:
-##      sleep(1)
 
 def look_left(window, canvas):
     canvas.coords(pupil_L, LLcap, LUstart, LRstart, LBstart)
@@ -406,12 +388,13 @@ if __name__ == "__main__":
     kore = Kore()
 
     # Submit the boot function to the ProcessPoolExecutor
-    kore.pexec.submit(kore.boot())
+    kore.exec.submit(kore.boot())
     print("---kore booted---")
 
     # Submit the mainloop function to the ProcessPoolExecutor
+    print("---mainloop started ---")
     kore.pexec.submit(kore.win.mainloop())
-    print("---kore booted---")
+    print("---mainloop ended ---")
 
     print("---End of Tasks---")
 
