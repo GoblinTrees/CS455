@@ -113,7 +113,7 @@ class Kore():
 
         # The taskmaster executor
         self.exec = ThreadPoolExecutor(max_workers=8)
-        self.pexec = ProcessPoolExecutor(max_workers=4)
+        # self.pexec = ProcessPoolExecutor(max_workers=4)
 
 
         # vocals
@@ -317,7 +317,8 @@ def look_down(window, canvas):
 def reset(window, canvas):
     canvas.coords(pupil_L, LLstart, LUstart, LRstart, LBstart)
     canvas.coords(pupil_R, RLstart, RUstart, RRstart, RBstart)
-
+def start_tkinter():
+    kore.win.mainloop()
 def look(bot: Kore):
     # get the bot values and decide what to do
     try:
@@ -388,12 +389,12 @@ if __name__ == "__main__":
     kore = Kore()
 
     # Submit the boot function to the ProcessPoolExecutor
-    kore.pexec.submit(kore.boot())
+    kore.exec.submit(kore.boot)
     print("---kore booted---")
 
     # Submit the mainloop function to the ProcessPoolExecutor
     print("---mainloop started ---")
-    kore.pexec.submit(kore.win.mainloop())
+    kore.exec.submit(start_tkinter)
     print("---mainloop ended ---")
 
     print("---End of Tasks---")
