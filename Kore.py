@@ -396,7 +396,7 @@ if __name__ == "__main__":
     # Submit the mainloop function to the ProcessPoolExecutor
     print("---mainloop started ---")
     # Submit the mainloop function to the ThreadPoolExecutor
-    kore.exec.submit(start_tkinter)
+    kore.exec.submit(start_tkinter())
 
     print("---mainloop ended ---")
 
