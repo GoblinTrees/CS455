@@ -398,10 +398,11 @@ animation_refresh_seconds = 0.01
 # main executable funtion
 if __name__ == "__main__":
     kore = Kore()
-    kore.boot()
+    kore.boot()  # Submit Flask app to ThreadPoolExecutor
     animation_window = create_animation_window()
     animation_canvas = create_animation_canvas(animation_window)
-    kore.exec.submit(kore.win.mainloop())
-    kore.exec.submit(PersonalityRun())
+
+    # Run Tkinter main loop directly in the main thread
+    kore.win.mainloop()
 
 
