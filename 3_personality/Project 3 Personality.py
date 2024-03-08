@@ -1,79 +1,12 @@
 import tkinter as tk
+from itertools import cycle
 import time
+#import keyboard
 import pyttsx3
 from random import uniform
 from tkinter import *
 from time import sleep
-from maestro import Controller
-
-class KeyControl():
-   def __init__(self,win):
-      self.headTurn = 6000
-      self.headTilt = 6000
-  
-
-  #Initialize Ports
-HEADTURN = 3
-HEADTILT = 4
-
-win = tk.Tk()
-keys = KeyControl(win)
-win.mainloop()
-
-# Head
-win.bind('<w>', keys.head)
-win.bind('<s>', keys.head)
-win.bind('<a>', keys.head)
-win.bind('<d>', keys.head)
-win.bind('<Escape>', keys.head)
-win.bind('<space>', keys.head) # currently unbound to a function
-
-
-def head(self, key):
-        print(key.keycode)
-        print(key.keysym)
-        while True:
-          match key:
-            # a 
-              case 38:
-                  self.headTurn += 200
-                  if self.headTurn > 7900:
-                      self.headTurn = 7900
-                  self.tango.setTarget(HEADTURN, self.headTurn)
-                  look_left(animation_window, animation_canvas)
-              # d
-              case 40:
-                  self.headTurn -= 200
-                  if self.headTurn < 1510:
-                      self.headTurn = 1510
-                  self.tango.setTarget(HEADTURN, self.headTurn)
-                  look_right(animation_window, animation_canvas)
-              # w
-              case 25:
-                  self.headTilt += 200
-                  if self.headTilt > 7900:
-                      self.headTilt = 7900
-                  self.tango.setTarget(HEADTILT, self.headTilt)
-                  look_up(animation_window, animation_canvas)
-              # s
-              case 39:
-                  self.headTilt -= 200
-                  if self.headTilt < 1510:
-                      self.headTilt = 1510
-                  self.tango.setTarget(HEADTILT, self.headTilt)
-                  look_down(animation_window, animation_canvas)
-              case 9: 
-                self.headTilt = 6000
-                self.tango.setTarget(HEADTILT, self.headTilt)
-                animation_window.destroy()
-                break
-            # Space Bar is to speak
-              case 21:
-                speak(animation_window, animation_canvas)
-            # base case
-              case _:
-                reset(animation_window, animation_canvas)
-        animation_window.update()
+import threading
 
 
 # width of the animation window
@@ -109,15 +42,38 @@ language = 'en'
 # delay between successive frames in seconds
 animation_refresh_seconds = 0.01
 
+def spin_text(text):
+    root = tk.Tk()
+    root.title("Spinning Text")
+
+    canvas = tk.Canvas(root, width=400, height=200)
+    canvas.pack()
+
+    text_obj = canvas.create_text(200, 100, text=text, font=("Helvetica", 20))
+
+    angles = cycle(range(0, 360, 10))
+
+def spin():
+    angle = next(angles)
+    canvas.coords(text_obj, 200, 100)
+    canvas.after(100, spin)
+    canvas.move(text_obj, 2 * angle, 0)
+# method calls to actually make it run
+# spin()
+# root.mainloop()
+
+# Example usage:
+spin_text("Hello, spinning text!")
+
 def create_animation_window():
-  window = tk.Tk()
+  window = tkinter.Tk()
   window.title("I'm awake")
   # Uses python 3.6+ string interpolation
   window.geometry(f'{animation_window_width}x{animation_window_height}')
   return window
 
 def create_animation_canvas(window):
-  canvas = tk.Canvas(window)
+  canvas = tkinter.Canvas(window)
   canvas.configure(bg="gray")
   canvas.pack(fill="both", expand=True)
   global captions
@@ -132,18 +88,25 @@ def create_animation_canvas(window):
   pupil_R = canvas.create_oval(RLstart,RUstart,RRstart,RBstart,width=3,fill="black")
   return canvas
 
-def speak(window,canvas):
+def speakThread(command):
   engine = pyttsx3.init()
+  engine.say(command)
+  engine.runAndWait()
+def speak():
+  #engine = pyttsx3.init()
   for x in (command1, command2, command3):
     temp = ''
+    t1 = threading.Thread(target=speakThread, args=(x,))
+    t1.start()
     for y in x:
       temp = temp + y
       captions.delete("1.0", "end")
       captions.insert(END,temp)
       captions.update()
       sleep(uniform(0.1, 0.4))
-    engine.say(x)
-    engine.runAndWait()
+    t1.join()
+    #engine.say(x)
+    #engine.runAndWait()
 ##    if x != command3:
 ##      sleep(1)
 
@@ -166,6 +129,25 @@ def reset(window, canvas):
 
 animation_window = create_animation_window()
 animation_canvas = create_animation_canvas(animation_window)
-   
-      
 
+while True:
+    animation_window.update()
+    if keyboard.is_pressed("a"):
+      look_left(animation_window, animation_canvas)
+    elif keyboard.is_pressed("w"):
+      look_up(animation_window, animation_canvas)
+    elif keyboard.is_pressed("d"):
+      look_right(animation_window, animation_canvas)
+    elif keyboard.is_pressed("s"):
+      look_down(animation_window, animation_canvas)
+    elif keyboard.is_pressed("left"):
+      look_left(animation_window, animation_canvas)
+    elif keyboard.is_pressed("right"):
+      look_right(animation_window, animation_canvas)
+    elif keyboard.is_pressed("ESC"):
+      animation_window.destroy()
+      break
+    elif keyboard.is_pressed("space"):
+      speak()
+    else: reset(animation_window, animation_canvas)
+print("Task ended")
