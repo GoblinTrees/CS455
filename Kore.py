@@ -1,3 +1,5 @@
+import time
+
 from flask import Flask, render_template, request
 import tkinter as tk
 import pyttsx3
@@ -372,18 +374,17 @@ if __name__ == "__main__":
     kore = Kore()
 
     # Submit the boot function to the ProcessPoolExecutor
-    kore.exec.submit(kore.boot())
+    kore.exec.submit(kore.boot)
     print("---kore booted---")
 
     # Submit the mainloop function to the ProcessPoolExecutor
     print("---mainloop started ---")
     # Submit the mainloop function to the ThreadPoolExecutor
-    kore.exec.submit(start_tkinter())
+    kore.exec.submit(start_tkinter)
 
     print("---mainloop ended ---\n")
 
     print("---End of Tasks---")
-    kore.exec.shutdown(wait=True)
-
+    time.sleep(600)
 
 
