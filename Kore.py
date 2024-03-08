@@ -385,6 +385,5 @@ if __name__ == "__main__":
     print("---mainloop ended ---\n")
 
     print("---End of Tasks---")
-    time.sleep(600)
 
 
