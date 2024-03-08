@@ -319,6 +319,7 @@ def reset(window, canvas):
     canvas.coords(pupil_R, RLstart, RUstart, RRstart, RBstart)
 def start_tkinter():
     kore.win.mainloop()
+
 def look(bot: Kore):
     # get the bot values and decide what to do
     try:
@@ -394,7 +395,9 @@ if __name__ == "__main__":
 
     # Submit the mainloop function to the ProcessPoolExecutor
     print("---mainloop started ---")
+    # Submit the mainloop function to the ThreadPoolExecutor
     kore.exec.submit(start_tkinter)
+
     print("---mainloop ended ---")
 
     print("---End of Tasks---")
