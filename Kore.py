@@ -5,6 +5,8 @@ from tkinter import *
 from maestro import Controller
 from sys import version_info
 from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
+
 
 app = Flask(__name__)
 
@@ -111,6 +113,8 @@ class Kore():
 
         # The taskmaster executor
         self.exec = ThreadPoolExecutor(max_workers=8)
+        self.pexec = ProcessPoolExecutor(max_workers=4)
+
 
         # vocals
         self.vocal_engine = pyttsx3.init()
@@ -400,9 +404,12 @@ if __name__ == "__main__":
     animation_window = create_animation_window()
     animation_canvas = create_animation_canvas(animation_window)
     kore = Kore()
-    #The Flask start
-    kore.exec.submit(kore.boot())
-    # Run Tkinter main loop directly in the main thread
-    kore.win.mainloop()
+
+    # Submit the boot function to the ProcessPoolExecutor
+    kore.pexec.submit(kore.boot)
+
+    # Submit the mainloop function to the ProcessPoolExecutor
+    kore.pexec.submit(kore.win.mainloop)
+
 
 
