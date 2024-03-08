@@ -398,9 +398,9 @@ animation_refresh_seconds = 0.01
 # main executable funtion
 if __name__ == "__main__":
     kore = Kore()
-    animation_window = create_animation_window()
-    kore.exec.submit(kore.win.mainloop())
-    animation_canvas = create_animation_canvas(animation_window)
     kore.boot()
+    animation_window = create_animation_window()
+    animation_canvas = create_animation_canvas(animation_window)
+    kore.win.mainloop()
 
 
