@@ -230,7 +230,12 @@ class Kore():
     def send_values(self):
         return self.tango_values
 
+# Bootup function----------------------------------------------------------
+    def boot(self):
+        # This line boots the FlaskIO
+        self.exec.submit(app.run(host="0.0.0.0", port=5245, debug=True))
 
+# End of Bootup function
 
 
 def PersonalityRun():
@@ -255,14 +260,9 @@ def PersonalityRun():
         # elif keyboard.is_pressed("space"):
         #   speak()
         # else: reset(animation_window, animation_canvas)
-    # print("Task ended")
+    print("Task ended")
 
-# Bootup function----------------------------------------------------------
-    def boot(self):
-        # This line boots the FlaskIO
-        self.exec.submit(app.run(host="0.0.0.0", port=5245, debug=True))
 
-# End of Bootup function
 
 #Personality stuff
 def create_animation_window():
