@@ -7,6 +7,8 @@ from tkinter import *
 from maestro import Controller
 from sys import version_info
 from concurrent.futures import ThreadPoolExecutor
+import threading
+
 
 
 app = Flask(__name__)
@@ -300,6 +302,9 @@ def look_down(window, canvas):
 def reset(window, canvas):
     canvas.coords(pupil_L, LLstart, LUstart, LRstart, LBstart)
     canvas.coords(pupil_R, RLstart, RUstart, RRstart, RBstart)
+def start_flask():
+    kore.boot()
+
 def start_tkinter():
     print("...starting tkinter...")
     kore.win.mainloop()
@@ -373,18 +378,16 @@ if __name__ == "__main__":
     animation_canvas = create_animation_canvas(animation_window)
     kore = Kore()
 
-    # Submit the boot function to the ProcessPoolExecutor
-    kore.exec.submit(kore.boot)
-    print("---kore booted---")
+    # Create threads for Flask and Tkinter
+    flask_thread = threading.Thread(target=start_flask)
+    tkinter_thread = threading.Thread(target=start_tkinter)
 
-    # Submit the mainloop function to the ProcessPoolExecutor
-    print("---mainloop started ---")
-    # Submit the mainloop function to the ThreadPoolExecutor
-    kore.exec.submit(start_tkinter)
+    # Start both threads
+    flask_thread.start()
+    tkinter_thread.start()
 
-    print("---mainloop ended ---\n")
-
-    print("---End of Tasks---")
-    kore.exec.shutdown(wait=True)
+    # Wait for both threads to finish
+    flask_thread.join()
+    tkinter_thread.join()
 
 
