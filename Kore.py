@@ -372,7 +372,7 @@ if __name__ == "__main__":
     kore = Kore()
 
     # Submit the boot function to the ProcessPoolExecutor
-    kore.exec.submit(kore.boot)
+    kore.exec.submit(kore.boot())
     print("---kore booted---")
 
     # Submit the mainloop function to the ProcessPoolExecutor
@@ -380,7 +380,7 @@ if __name__ == "__main__":
     # Submit the mainloop function to the ThreadPoolExecutor
     kore.exec.submit(start_tkinter())
 
-    print("---mainloop ended ---")
+    print("---mainloop ended ---\n")
 
     print("---End of Tasks---")
     kore.exec.shutdown(wait=True)
