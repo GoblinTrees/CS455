@@ -242,7 +242,13 @@ class Kore():
         app.run(host="0.0.0.0", port=5245, debug=True)
 
 # End of Bootup function
+    def boot(self):
+        # This line boots the FlaskIO
+        app.run(host="0.0.0.0", port=5245, debug=True)
 
+    def start_tkinter(self):
+        print("...starting tkinter...")
+        self.win.mainloop()
 
 def PersonalityRun(bot: Kore):
     while True:
@@ -302,12 +308,7 @@ def look_down(window, canvas):
 def reset(window, canvas):
     canvas.coords(pupil_L, LLstart, LUstart, LRstart, LBstart)
     canvas.coords(pupil_R, RLstart, RUstart, RRstart, RBstart)
-def start_flask():
-    kore.boot()
 
-def start_tkinter():
-    print("...starting tkinter...")
-    kore.win.mainloop()
 
 def look(bot: Kore):
     # get the bot values and decide what to do
@@ -379,8 +380,8 @@ if __name__ == "__main__":
     kore = Kore()
 
     # Create threads for Flask and Tkinter
-    flask_thread = threading.Thread(target=start_flask)
-    tkinter_thread = threading.Thread(target=start_tkinter)
+    flask_thread = threading.Thread(target=kore.boot)
+    tkinter_thread = threading.Thread(target=kore.start_tkinter)
 
     # Start both threads
     flask_thread.start()
