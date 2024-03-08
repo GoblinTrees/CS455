@@ -318,6 +318,7 @@ def reset(window, canvas):
     canvas.coords(pupil_L, LLstart, LUstart, LRstart, LBstart)
     canvas.coords(pupil_R, RLstart, RUstart, RRstart, RBstart)
 def start_tkinter():
+    print("...starting tkinter...")
     kore.win.mainloop()
 
 def look(bot: Kore):
