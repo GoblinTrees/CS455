@@ -186,6 +186,7 @@ class Robot:
                 self.root.update()
                 time.sleep(.1)  # Adjust the idle animation duration as needed
             elif self.isDriving:  # Display driving animation if driving
+                self.canvas.delete("all")
                 self.walk_animation()
                 self.root.update()
                 time.sleep(0.1)  # Adjust the driving animation duration as needed
