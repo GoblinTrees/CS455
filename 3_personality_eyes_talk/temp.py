@@ -24,6 +24,7 @@ class Robot:
         root.bind('<Down>', self.handle_arrow_key)
         root.bind('<Right>', self.handle_arrow_key)
         root.bind('<space>', self.handle_arrow_key)
+        root.bind('<v>', self.talk())
 
     def handle_arrow_key(self, event):
         if event.keysym == 'Up':
