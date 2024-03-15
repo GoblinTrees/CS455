@@ -108,15 +108,20 @@ class Robot:
         self.move_stick_figure()
 
     def move_stick_figure(self, x=100, y=200):
-        # Clear canvas
+    # Clear canvas
         self.canvas.delete("stick_figure")
-        # Draw stick figure
-        self.canvas.create_oval(x-10, y-10, x+10, y+10, fill="black", tags="stick_figure")
-        self.canvas.create_line(x, y, x, y+30, fill="black", tags="stick_figure")
-        self.canvas.create_line(x, y+30, x-20, y+50, fill="black", tags="stick_figure")
-        self.canvas.create_line(x, y+30, x+20, y+50, fill="black", tags="stick_figure")
-        self.canvas.create_line(x, y+10, x-10, y+20, fill="black", tags="stick_figure")
-        self.canvas.create_line(x, y+10, x+10, y+20, fill="black", tags="stick_figure")
+        if self.isDriving:
+            # Draw stick figure
+            self.canvas.create_oval(x-10, y-10, x+10, y+10, fill="black", tags="stick_figure")
+            self.canvas.create_line(x, y, x, y+30, fill="black", tags="stick_figure")
+            self.canvas.create_line(x, y+30, x-20, y+50, fill="black", tags="stick_figure")
+            self.canvas.create_line(x, y+30, x+20, y+50, fill="black", tags="stick_figure")
+            self.canvas.create_line(x, y+10, x-10, y+20, fill="black", tags="stick_figure")
+            self.canvas.create_line(x, y+10, x+10, y+20, fill="black", tags="stick_figure")
+        else:
+            # Redraw the canvas to remove the stick figure
+            self.canvas.create_rectangle(0, 0, 800, 600, fill="lightgray")
+
 
     def blink_eyes(self):
         # Draw head
