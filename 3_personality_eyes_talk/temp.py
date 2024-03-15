@@ -24,7 +24,7 @@ class Robot:
         root.bind('<Down>', self.handle_arrow_key)
         root.bind('<Right>', self.handle_arrow_key)
         root.bind('<space>', self.handle_arrow_key)
-        root.bind('<v>', self.talk())
+        root.bind('<v>', self.handle_arrow_key)
 
     def handle_arrow_key(self, event):
         if event.keysym == 'Up':
@@ -52,6 +52,13 @@ class Robot:
             self.isDriving = False
             self.canvas.update()
             self.emergency_stop()
+        elif event.keysym == 'v':
+            self.is_idle = False
+            self.isTalking = True
+            self.canvas.update()
+            self.talk("I am a robot")
+            self.isTalking = False
+            
 
     def move_forward(self):
         # Implement logic to move forward
@@ -181,7 +188,7 @@ class Robot:
                 time.sleep(0.1)  # Adjust the driving animation duration as needed
             elif self.isTalking:
                 self.canvas.delete("all")
-                self.talk("Hello, I am a robot")
+                self.talk_animation()
                 self.root.update()
 
     def talk(self, words):
