@@ -219,6 +219,7 @@ class Robot:
         self.engine.say(words)
         self.engine.runAndWait()
         self.isTalking = False
+        self.is_idle = True
         
 if __name__ == "__main__":
     root = tk.Tk()
