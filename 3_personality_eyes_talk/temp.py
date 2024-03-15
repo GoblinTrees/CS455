@@ -106,7 +106,9 @@ class Robot:
         self.tango.setTarget(self.L_MOTORS, self.l_motors)
         self.tango.setTarget(self.R_MOTORS, self.r_motors)
         self.isDriving = False  # Set isDriving to False
+        self.canvas.delete("stick_figure")  # Remove stick figure from the canvas
         self.blink_eyes()  # Display idle face animation
+
 
 
     def drive(self):
