@@ -18,6 +18,8 @@ class Robot:
         global RBcap
         global RUstart
         global RBstart
+        
+        # R Default
         RLcap = 350
         RRcap = 650
         RLstart = 475
@@ -27,8 +29,23 @@ class Robot:
         RUstart = 225
         RBstart = 275
 
-        pupil_L = None
-        pupil_R = None
+        global LLcap
+        global LRcap
+        global LLstart
+        global LRstart
+        global LUcap
+        global LBcap
+        global LUstart
+        global LBstart
+        # L Default
+        LLcap = 100
+        LRcap = 400
+        LLstart = 225
+        LRstart = 275
+        LUcap = 100
+        LBcap = 400
+        LUstart = 225
+        LBstart = 275
 
     def move_stick_figure(self, x, y):
         # Clear canvas
@@ -103,6 +120,7 @@ class Robot:
                 self.is_idle = True  # Set robot to idle state after actions
 
 if __name__ == "__main__":
+
     root = tk.Tk()
     robot = Robot(root)
     robot.run()
