@@ -2,6 +2,7 @@ import time
 import threading
 import tkinter as tk
 import pyttsx3
+from maestro import Controller
 
 class Robot:
     def __init__(self, root):
@@ -15,7 +16,9 @@ class Robot:
         self.R_MOTORS = 0
         self.r_motors = 6000
         self.l_motors = 6000
+        self.tango = Controller()
 
+        # Keyboard Binds
         root.bind('<Up>', self.handle_arrow_key)
         root.bind('<Left>', self.handle_arrow_key)
         root.bind('<Down>', self.handle_arrow_key)
