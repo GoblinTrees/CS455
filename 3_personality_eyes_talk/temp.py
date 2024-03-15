@@ -11,6 +11,10 @@ class Robot:
         self.canvas.pack()
         self.engine = pyttsx3.init()
 
+    def driving(self):
+        self.canvas.create_rectangle(0, 0, 800, 600, fill="lightgray")
+        self.move_stick_figure()
+
     def move_stick_figure(self, x=100, y=200):
         # Clear canvas
         self.canvas.delete("stick_figure")
@@ -42,10 +46,6 @@ class Robot:
         self.engine.runAndWait()
 
     def idle_animation(self):
-        # Animation for idle state
-        self.canvas.create_rectangle(0, 0, 800, 600, fill="lightgray")
-        self.move_stick_figure()
-
         # Draw eyes
         eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
         eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
@@ -64,10 +64,9 @@ class Robot:
         self.root.update()
         time.sleep(0.5)  # Duration eyes are open
 
-
     def perform_action(self, action, *args):
         if action == "drive":
-            self.turn_wheels()
+            self.driving()
         elif action == "talk":
             self.talk(*args)
         else:
