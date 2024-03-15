@@ -131,35 +131,27 @@ class Robot:
             time.sleep(0.1)
 
     def talk_animation(self):
-        # Draw head
+        # Draw head, eyes, and pupils
         head = self.canvas.create_oval(70, 250, 230, 350, fill="lightgray")
-
-        # Draw eyes
         eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
         eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
-
-        # Draw pupils
         pupil_left = self.canvas.create_oval(95, 290, 105, 310, fill="black", tags="pupil_left")
         pupil_right = self.canvas.create_oval(195, 290, 205, 310, fill="black", tags="pupil_right")
 
-        # Draw mouth
-        mouth = self.canvas.create_oval(120, 320, 180, 340, fill="black")
-
         for _ in range(3):  # Adjust the number of iterations to control the movement of the mouth
-            # Increase size of mouth
-            for i in range(5):
-                self.canvas.scale(mouth, 1.05, 1.05)  # Scale mouth by 5% in both x and y directions
-                self.root.update()
-                time.sleep(0.05)  # Adjust the duration to control the speed of the animation
+            # Open mouth
+            self.canvas.create_oval(120, 320, 180, 340, fill="black", tags="mouth")
+            self.root.update()
+            time.sleep(0.2)  # Adjust the duration to control the speed of the animation
 
-            # Decrease size of mouth
-            for i in range(5):
-                self.canvas.scale(mouth, 0.95, 0.95)  # Scale mouth by 5% in both x and y directions
-                self.root.update()
-                time.sleep(0.05)  # Adjust the duration to control the speed of the animation
+            # Close mouth
+            self.canvas.create_oval(120, 320, 180, 335, fill="lightgray", tags="mouth")
+            self.root.update()
+            time.sleep(0.2)  # Adjust the duration to control the speed of the animation
 
         # Delete objects
-        self.canvas.delete(head, eye_left, eye_right, pupil_left, pupil_right, mouth)
+        self.canvas.delete(head, eye_left, eye_right, pupil_left, pupil_right, "mouth")
+
 
 
 
