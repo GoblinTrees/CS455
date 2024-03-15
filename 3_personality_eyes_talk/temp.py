@@ -56,7 +56,6 @@ class Robot:
         elif event.keysym == 'v':
             self.is_idle = True
             self.isTalking = True
-            # self.isTalking = False
             
 
     def move_forward(self):
@@ -130,8 +129,9 @@ class Robot:
             x += dx
             time.sleep(0.1)
 
-    def talk_animation(self):
+    def talk_animation(self, words):
         # Draw head, eyes, and pupils
+        self.canvas.create_text(200, 300, text=words, font=("Helvetica", 12))
         head = self.canvas.create_oval(70, 250, 230, 350, fill="lightgray")
         eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
         eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
@@ -208,16 +208,16 @@ class Robot:
                 self.root.update()
                 time.sleep(0.1)  # Adjust the driving animation duration as needed
             elif self.isTalking:
+                words = "I am a robot"
                 self.canvas.delete("all")
-                self.talk_animation()
-                self.talk("I am a robot")
+                self.talk_animation(words)
+                self.talk(words)
     
     def talk(self, words):
-        # Animation for talking (you can customize this)
-        self.canvas.create_text(200, 300, text=words, font=("Helvetica", 12))
         # Text-to-speech
         self.engine.say(words)
         self.engine.runAndWait()
+        self.isTalking = False
         
 if __name__ == "__main__":
     root = tk.Tk()
