@@ -55,10 +55,16 @@ class Robot:
 
         # Blink animation
         time.sleep(0.3)  # Duration eyes are closed
-        self.canvas.delete(eye_left, eye_right, pupil_left, pupil_right, head, smile)
-        self.canvas.create_rectangle(90, 280, 110, 320, fill="lightgray")  # Closed eyes
+        self.canvas.delete(eye_left, eye_right, pupil_left, pupil_right)
         self.root.update()
         time.sleep(0.2)  # Duration eyes are closed
+        # Draw eyes
+        eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
+        eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
+
+        # Draw pupils
+        pupil_left = self.canvas.create_oval(95, 290, 105, 310, fill="black", tags="pupil_left")
+        pupil_right = self.canvas.create_oval(195, 290, 205, 310, fill="black", tags="pupil_right")
 
     def perform_action(self, action, *args):
         if action == "drive":
