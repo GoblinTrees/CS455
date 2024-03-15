@@ -16,74 +16,81 @@ class Robot:
         self.r_motors = 6000
         self.l_motors = 6000
 
-        keys = Robot(root)
-        root.bind('<Up>', keys.arrow)
-        root.bind('<Left>', keys.arrow)
-        root.bind('<Down>', keys.arrow)
-        root.bind('<Right>', keys.arrow)
-        root.bind('<space>', keys.arrow)
+        root.bind('<Up>', self.handle_arrow_key)
+        root.bind('<Left>', self.handle_arrow_key)
+        root.bind('<Down>', self.handle_arrow_key)
+        root.bind('<Right>', self.handle_arrow_key)
+        root.bind('<space>', self.handle_arrow_key)
 
     def set_driving(self, status):
         self.isDriving = status
 
-    def arrow(self, key):
-        # set motor speed here
-            # Forwards
-        if key.keycode == 111:
-            if self.l_motors == 6000:
-                self.r_motors = 6600
-                self.l_motors = 5800
-            else:
-                self.l_motors -= 200
-                if self.r_motors > 7900:
-                    self.r_motors = 7900
-                # Increment speed by 200 in the forward direction
-                self.r_motors += 200
+    def handle_arrow_key(self, event):
+        if event.keysym == 'Up':
+            self.move_forward()
+        elif event.keysym == 'Down':
+            self.move_backward()
+        elif event.keysym == 'Left':
+            self.turn_left()
+        elif event.keysym == 'Right':
+            self.turn_right()
+        elif event.keysym == 'space':
+            self.emergency_stop()
 
-            print(self.r_motors)
-            print(self.l_motors)
-            self.tango.setTarget(self.L_MOTORS, self.l_motors)
-            self.tango.setTarget(self.R_MOTORS, self.r_motors)
-
-        # Backwards
-
-        if key.keycode == 116:
-            if self.l_motors == 6000:
-                self.r_motors = 5400
-                self.l_motors = 6200
-            else:
-                self.l_motors += 200
-                if self.r_motors < 1510:
-                    self.r_motors = 1510
-                # Increment speed by 200 in the reverse direction
-                self.r_motors -= 200
-
-            print(self.r_motors)
-            print(self.l_motors)
-            self.tango.setTarget(self.L_MOTORS, self.l_motors)
-            self.tango.setTarget(self.R_MOTORS, self.r_motors)
-
-        # Left
-        if key.keycode == 113:
-            self.r_motors += 200
-            if (self.r_motors > 7900):
-                self.r_motors = 7900
-            print(self.r_motors)
-            self.tango.setTarget(self.R_MOTORS, self.r_motors)
-
-        # right
-        if key.keycode == 114:
+    def move_forward(self):
+        # Implement logic to move forward
+        if self.l_motors == 6000:
+                    self.r_motors = 6600
+                    self.l_motors = 5800
+        else:
             self.l_motors -= 200
-            if (self.l_motors < 2110):
-                self.l_motors = 2110
-            print(self.l_motors)
-            self.tango.setTarget(self.L_MOTORS, self.l_motors)
+            if self.r_motors > 7900:
+                self.r_motors = 7900
+            # Increment speed by 200 in the forward direction
+            self.r_motors += 200
+        self.tango.setTarget(self.L_MOTORS, self.l_motors)
+        self.tango.setTarget(self.R_MOTORS, self.r_motors)
+        pass
 
-        # escape (estop)
-        if key.keycode == 9:
-            self.r_motors = 6000
-            self.l_motors = 6000
-        self.isDriving = True
+    def move_backward(self):
+        # Implement logic to move backward
+        if self.l_motors == 6000:
+                    self.r_motors = 5400
+                    self.l_motors = 6200
+        else:
+            self.l_motors += 200
+            if self.r_motors < 1510:
+                self.r_motors = 1510
+            # Increment speed by 200 in the reverse direction
+            self.r_motors -= 200
+
+        self.tango.setTarget(self.L_MOTORS, self.l_motors)
+        self.tango.setTarget(self.R_MOTORS, self.r_motors)
+        pass
+
+    def turn_left(self):
+        # Implement logic to turn left
+        self.r_motors += 200
+        if (self.r_motors > 7900):
+            self.r_motors = 7900
+        self.tango.setTarget(self.R_MOTORS, self.r_motors)
+        pass
+
+    def turn_right(self):
+        # Implement logic to turn right
+        self.l_motors -= 200
+        if (self.l_motors < 2110):
+            self.l_motors = 2110
+        self.tango.setTarget(self.L_MOTORS, self.l_motors)
+        pass
+
+    def emergency_stop(self):
+        self.l_motors = 6000
+        self.r_motors = 6000
+        # Implement logic for emergency stop
+        self.tango.setTarget(self.L_MOTORS, self.l_motors)
+        self.tango.setTarget(self.R_MOTORS, self.r_motors)
+        pass
 
     def drive(self):
         # Animation for driving
