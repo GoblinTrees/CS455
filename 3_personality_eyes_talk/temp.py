@@ -105,7 +105,9 @@ class Robot:
         # Implement logic for emergency stop
         self.tango.setTarget(self.L_MOTORS, self.l_motors)
         self.tango.setTarget(self.R_MOTORS, self.r_motors)
-        pass
+        self.isDriving = False  # Set isDriving to False
+        self.blink_eyes()  # Display idle face animation
+
 
     def drive(self):
         # Animation for driving
