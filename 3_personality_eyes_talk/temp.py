@@ -12,10 +12,10 @@ class Robot:
         self.engine = pyttsx3.init()
 
         # Bind arrow key presses to driving animation
-        root.bind("<Up>", lambda event: self.drive())
-        root.bind("<Down>", lambda event: self.drive())
-        root.bind("<Left>", lambda event: self.drive())
-        root.bind("<Right>", lambda event: self.drive())
+        root.bind("<Up>", lambda event: self.drive() if self.is_idle else None)
+        root.bind("<Down>", lambda event: self.drive() if self.is_idle else None)
+        root.bind("<Left>", lambda event: self.drive() if self.is_idle else None)
+        root.bind("<Right>", lambda event: self.drive() if self.is_idle else None)
 
     def drive(self):
         # Animation for driving
@@ -96,3 +96,4 @@ if __name__ == "__main__":
     robot = Robot(root)
     thread = threading.Thread(target=robot.start_mainloop())
     thread.start()
+    robot.run()
