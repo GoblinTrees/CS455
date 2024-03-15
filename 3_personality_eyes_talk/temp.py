@@ -1,4 +1,5 @@
 import time
+import threading
 import tkinter as tk
 import pyttsx3
 
@@ -11,12 +12,12 @@ class Robot:
         self.engine = pyttsx3.init()
 
         # Bind arrow key presses to driving animation
-        root.bind("<Up>", lambda event: self.action_thread("drive"))
-        root.bind("<Down>", lambda event: self.action_thread("drive"))
-        root.bind("<Left>", lambda event: self.action_thread("drive"))
-        root.bind("<Right>", lambda event: self.action_thread("drive"))
+        root.bind("<Up>", lambda event: self.drive())
+        root.bind("<Down>", lambda event: self.drive())
+        root.bind("<Left>", lambda event: self.drive())
+        root.bind("<Right>", lambda event: self.drive())
 
-    def driving(self):
+    def drive(self):
         # Animation for driving
         self.canvas.create_rectangle(0, 0, 800, 600, fill="lightgray")
         self.move_stick_figure()
@@ -31,17 +32,6 @@ class Robot:
         self.canvas.create_line(x, y+30, x+20, y+50, fill="black", tags="stick_figure")
         self.canvas.create_line(x, y+10, x-10, y+20, fill="black", tags="stick_figure")
         self.canvas.create_line(x, y+10, x+10, y+20, fill="black", tags="stick_figure")
-
-    def turn_wheels(self):
-        # Animation for turning wheels on canvas
-        self.move_stick_figure(50, 200)
-        for _ in range(20):
-            self.move_stick_figure(50, 200)
-            self.root.update()
-            time.sleep(0.1)
-            self.move_stick_figure(150, 200)
-            self.root.update()
-            time.sleep(0.1)
 
     def blink_eyes(self):
         # Draw head
@@ -73,6 +63,35 @@ class Robot:
 
     def perform_action(self, action, *args):
         if action == "drive":
-            self.driving()
+            self.drive()
         elif action == "talk":
-            self.t
+            self.talk(*args)
+        else:
+            print("Unknown action")
+
+    def action_thread(self, action, *args):
+        thread = threading.Thread(target=self.perform_action, args=(action, *args))
+        thread.start()
+
+    def run(self):
+        while True:
+            if self.is_idle:
+                self.blink_eyes()  # Blink animation for eyes
+                self.root.update()
+                time.sleep(1)  # Adjust the idle animation duration as needed
+
+    def talk(self, words):
+        # Animation for talking (you can customize this)
+        self.canvas.create_text(200, 300, text=words, font=("Helvetica", 12))
+
+        # Text-to-speech
+        self.engine.say(words)
+        self.engine.runAndWait()
+
+    def start_mainloop(self):
+        self.root.mainloop()
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    robot = Robot(root)
+    threading.Thread(target)
