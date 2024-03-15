@@ -150,7 +150,7 @@ class Robot:
             time.sleep(0.2)  # Adjust the duration to control the speed of the animation
 
         # Delete objects
-        self.canvas.delete(head, eye_left, eye_right, pupil_left, pupil_right, "mouth")
+        self.canvas.delete("all")
 
     def move_stick_figure(self, x=100, y=200):
     # Clear canvas
@@ -217,7 +217,7 @@ class Robot:
     def talk(self, words):
         # Text-to-speech
         self.engine.say(words)
-        self.engine.runAndWait()
+        self.engine.runAndWait() 
         self.isTalking = False
         self.is_idle = True
         
