@@ -10,6 +10,14 @@ class Robot:
         self.canvas = tk.Canvas(root, width=400, height=400)
         self.canvas.pack()
         self.engine = pyttsx3.init()
+        global RLcap
+        global RRcap
+        global RLstart
+        global RRstart
+        global RUcap
+        global RBcap
+        global RUstart
+        global RBstart
         RLcap = 350
         RRcap = 650
         RLstart = 475
