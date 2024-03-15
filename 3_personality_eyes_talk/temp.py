@@ -57,18 +57,15 @@ class Robot:
         self.engine.runAndWait()
 
     def idle_animation(self):
-        canvas.configure(bg="gray")
-        canvas.pack(fill="both", expand=True)
-        global captions
-        captions = Text(window, height=1, width=30, font=('Arial', 16, 'bold'))
-        captions.place(x=200, y=510)
-        head = canvas.create_oval(50, 50, 700, 500, width=5, fill="lightgray")
-        eye_L = canvas.create_oval(150, 150, 350, 350, width=3, fill="white")
-        eye_R = canvas.create_oval(400, 150, 600, 350, width=3, fill="white")
+        self.canvas.configure(bg="gray")
+        self.canvas.pack(fill="both", expand=True)
+        head = self.canvas.create_oval(50, 50, 700, 500, width=5, fill="lightgray")
+        eye_L = self.canvas.create_oval(150, 150, 350, 350, width=3, fill="white")
+        eye_R = self.canvas.create_oval(400, 150, 600, 350, width=3, fill="white")
         global pupil_L
-        pupil_L = canvas.create_oval(LLstart, LUstart, LRstart, LBstart, width=3, fill="black")
+        pupil_L = self.canvas.create_oval(self.LLstart, self.LUstart, self.LRstart, self.LBstart, width=3, fill="black")
         global pupil_R
-        pupil_R = canvas.create_oval(RLstart, RUstart, RRstart, RBstart, width=3, fill="black")
+        pupil_R = self.canvas.create_oval(self.RLstart, self.RUstart, self.RRstart, self.RBstart, width=3, fill="black")
 
     def perform_action(self, action, *args):
         if action == "move_arm":
