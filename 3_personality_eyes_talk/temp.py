@@ -131,6 +131,34 @@ class Robot:
             x += dx
             time.sleep(0.1)
 
+    def talk_animation(self):
+        # Draw head
+        head = self.canvas.create_oval(70, 250, 230, 350, fill="lightgray")
+
+        # Draw eyes
+        eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
+        eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
+
+        # Draw pupils
+        pupil_left = self.canvas.create_oval(95, 290, 105, 310, fill="black", tags="pupil_left")
+        pupil_right = self.canvas.create_oval(195, 290, 205, 310, fill="black", tags="pupil_right")
+
+        # Draw smile
+        for _ in range(3):  # Adjust the number of iterations to control the movement of the mouth
+            # Open mouth
+            self.canvas.create_arc(120, 320, 180, 340, start=0, extent=180, style=tk.ARC)
+            self.root.update()
+            time.sleep(0.2)  # Adjust the duration to control the speed of the animation
+
+            # Close mouth
+            self.canvas.create_arc(120, 320, 180, 335, start=0, extent=180, style=tk.ARC)
+            self.root.update()
+            time.sleep(0.2)  # Adjust the duration to control the speed of the animation
+
+        # Delete objects
+        self.canvas.delete(head, eye_left, eye_right, pupil_left, pupil_right)
+
+
     def move_stick_figure(self, x=100, y=200):
     # Clear canvas
         self.canvas.delete("stick_figure")
