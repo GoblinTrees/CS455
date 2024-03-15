@@ -63,9 +63,9 @@ class Robot:
         eye_L = self.canvas.create_oval(150, 150, 350, 350, width=3, fill="white")
         eye_R = self.canvas.create_oval(400, 150, 600, 350, width=3, fill="white")
         global pupil_L
-        pupil_L = self.canvas.create_oval(self.LLstart, self.LUstart, self.LRstart, self.LBstart, width=3, fill="black")
+        pupil_L = self.canvas.create_oval(LLstart, LUstart, LRstart, LBstart, width=3, fill="black")
         global pupil_R
-        pupil_R = self.canvas.create_oval(self.RLstart, self.RUstart, self.RRstart, self.RBstart, width=3, fill="black")
+        pupil_R = self.canvas.create_oval(RLstart, RUstart, RRstart, RBstart, width=3, fill="black")
 
     def perform_action(self, action, *args):
         if action == "move_arm":
