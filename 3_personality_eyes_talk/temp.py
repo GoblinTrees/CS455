@@ -76,7 +76,7 @@ class Robot:
         while True:
             if self.is_idle:
                 self.blink_eyes()  # Blink animation for eyes
-                self.driving()  # Driving animation for the stick figure
+
                 self.root.update()
                 time.sleep(1)  # Adjust the idle animation duration as needed
 
