@@ -167,18 +167,6 @@ class Robot:
         pupil_left = self.canvas.create_oval(95, 290, 105, 310, fill="black", tags="pupil_left")
         pupil_right = self.canvas.create_oval(195, 290, 205, 310, fill="black", tags="pupil_right")
 
-    def perform_action(self, action, *args):
-        if action == "drive":
-            self.drive()
-        elif action == "talk":
-            self.talk(*args)
-        else:
-            print("Unknown action")
-
-    def action_thread(self, action, *args):
-        thread = threading.Thread(target=self.perform_action, args=(action, *args))
-        thread.start()
-
     def run(self):
         while True:
             if self.is_idle and not self.isDriving:  # Display idle animation if not driving
@@ -190,11 +178,14 @@ class Robot:
                 self.walk_animation()
                 self.root.update()
                 time.sleep(0.1)  # Adjust the driving animation duration as needed
+            elif self.isTalking:
+                self.canvas.delete("all")
+                self.talk("Hello, I am a robot")
+                self.root.update()
 
     def talk(self, words):
         # Animation for talking (you can customize this)
         self.canvas.create_text(200, 300, text=words, font=("Helvetica", 12))
-
         # Text-to-speech
         self.engine.say(words)
         self.engine.runAndWait()
