@@ -225,6 +225,7 @@ class Robot:
         # Text-to-speech
         self.engine.say(words)
         self.engine.runAndWait()
+        self.canvas.delete("all")
 
 if __name__ == "__main__":
     root = tk.Tk()
