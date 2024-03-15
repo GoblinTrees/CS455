@@ -54,7 +54,7 @@ class Robot:
             self.canvas.update()
             self.emergency_stop()
         elif event.keysym == 'v':
-            self.is_idle = True
+            self.is_idle = False
             self.isTalking = True
             
 
