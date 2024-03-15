@@ -10,44 +10,8 @@ class Robot:
         self.canvas = tk.Canvas(root, width=400, height=400)
         self.canvas.pack()
         self.engine = pyttsx3.init()
-        global RLcap
-        global RRcap
-        global RLstart
-        global RRstart
-        global RUcap
-        global RBcap
-        global RUstart
-        global RBstart
-        
-        # R Default
-        RLcap = 350
-        RRcap = 650
-        RLstart = 475
-        RRstart = 525
-        RUcap = 100
-        RBcap = 400
-        RUstart = 225
-        RBstart = 275
 
-        global LLcap
-        global LRcap
-        global LLstart
-        global LRstart
-        global LUcap
-        global LBcap
-        global LUstart
-        global LBstart
-        # L Default
-        LLcap = 100
-        LRcap = 400
-        LLstart = 225
-        LRstart = 275
-        LUcap = 100
-        LBcap = 400
-        LUstart = 225
-        LBstart = 275
-
-    def move_stick_figure(self, x, y):
+    def move_stick_figure(self, x=100, y=200):
         # Clear canvas
         self.canvas.delete("stick_figure")
         # Draw stick figure
@@ -57,10 +21,6 @@ class Robot:
         self.canvas.create_line(x, y+30, x+20, y+50, fill="black", tags="stick_figure")
         self.canvas.create_line(x, y+10, x-10, y+20, fill="black", tags="stick_figure")
         self.canvas.create_line(x, y+10, x+10, y+20, fill="black", tags="stick_figure")
-
-    def move_arm(self):
-        # Animation for moving arm on canvas
-        pass
 
     def turn_wheels(self):
         # Animation for turning wheels on canvas
@@ -82,20 +42,31 @@ class Robot:
         self.engine.runAndWait()
 
     def idle_animation(self):
-        self.canvas.configure(bg="gray")
-        self.canvas.pack(fill="both", expand=True)
-        head = self.canvas.create_oval(50, 50, 700, 500, width=5, fill="lightgray")
-        eye_L = self.canvas.create_oval(150, 150, 350, 350, width=3, fill="white")
-        eye_R = self.canvas.create_oval(400, 150, 600, 350, width=3, fill="white")
-        global pupil_L
-        pupil_L = self.canvas.create_oval(LLstart, LUstart, LRstart, LBstart, width=3, fill="black")
-        global pupil_R
-        pupil_R = self.canvas.create_oval(RLstart, RUstart, RRstart, RBstart, width=3, fill="black")
+        # Animation for idle state
+        self.canvas.create_rectangle(0, 0, 800, 600, fill="lightgray")
+        self.move_stick_figure()
+
+        # Draw eyes
+        eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
+        eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
+
+        # Draw pupils
+        pupil_left = self.canvas.create_oval(95, 290, 105, 310, fill="black", tags="pupil_left")
+        pupil_right = self.canvas.create_oval(195, 290, 205, 310, fill="black", tags="pupil_right")
+
+        # Blink animation
+        time.sleep(0.3)  # Duration eyes are closed
+        self.canvas.delete(eye_left, eye_right, pupil_left, pupil_right)
+        self.canvas.create_rectangle(90, 280, 210, 320, fill="lightgray")  # Closed eyes
+        self.root.update()
+        time.sleep(0.2)  # Duration eyes are closed
+        self.canvas.delete("all")  # Clear canvas
+        self.root.update()
+        time.sleep(0.5)  # Duration eyes are open
+
 
     def perform_action(self, action, *args):
-        if action == "move_arm":
-            self.move_arm()
-        elif action == "turn_wheels":
+        if action == "drive":
             self.turn_wheels()
         elif action == "talk":
             self.talk(*args)
@@ -111,16 +82,9 @@ class Robot:
             if self.is_idle:
                 self.idle_animation()
                 self.root.update()
-                time.sleep(2)  # Adjust the idle animation duration as needed
-            else:
-                # Example: Robot is asked to move arm and talk simultaneously
-                self.action_thread("turn_wheels")
-                self.action_thread("talk", "I'm turning the wheels!")
-                time.sleep(2)  # Adjust the duration between actions as needed
-                self.is_idle = True  # Set robot to idle state after actions
+                time.sleep(1)  # Adjust the idle animation duration as needed
 
 if __name__ == "__main__":
-
     root = tk.Tk()
     robot = Robot(root)
     robot.run()
