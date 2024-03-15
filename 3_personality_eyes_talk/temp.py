@@ -12,6 +12,7 @@ class Robot:
         self.engine = pyttsx3.init()
 
     def driving(self):
+        # Animation for driving
         self.canvas.create_rectangle(0, 0, 800, 600, fill="lightgray")
         self.move_stick_figure()
 
@@ -37,15 +38,10 @@ class Robot:
             self.root.update()
             time.sleep(0.1)
 
-    def talk(self, words):
-        # Animation for talking (you can customize this)
-        self.canvas.create_text(200, 200, text=words)
+    def blink_eyes(self):
+        # Draw head
+        head = self.canvas.create_oval(70, 250, 230, 350, fill="lightgray")
 
-        # Text-to-speech
-        self.engine.say(words)
-        self.engine.runAndWait()
-
-    def idle_animation(self):
         # Draw eyes
         eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
         eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
@@ -54,19 +50,19 @@ class Robot:
         pupil_left = self.canvas.create_oval(95, 290, 105, 310, fill="black", tags="pupil_left")
         pupil_right = self.canvas.create_oval(195, 290, 205, 310, fill="black", tags="pupil_right")
 
+        # Draw smile
+        smile = self.canvas.create_arc(120, 320, 180, 340, start=0, extent=180, style=tk.ARC)
+
         # Blink animation
         time.sleep(0.3)  # Duration eyes are closed
-        self.canvas.delete(eye_left, eye_right, pupil_left, pupil_right)
-        self.canvas.create_rectangle(90, 280, 210, 320, fill="lightgray")  # Closed eyes
+        self.canvas.delete(eye_left, eye_right, pupil_left, pupil_right, head, smile)
+        self.canvas.create_rectangle(90, 280, 110, 320, fill="lightgray")  # Closed eyes
         self.root.update()
         time.sleep(0.2)  # Duration eyes are closed
-        self.canvas.delete("all")  # Clear canvas
-        self.root.update()
-        time.sleep(0.5)  # Duration eyes are open
 
     def perform_action(self, action, *args):
         if action == "drive":
-            self.driving()
+            self.turn_wheels()
         elif action == "talk":
             self.talk(*args)
         else:
@@ -79,9 +75,18 @@ class Robot:
     def run(self):
         while True:
             if self.is_idle:
-                self.idle_animation()
+                self.blink_eyes()  # Blink animation for eyes
+                self.driving()  # Driving animation for the stick figure
                 self.root.update()
                 time.sleep(1)  # Adjust the idle animation duration as needed
+
+    def talk(self, words):
+        # Animation for talking (you can customize this)
+        self.canvas.create_text(200, 300, text=words, font=("Helvetica", 12))
+
+        # Text-to-speech
+        self.engine.say(words)
+        self.engine.runAndWait()
 
 if __name__ == "__main__":
     root = tk.Tk()
