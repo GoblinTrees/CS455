@@ -208,7 +208,7 @@ class Robot:
 
     def run(self):
         while True:
-            if self.is_idle and not self.isDriving:  # Display idle animation if not driving
+            if self.is_idle and not self.isDriving and not self.isTalking:  # Display idle animation if not driving
                 self.blink_eyes()  # Blink animation for eyes
                 self.root.update()
                 time.sleep(.1)  # Adjust the idle animation duration as needed
