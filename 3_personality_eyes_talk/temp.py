@@ -152,9 +152,6 @@ class Robot:
         # Delete objects
         self.canvas.delete(head, eye_left, eye_right, pupil_left, pupil_right, "mouth")
 
-
-
-
     def move_stick_figure(self, x=100, y=200):
     # Clear canvas
         self.canvas.delete("stick_figure")
@@ -214,20 +211,14 @@ class Robot:
                 self.canvas.delete("all")
                 self.talk_animation()
                 self.talk("I am a robot")
-                self.root.update()
-
     
-            
-            
-
     def talk(self, words):
         # Animation for talking (you can customize this)
         self.canvas.create_text(200, 300, text=words, font=("Helvetica", 12))
         # Text-to-speech
         self.engine.say(words)
         self.engine.runAndWait()
-        self.canvas.delete("all")
-
+        
 if __name__ == "__main__":
     root = tk.Tk()
     robot = Robot(root)
