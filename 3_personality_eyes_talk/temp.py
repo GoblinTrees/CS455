@@ -1,4 +1,5 @@
 import time
+import threading
 import tkinter as tk
 import pyttsx3
 
@@ -11,12 +12,13 @@ class Robot:
         self.engine = pyttsx3.init()
 
         # Bind arrow key presses to driving animation
-        root.bind("<Up>", lambda event: self.drive() if self.is_idle else None)
-        root.bind("<Down>", lambda event: self.drive() if self.is_idle else None)
-        root.bind("<Left>", lambda event: self.drive() if self.is_idle else None)
-        root.bind("<Right>", lambda event: self.drive() if self.is_idle else None)
+        root.bind("<Up>", lambda event: self.drive())
+        root.bind("<Down>", lambda event: self.drive())
+        root.bind("<Left>", lambda event: self.drive())
+        root.bind("<Right>", lambda event: self.drive())
 
     def drive(self):
+        self.is_idle = False
         # Animation for driving
         self.canvas.create_rectangle(0, 0, 800, 600, fill="lightgray")
         self.move_stick_figure()
@@ -68,12 +70,18 @@ class Robot:
         else:
             print("Unknown action")
 
+    def action_thread(self, action, *args):
+        thread = threading.Thread(target=self.perform_action, args=(action, *args))
+        thread.start()
+
     def run(self):
         while True:
             if self.is_idle:
                 self.blink_eyes()  # Blink animation for eyes
                 self.root.update()
                 time.sleep(1)  # Adjust the idle animation duration as needed
+            else:
+                self.move_stick_figure()  # Show driving animation
 
     def talk(self, words):
         # Animation for talking (you can customize this)
@@ -83,7 +91,8 @@ class Robot:
         self.engine.say(words)
         self.engine.runAndWait()
 
+
 if __name__ == "__main__":
     root = tk.Tk()
     robot = Robot(root)
-    root.mainloop()
+    robot.run()
