@@ -11,6 +11,12 @@ class Robot:
         self.canvas.pack()
         self.engine = pyttsx3.init()
 
+        # Bind arrow key presses to driving animation
+        root.bind("<Up>", lambda event: self.action_thread("drive"))
+        root.bind("<Down>", lambda event: self.action_thread("drive"))
+        root.bind("<Left>", lambda event: self.action_thread("drive"))
+        root.bind("<Right>", lambda event: self.action_thread("drive"))
+
     def driving(self):
         # Animation for driving
         self.canvas.create_rectangle(0, 0, 800, 600, fill="lightgray")
@@ -68,7 +74,7 @@ class Robot:
 
     def perform_action(self, action, *args):
         if action == "drive":
-            self.turn_wheels()
+            self.driving()
         elif action == "talk":
             self.talk(*args)
         else:
