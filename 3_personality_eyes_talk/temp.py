@@ -109,12 +109,19 @@ class Robot:
         self.canvas.delete("stick_figure")  # Remove stick figure from the canvas
         self.blink_eyes()  # Display idle face animation
 
-
-
-    def drive(self):
-        # Animation for driving
-        self.canvas.create_rectangle(0, 0, 800, 600, fill="lightgray")
-        self.move_stick_figure()
+    def walk_animation(self):
+        x = 50
+        y = 200
+        dx = 5  # Movement speed in the x direction
+        while self.isDriving:
+            self.move_stick_figure(x, y)
+            self.canvas.update()
+            if x > 350:
+                dx = -5
+            elif x < 50:
+                dx = 5
+            x += dx
+            time.sleep(0.1)
 
     def move_stick_figure(self, x=100, y=200):
     # Clear canvas
@@ -179,7 +186,7 @@ class Robot:
                 self.root.update()
                 time.sleep(1)  # Adjust the idle animation duration as needed
             elif self.isDriving:  # Display driving animation if driving
-                self.drive()
+                self.walk_animation()
                 self.root.update()
                 time.sleep(0.1)  # Adjust the driving animation duration as needed
 
