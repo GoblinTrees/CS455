@@ -94,4 +94,5 @@ class Robot:
 if __name__ == "__main__":
     root = tk.Tk()
     robot = Robot(root)
-    threading.Thread(target)
+    thread = threading.Thread(target=robot.start_mainloop())
+    thread.start()
