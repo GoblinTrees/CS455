@@ -1,5 +1,4 @@
 import time
-import threading
 import tkinter as tk
 import pyttsx3
 
@@ -76,31 +75,4 @@ class Robot:
         if action == "drive":
             self.driving()
         elif action == "talk":
-            self.talk(*args)
-        else:
-            print("Unknown action")
-
-    def action_thread(self, action, *args):
-        thread = threading.Thread(target=self.perform_action, args=(action, *args))
-        thread.start()
-
-    def run(self):
-        while True:
-            if self.is_idle:
-                self.blink_eyes()  # Blink animation for eyes
-
-                self.root.update()
-                time.sleep(1)  # Adjust the idle animation duration as needed
-
-    def talk(self, words):
-        # Animation for talking (you can customize this)
-        self.canvas.create_text(200, 300, text=words, font=("Helvetica", 12))
-
-        # Text-to-speech
-        self.engine.say(words)
-        self.engine.runAndWait()
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    robot = Robot(root)
-    robot.run()
+            self.t
