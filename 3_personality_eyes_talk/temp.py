@@ -53,11 +53,12 @@ class Robot:
             self.canvas.update()
             self.emergency_stop()
         elif event.keysym == 'v':
-            self.is_idle = False
+            self.is_idle = True
             self.isTalking = True
             self.canvas.update()
             self.talk("I am a robot")
-            self.isTalking = False
+            self.talk_animation()
+            # self.isTalking = False
             
 
     def move_forward(self):
@@ -132,16 +133,6 @@ class Robot:
             time.sleep(0.1)
 
     def talk_animation(self):
-        # Draw head
-        head = self.canvas.create_oval(70, 250, 230, 350, fill="lightgray")
-
-        # Draw eyes
-        eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
-        eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
-
-        # Draw pupils
-        pupil_left = self.canvas.create_oval(95, 290, 105, 310, fill="black", tags="pupil_left")
-        pupil_right = self.canvas.create_oval(195, 290, 205, 310, fill="black", tags="pupil_right")
 
         # Draw smile
         for _ in range(3):  # Adjust the number of iterations to control the movement of the mouth
