@@ -29,22 +29,27 @@ class Robot:
         if event.keysym == 'Up':
             self.is_idle = False
             self.isDriving = True
+            self.canvas.update()
             self.move_forward()
         elif event.keysym == 'Down':
             self.is_idle = False
             self.isDriving = True
+            self.canvas.update()
             self.move_backward()
         elif event.keysym == 'Left':
             self.is_idle = False
             self.isDriving = True
+            self.canvas.update()
             self.turn_left()
         elif event.keysym == 'Right':
             self.is_idle = False
             self.isDriving = True
+            self.canvas.update()
             self.turn_right()
         elif event.keysym == 'space':
             self.is_idle = True
             self.isDriving = False
+            self.canvas.update()
             self.emergency_stop()
 
     def move_forward(self):
