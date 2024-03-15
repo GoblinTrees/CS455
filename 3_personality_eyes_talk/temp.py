@@ -1,5 +1,4 @@
 import time
-import threading
 import tkinter as tk
 import pyttsx3
 
@@ -69,10 +68,6 @@ class Robot:
         else:
             print("Unknown action")
 
-    def action_thread(self, action, *args):
-        thread = threading.Thread(target=self.perform_action, args=(action, *args))
-        thread.start()
-
     def run(self):
         while True:
             if self.is_idle:
@@ -88,11 +83,7 @@ class Robot:
         self.engine.say(words)
         self.engine.runAndWait()
 
-    def start_mainloop(self):
-        self.root.mainloop()
-
 if __name__ == "__main__":
     root = tk.Tk()
     robot = Robot(root)
-    thread = threading.Thread(target=robot.start_mainloop)
-    thread.start()
+    root.mainloop()
