@@ -8,6 +8,7 @@ class Robot:
     def __init__(self, root):
         self.is_idle = True
         self.isDriving = False  # Flag to indicate if driving animation is active
+        self.isTalking = False
         self.root = root
         self.canvas = tk.Canvas(root, width=400, height=400)
         self.canvas.pack()
