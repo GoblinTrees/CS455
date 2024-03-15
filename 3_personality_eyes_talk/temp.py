@@ -6,19 +6,86 @@ import pyttsx3
 class Robot:
     def __init__(self, root):
         self.is_idle = True
+        self.isDriving = False  # Flag to indicate if driving animation is active
         self.root = root
         self.canvas = tk.Canvas(root, width=400, height=400)
         self.canvas.pack()
         self.engine = pyttsx3.init()
+        self.L_MOTORS = 1
+        self.R_MOTORS = 0
+        self.r_motors = 6000
+        self.l_motors = 6000
 
-        # Bind arrow key presses to driving animation
-        root.bind("<Up>", lambda event: self.drive())
-        root.bind("<Down>", lambda event: self.drive())
-        root.bind("<Left>", lambda event: self.drive())
-        root.bind("<Right>", lambda event: self.drive())
+        keys = Robot(root)
+        root.bind('<Up>', keys.arrow)
+        root.bind('<Left>', keys.arrow)
+        root.bind('<Down>', keys.arrow)
+        root.bind('<Right>', keys.arrow)
+        root.bind('<space>', keys.arrow)
+
+    def set_driving(self, status):
+        self.isDriving = status
+
+    def arrow(self, key):
+        # set motor speed here
+            # Forwards
+        if key.keycode == 111:
+            if self.l_motors == 6000:
+                self.r_motors = 6600
+                self.l_motors = 5800
+            else:
+                self.l_motors -= 200
+                if self.r_motors > 7900:
+                    self.r_motors = 7900
+                # Increment speed by 200 in the forward direction
+                self.r_motors += 200
+
+            print(self.r_motors)
+            print(self.l_motors)
+            self.tango.setTarget(self.L_MOTORS, self.l_motors)
+            self.tango.setTarget(self.R_MOTORS, self.r_motors)
+
+        # Backwards
+
+        if key.keycode == 116:
+            if self.l_motors == 6000:
+                self.r_motors = 5400
+                self.l_motors = 6200
+            else:
+                self.l_motors += 200
+                if self.r_motors < 1510:
+                    self.r_motors = 1510
+                # Increment speed by 200 in the reverse direction
+                self.r_motors -= 200
+
+            print(self.r_motors)
+            print(self.l_motors)
+            self.tango.setTarget(self.L_MOTORS, self.l_motors)
+            self.tango.setTarget(self.R_MOTORS, self.r_motors)
+
+        # Left
+        if key.keycode == 113:
+            self.r_motors += 200
+            if (self.r_motors > 7900):
+                self.r_motors = 7900
+            print(self.r_motors)
+            self.tango.setTarget(self.R_MOTORS, self.r_motors)
+
+        # right
+        if key.keycode == 114:
+            self.l_motors -= 200
+            if (self.l_motors < 2110):
+                self.l_motors = 2110
+            print(self.l_motors)
+            self.tango.setTarget(self.L_MOTORS, self.l_motors)
+
+        # escape (estop)
+        if key.keycode == 9:
+            self.r_motors = 6000
+            self.l_motors = 6000
+        self.isDriving = True
 
     def drive(self):
-        self.is_idle = False
         # Animation for driving
         self.canvas.create_rectangle(0, 0, 800, 600, fill="lightgray")
         self.move_stick_figure()
@@ -76,12 +143,14 @@ class Robot:
 
     def run(self):
         while True:
-            if self.is_idle:
+            if self.is_idle and not self.isDriving:  # Display idle animation if not driving
                 self.blink_eyes()  # Blink animation for eyes
                 self.root.update()
                 time.sleep(1)  # Adjust the idle animation duration as needed
-            else:
-                self.move_stick_figure()  # Show driving animation
+            elif self.isDriving:  # Display driving animation if driving
+                self.drive()
+                self.root.update()
+                time.sleep(0.1)  # Adjust the driving animation duration as needed
 
     def talk(self, words):
         # Animation for talking (you can customize this)
@@ -91,8 +160,9 @@ class Robot:
         self.engine.say(words)
         self.engine.runAndWait()
 
-
 if __name__ == "__main__":
     root = tk.Tk()
     robot = Robot(root)
-    robot.run()
+    thread = threading.Thread(target=robot.run)
+    thread.start()
+    root.mainloop()
