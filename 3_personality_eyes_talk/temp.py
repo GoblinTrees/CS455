@@ -25,19 +25,26 @@ class Robot:
         root.bind('<Right>', self.handle_arrow_key)
         root.bind('<space>', self.handle_arrow_key)
 
-    def set_driving(self, status):
-        self.isDriving = status
-
     def handle_arrow_key(self, event):
         if event.keysym == 'Up':
+            self.is_idle = False
+            self.isDriving = True
             self.move_forward()
         elif event.keysym == 'Down':
+            self.is_idle = False
+            self.isDriving = True
             self.move_backward()
         elif event.keysym == 'Left':
+            self.is_idle = False
+            self.isDriving = True
             self.turn_left()
         elif event.keysym == 'Right':
+            self.is_idle = False
+            self.isDriving = True
             self.turn_right()
         elif event.keysym == 'space':
+            self.is_idle = True
+            self.isDriving = False
             self.emergency_stop()
 
     def move_forward(self):
