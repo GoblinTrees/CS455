@@ -131,7 +131,7 @@ class Robot:
 
     def talk_animation(self, words):
         # Draw head, eyes, and pupils
-        self.canvas.create_text(400, 400, text=words, font=("Helvetica", 12))
+        self.canvas.create_text(200, 350, text=words, font=("Helvetica", 12))
         head = self.canvas.create_oval(70, 250, 230, 350, fill="lightgray")
         eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
         eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
