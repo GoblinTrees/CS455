@@ -13,10 +13,6 @@ import threading
 
 app = Flask(__name__)
 
-@app.route("/check")
-def checkWorking():
-    return "Hello from Flask"
-
 
 @app.route('/')
 def home():
@@ -27,7 +23,6 @@ def home():
     kore.update(kore.tango_default)
 
     return render_template('index.html', ip_address=ip_add)
-
 
 @app.route('/control', methods=['POST'])
 def control_robot():
@@ -78,6 +73,7 @@ def control_robot():
     return "Received the control data successfully!"
 
 
+#TODO test the vocals
 @app.route("/voice", methods=['GET', 'POST'])
 def voice():
     # send the data by form request in the dashboard
@@ -88,10 +84,11 @@ def voice():
         # Extract the text from the received data
         text = data.get('text')
 
-        # send the data to the vocals
+        # send the data to the vocals OPTION 1
         kore.exec.submit(kore.speak(text))
+        # send the data to the vocals OPTION 2
+        # kore.speak(text)
 
-    # Submit data to the exec Executor
     return "Hello from Flask"
 
 
@@ -115,7 +112,7 @@ class Kore():
         self.tango = Controller()
 
         # The taskmaster executor
-        self.exec = ThreadPoolExecutor(max_workers=8)
+        self.exec = ThreadPoolExecutor(max_workers=None)
 
 
         # vocals
@@ -123,7 +120,7 @@ class Kore():
         # the personality window
         self.win = tk.Tk()
 
-        # the actual values to be manipultated for the system
+        # the actual values to be manipulated for the system
         self.tango_values = {
             "Headtilt": 6000,
             "Headturn": 6000,
