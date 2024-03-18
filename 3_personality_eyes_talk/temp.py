@@ -131,7 +131,13 @@ class Robot:
 
     def talk_animation(self, words):
         # Draw head, eyes, and pupils
-        self.canvas.create_text(300, 250, text=words, font=("Helvetica", 12))
+        text_object = self.canvas.create_text(300, 250, text=words, font=("Helvetica", 12))
+        (x0, y0, x1, y1) = canvas.bbox(text_object)
+
+        # Create the speech bubble around the text
+        speech_bubble = canvas.create_rectangle(x0 - 10, y0 - 10, x1 + 10, y1 + 10, fill="white", outline="black")
+        canvas.tag_lower(speech_bubble, text_object)
+    
         head = self.canvas.create_oval(70, 250, 230, 350, fill="lightgray")
         eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
         eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
