@@ -190,10 +190,10 @@ class Robot:
         smile = self.canvas.create_arc(120, 320, 180, 340, start=0, extent=180, style=tk.ARC)
 
         # Blink animation
-        time.sleep(0.3)  # Duration eyes are closed
+        time.sleep(1)  # Duration eyes are closed
         self.canvas.delete(eye_left, eye_right, pupil_left, pupil_right)
         self.root.update()
-        time.sleep(0.2)  # Duration eyes are closed
+        time.sleep(0.4)  # Duration eyes are closed
         # Draw eyes
         eye_left = self.canvas.create_oval(90, 280, 110, 320, fill="white")
         eye_right = self.canvas.create_oval(190, 280, 210, 320, fill="white")
