@@ -1,7 +1,7 @@
 from openai import OpenAI
 import pyttsx3
 import speech_recognition as sr
-import concurrent.futures
+import threading
 
 client = OpenAI()  # Automatically uses API key from environment variables
 engine = pyttsx3.init()
@@ -10,7 +10,7 @@ def chat_with_openai(prompt):
     response = client.completions.create(model="gpt-3.5-turbo-instruct",  # Adjust model name here
                                          prompt=prompt,
                                          temperature=0.7,
-                                         max_tokens=150)
+                                         max_tokens= 10)
     return response.choices[0].text.strip()
 
 
@@ -41,21 +41,34 @@ def talk_to() -> str:
 
 def talk_back(words):
     engine.say(words)
-    engine.runAndWait()
-
 
 if __name__ == "__main__":
     # Ask your Genie three questions
     print("-> Ask me three Questions <-")
 
+    # Inside the main block
     for x in range(1):
         user_input = talk_to()
-        # if user_input.lower() == "exit":
-        #     print("Goodbye!")
-        # break
         prompt = f"You said: {user_input}\nAI says:"
         response = chat_with_openai(prompt)
-        # output the responses
-    print("-> That is all! <- ")
 
-#TODO add in 5 personalities, shorten up the token response on Chat-GPT, import to Kore.py, switch to multithreading
+        # Remove extra spaces from the response
+        words = response.split()  # Split the text into words
+        cleaned_words = [word.strip() for word in words]  # Remove extra spaces from each word
+        response_cleaned = ' '.join(cleaned_words)  # Join the cleaned words back together
+
+        # Output the responses using threading
+        thread1 = threading.Thread(target=talk_back, name="Thread 1", args=(response_cleaned,))
+        thread2 = threading.Thread(target=print, name="Thread 2", args=(response,))
+
+        thread1.start()
+        thread2.start()
+
+        #
+        thread1.join()
+        thread2.join()
+        print("after")
+
+print("-> That is all! <- ")
+
+#TODO add in 5 personalities, shorten up the token response on Chat-GPT, import to Kore.p   y, switch to multithreading
