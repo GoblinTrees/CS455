@@ -1,7 +1,7 @@
 import socket
 import random
 import time
-
+import pyttsx3
 token = b"your turn"
 
 msg = [
@@ -38,6 +38,7 @@ def server():
     conn.close()
 
 def exchange_messages(conn):
+
 
     for x in range(len(msg)):
         # print line
