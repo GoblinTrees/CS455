@@ -149,8 +149,8 @@ class DialogEngine:
                                         rules[currentSubruleIndex]["subrules"] = subrules
                                         currentSubruleIndex = index
                             index+=1          
-                for i in rules:
-                    print(rules[i])
+                #for i in rules:
+                #    print(rules[i])
         except FileNotFoundError:
             print(f"Error: File '{rulesFile}' not found.")
         return rules
