@@ -284,7 +284,7 @@ while listening:
             userInput = r.recognize_google(audio)
             print(userInput)
             userInput = dialogEngine.variableRecognition(userInput)
-            print(userInput)
+            #print(userInput)
             response = dialogEngine.processInput(userInput)
             responseParts = response.split(" ")
             #fix replace var
