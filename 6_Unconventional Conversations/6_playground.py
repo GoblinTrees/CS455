@@ -9,7 +9,6 @@ import random
 from openai import OpenAI
 
 # client = OpenAI()  # Automatically uses API key from environment variables
-# api_key = "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"
 client = OpenAI()
 
 engine = pyttsx3.init()
