@@ -9,6 +9,7 @@ import random
 from openai import OpenAI
 
 # client = OpenAI()  # Automatically uses API key from environment variables
+api_key = "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"
 client = OpenAI()
 
 engine = pyttsx3.init()
@@ -289,11 +290,9 @@ if __name__ == "__main__":
         thread1.start()
         thread2.start()
 
-        # thread1.join()
-        # thread2.join()
+
         engine.runAndWait()
-        print("---EOR---")
-        break
+        print(f"---End of response for {str(personality)}---")
 
     print("-> That is all! <- ")
 
