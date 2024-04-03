@@ -6,7 +6,6 @@ import pyttsx3
 from tkinter import *
 from maestro import Controller
 from sys import version_info
-from concurrent.futures import ThreadPoolExecutor
 import threading
 
 
@@ -73,7 +72,6 @@ def control_robot():
     return "Received the control data successfully!"
 
 
-#TODO test the vocals
 @app.route("/voice", methods=['GET', 'POST'])
 def voice():
     # send the data by form request in the dashboard
@@ -85,9 +83,7 @@ def voice():
         text = data.get('text')
 
         # send the data to the vocals OPTION 1
-        kore.exec.submit(kore.speak(text))
-        # send the data to the vocals OPTION 2
-        # kore.speak(text)
+        kore.speak(text)
 
     return "Hello from Flask"
 
@@ -112,7 +108,7 @@ class Kore():
         self.tango = Controller()
 
         # The taskmaster executor
-        self.exec = ThreadPoolExecutor(max_workers=None)
+
 
 
         # vocals
@@ -221,9 +217,6 @@ class Kore():
 
     def ping(self):
         return print("Pinged Kore")
-
-    # def execute(self, order):
-    #     self.exec.submit(order)
 
     def speak(self, text):
         # Pass the text into the vocals (engine)
@@ -378,14 +371,14 @@ if __name__ == "__main__":
 
     # Create threads for Flask and Tkinter
     flask_thread = threading.Thread(target=kore.boot)
-    tkinter_thread = threading.Thread(target=kore.start_tkinter)
+    # tkinter_thread = threading.Thread(target=kore.start_tkinter)
 
     # Start both threads
     flask_thread.start()
-    tkinter_thread.start()
+    # tkinter_thread.start()
 
     # Wait for both threads to finish
     flask_thread.join()
-    tkinter_thread.join()
+    # tkinter_thread.join()
 
 
