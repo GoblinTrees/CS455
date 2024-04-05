@@ -33,7 +33,7 @@ while searching:
                 print(data)
                 print("break")
                 print(data1)
-                print(data1[1]
+                print(data1[1])
                 print("break")
                 #distances = data.split(',')
                 #print(distances[0])
