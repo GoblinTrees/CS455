@@ -1,5 +1,5 @@
 import serial
-
+breakflag = 0
 print("in loop")
 try:
         ser = serial.Serial()
