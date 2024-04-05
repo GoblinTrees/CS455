@@ -34,6 +34,8 @@ while searching:
                 #print("break")
                 #print(data1)
                 print(data1[1])
+                print(data1[0])
+                print(data1[2])
                 print("break")
                 #distances = data.split(',')
                 #print(distances[0])
