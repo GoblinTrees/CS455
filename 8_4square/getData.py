@@ -28,4 +28,6 @@ while searching:
                 print(data)
                 
         finally:
+                if breakflag:
+                        break
         
