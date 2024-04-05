@@ -1,6 +1,9 @@
 import serial
+import time
+
 breakflag = 0
 print("in loop")
+
 try:
         ser = serial.Serial()
         ser.port = '/dev/ttyUSB0'
