@@ -29,9 +29,11 @@ while searching:
                 data=str(ser.readline())
                 data1 = str(ser.readline())
                 data = data.split()
-                data1 = data1.split()
+                data1 = data1.split(',')
                 print(data)
+                print("break")
                 print(data1)
+                print(data1[1]
                 print("break")
                 #distances = data.split(',')
                 #print(distances[0])
