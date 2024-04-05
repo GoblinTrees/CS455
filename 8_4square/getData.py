@@ -22,9 +22,10 @@ while searching:
                 # data looks like this when it first gets here
                 # mc 0f 00000663 000005a3 00000512 000004cb  ffffffff ffffffff ffffffff 095f c1 00146fb7 a0:0 22be
                 # 0  1  2        3        4        5        6        7        8        9        10   11 12       13   14
-                data=ser.readline()
+                data=str(ser.readline())
+                distances = data.split(",")
+                print(distances)
                 print(data)
                 
         finally:
-                print("error")
         
