@@ -1,0 +1,86 @@
+from asyncio import wait
+import time
+import random
+import tkinter as tk
+from maestro import Controller
+import pyttsx3
+
+
+
+class UWBAnchor:
+    def __init__(self, id):
+        self.id = id
+        # Initialize UWB anchor sensor
+    
+    def get_range_to_robot(self):
+        # Simulate ranging measurement or communicate with the UWB sensor
+        return random.uniform(0, 3)  # Example: Random distance between 0 and 3 meters
+
+class Robot:
+    def __init__(self, root):
+        self.currentSection = None # can be a number between 0 and 3, 0,1,2,3 are sections None is default.
+        self.root = root
+        self.canvas = tk.Canvas(root, width=400, height=400)
+        self.canvas.pack()
+        self.engine = pyttsx3.init()
+        self.L_MOTORS = 1
+        self.R_MOTORS = 0
+        self.r_motors = 6000
+        self.l_motors = 6000
+        self.tango = Controller()
+        self.exited = 0
+
+    # if given turn and turn time it will turn right for length of time specified. Then it will drive forward based on drive time.
+    def move(self, turn, turnTime, driveTime):
+        if turn:
+            self.r_motors = 7000
+            self.tango.setTarget(self.R_MOTORS, self.r_motors)
+            wait(turnTime)
+            self.r_motors = 6000
+            self.tango.setTarget(self.R_MOTORS, self.r_motors)
+        self.r_motors = 7000
+        self.l_motors = 5400
+        self.tango.setTarget(self.L_MOTORS, self.l_motors)
+        self.tango.setTarget(self.R_MOTORS, self.r_motors)
+        wait(driveTime)
+        self.r_motors = 6000
+        self.l_motors = 6000
+        self.tango.setTarget(self.L_MOTORS, self.l_motors)
+        self.tango.setTarget(self.R_MOTORS, self.r_motors)
+        pass
+
+    def announce_section(self, section):
+        print("I'm in section ", section)
+
+    def announce_exit(self):
+        print("Exited")
+
+
+def localize(robot, anchors):
+    # Implement localization algorithm here
+    # Determine current section based on UWB ranging data
+    # Update robot's current section attribute
+
+
+def main():
+    # System setup
+    anchors = [UWBAnchor(i) for i in range(4)]  # Create UWB anchor sensors
+    robot = Robot()  # Create robot instance
+
+    # Localization
+    data = localize(robot, anchors)
+
+    # Robot behavior
+    if robot.current_section is not None:
+        robot.announce_section(robot.current_section)
+
+    if robot.exited:
+        robot.announce_exit()
+    # Move the robot (simulate or actual movement)
+    robot.move(data)
+
+    # Sleep for some time before next iteration
+    time.sleep(1)  # Adjust as needed
+
+if __name__ == "__main__":
+    main()
