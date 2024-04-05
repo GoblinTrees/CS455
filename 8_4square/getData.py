@@ -1,4 +1,6 @@
+import serial
 def getCurrentDistances(self) -> dict:
+        print("in loop")
         try:
             ser = serial.Serial()
             ser.port = '/dev/ttyUSB0'
