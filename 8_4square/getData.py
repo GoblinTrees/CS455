@@ -15,7 +15,6 @@ try:
 except Exception as e:
         print("ERROR IN FIRST TRY OF GET DISTANCES:",e)
         pass
-ser.open()
 searching = True
 toReturn = {}
 while searching:
