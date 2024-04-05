@@ -25,7 +25,7 @@ while searching:
                 data=ser.readline()
                 print(data)
                 for i in range(data.length()):
-                        print(data[i]
+                        print(data[i])
                 
         finally:
                 print("error")
