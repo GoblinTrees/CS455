@@ -37,7 +37,8 @@ numData = 0
 target = None
 previousHighest = None
 
-def findPylon (self):
+
+def findPylon (self, searching, foundPylon, missionSuccess, pylon, numData, target, previousHighest):
         while searching:
                 if foundPylon:
                         # rotate for .5 seconds
@@ -57,7 +58,7 @@ def findPylon (self):
                         isNull = False
                         if foundPylon:
                         # check if its less than previous
-                                if data1[target] < previousHighest:
+                                if float(data1[target]) < previousHighest:
                                         previousHighest = data1[target]
                                 else:
                                         # rotate for .5 seconds
@@ -81,25 +82,26 @@ def findPylon (self):
 
                         else:
                                 if numData == 10:
-                                        pylon[0] = pylon[0]/10
-                                        pylon[1] = pylon[1]/10
-                                        pylon[2] = pylon[2]/10
-                                        pylon[3] = pylon[3]/10
+                                        pylon[0] = float(pylon[0])/10
+                                        pylon[1] = float(pylon[1])/10
+                                        pylon[2] = float(pylon[2])/10
+                                        pylon[3] = float(pylon[3])/10
                                         target = pylon.argmax()
                                         foundPylon = True
                                         previousHighest = pylon[target]
                                 else:
-                                        for i in range(4):
-                                                if data1[i] > 2000000 or data1[i] == None:
+                                        for i in range(1, 5):
+                                                #print(i, "Data1:", data1[i])
+                                                if data1[i] == None:
                                                         isNull = True
                                         if isNull == False:
-                                                for i in range(4):
+                                                for i in range(1, 5):
                                                         numData += 1
-                                                        pylon[i] += data1[i]
+                                                        pylon[i-1] += float(data1[i])
                 finally:
                         print("Mission Successful")
                                 
 root = tk.Tk()
 robot = Robot(root)
-findPylon(robot)
+findPylon(robot, searching, foundPylon, missionSuccess, pylon, numData, target, previousHighest)
 root.mainloop()
