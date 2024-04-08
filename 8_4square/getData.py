@@ -30,6 +30,7 @@ except Exception as e:
 
 ser.open()
 searching = True
+dataPoints = np.zeros((10, 4))
 foundPylon = False
 missionSuccess = False
 pylon = np.zeros((4,), dtype=int)
@@ -57,31 +58,35 @@ def findPylon (self, searching, foundPylon, missionSuccess, pylon, numData, targ
                         data1 = data1.split(',')
                         isNull = False
                         if foundPylon:
+                                print("found Pylon!!!!!!!!!!!!!!!!!!!!!!!!!!")
                         # check if its less than previous
-                                if float(data1[target]) < previousHighest:
-                                        previousHighest = data1[target]
-                                else:
-                                        # rotate for .5 seconds
-                                        self.r_motors = 7000
-                                        self.tango.setTarget(self.R_MOTORS, self.r_motors)
-                                        time.sleep(.5)
-                                        self.r_motors = 6000
-                                        self.tango.setTarget(self.R_MOTORS, self.r_motors)
+                            if data1[target] != "null" or float(data1[target] != None:
+                                    if float(data1[target]) < previousHighest:
+                                            previousHighest = data1[target]
+                                    else:
+                                            print("rotating")
+                                            # rotate for .5 seconds
+                                            self.r_motors = 7000
+                                            self.tango.setTarget(self.R_MOTORS, self.r_motors)
+                                            time.sleep(.5)
+                                            self.r_motors = 6000
+                                            self.tango.setTarget(self.R_MOTORS, self.r_motors)
 
-                                        # drive straight based on distance calculated in pylon[target]
-                                        self.r_motors = 6600
-                                        self.l_motors = 5800
-                                        self.tango.setTarget(self.L_MOTORS, self.l_motors)
-                                        self.tango.setTarget(self.R_MOTORS, self.r_motors)
-                                        time.sleep(3) # figure out how far this drives
-                                        self.r_motors = 6000
-                                        self.l_motors = 6000
-                                        self.tango.setTarget(self.L_MOTORS, self.l_motors)
-                                        self.tango.setTarget(self.R_MOTORS, self.r_motors)
-                                        searching = False
+                                            # drive straight based on distance calculated in pylon[target]
+                                            self.r_motors = 6600
+                                            self.l_motors = 5800
+                                            self.tango.setTarget(self.L_MOTORS, self.l_motors)
+                                            self.tango.setTarget(self.R_MOTORS, self.r_motors)
+                                            time.sleep(3) # figure out how far this drives
+                                            self.r_motors = 6000
+                                            self.l_motors = 6000
+                                            self.tango.setTarget(self.L_MOTORS, self.l_motors)
+                                            self.tango.setTarget(self.R_MOTORS, self.r_motors)
+                                            searching = False
 
                         else:
-                                if numData == 10:
+                                if numData == 9:
+                                        print("found 10 data points")
                                         pylon[0] = float(pylon[0])/10
                                         pylon[1] = float(pylon[1])/10
                                         pylon[2] = float(pylon[2])/10
@@ -91,13 +96,16 @@ def findPylon (self, searching, foundPylon, missionSuccess, pylon, numData, targ
                                         previousHighest = pylon[target]
                                 else:
                                         for i in range(1, 5):
-                                                #print(i, "Data1:", data1[i])
-                                                if data1[i] == None:
+                                                #print("null checking")
+                                                if data1[i] == None or data1[i] == "null":
                                                         isNull = True
                                         if isNull == False:
+                                                print("found another data point")
+                                                numData += 1
+                                                print(numData)
                                                 for i in range(1, 5):
-                                                        numData += 1
                                                         pylon[i-1] += float(data1[i])
+                                                        dataPoints[numData][i-1] = float(data1[i])
                 finally:
                         print("Mission Successful")
                                 
