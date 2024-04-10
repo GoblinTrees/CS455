@@ -79,6 +79,10 @@ root = tk.Tk()
 robot = Robot(root)
 searching = True
 foundPylon = False
+pylon = None
+numData = 0
+target = none
+previous highest = 0
 missionSuccess = False
 
 findPylon(robot, searching, foundPylon, missionSuccess, pylon, numData, target, previousHighest)
