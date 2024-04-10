@@ -11,19 +11,18 @@ class Robot:
         self.r_motors = 6000
         self.l_motors = 6000
         self.tango = Controller()
-        ser = serial.Serial()
+        self.ser = serial.Serial()
 
         try:
-            # ser = serial.Serial()
-            ser.port = '/dev/ttyUSB0'
-            ser.baudrate = 115200
-            ser.bytesize = serial.EIGHTBITS
-            ser.parity = serial.PARITY_NONE
-            ser.stopbits = serial.STOPBITS_ONE
-            ser.timeout = 1
-            ser.open()
+            self.ser.port = '/dev/ttyUSB0'
+            self.ser.baudrate = 115200
+            self.ser.bytesize = serial.EIGHTBITS
+            self.ser.parity = serial.PARITY_NONE
+            self.ser.stopbits = serial.STOPBITS_ONE
+            self.ser.timeout = 1
+            self.ser.open()
             time.sleep(1)
-            ser.close()
+            self.ser.close()
         except Exception as e:
             print("ERROR IN FIRST TRY OF GET DISTANCES:", e)
             pass
