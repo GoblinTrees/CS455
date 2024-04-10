@@ -82,6 +82,4 @@ numData = 0
 target = None
 previousHighest = 0
 missionSuccess = False
-
 findPylon(robot, searching, foundPylon, missionSuccess, pylon, numData, target, previousHighest)
-root.mainloop()
