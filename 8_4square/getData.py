@@ -41,21 +41,21 @@ try:
             tango.setTarget(robot.R_MOTORS, robot.r_motors)
 
             # Drive straight based on distance calculated in pylon[target]
-            robot.r_motors = 6600
-            robot.l_motors = 5800
-            robot.tango.setTarget(robot.L_MOTORS, robot.l_motors)
-            robot.tango.setTarget(robot.R_MOTORS, robot.r_motors)
+            r_motors = 6600
+            l_motors = 5800
+            tango.setTarget(robot.L_MOTORS, robot.l_motors)
+            tango.setTarget(robot.R_MOTORS, robot.r_motors)
             time.sleep(3)  # Adjust the time to drive as needed
-            robot.r_motors = 6000
-            robot.l_motors = 6000
-            robot.tango.setTarget(robot.L_MOTORS, robot.l_motors)
-            robot.tango.setTarget(robot.R_MOTORS, robot.r_motors)
+            r_motors = 6000
+            l_motors = 6000
+            tango.setTarget(robot.L_MOTORS, robot.l_motors)
+            tango.setTarget(robot.R_MOTORS, robot.r_motors)
 
             searching = False
 
         else:
             try:
-                data = robot.ser.readline().decode().strip()
+                data = ser.readline().decode().strip()
                 data_parts = data.split()
                 if len(data_parts) == 15:  # Check if the data has all parts
                     # Extract relevant data
