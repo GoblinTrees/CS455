@@ -2,7 +2,6 @@ import serial
 import time
 import numpy as np
 from maestro import Controller
-import tkinter as tk
 
 class Robot:
     def __init__(self):
@@ -14,7 +13,7 @@ class Robot:
         self.ser = serial.Serial()
 
         try:
-            robot.ser.open()
+            self.ser.open()
             self.ser.port = '/dev/ttyUSB0'
             self.ser.baudrate = 115200
             self.ser.bytesize = serial.EIGHTBITS
@@ -32,11 +31,11 @@ def findPylon(robot, searching, foundPylon, missionSuccess, pylon, numData, targ
     while searching:
         if foundPylon:
             # rotate for .5 seconds
-            robot.r_motors = 7000
-            robot.tango.setTarget(robot.R_MOTORS, robot.r_motors)
+            r_motors = 7000
+            tango.setTarget(robot.R_MOTORS, robot.r_motors)
             time.sleep(.5)
-            robot.r_motors = 6000
-            robot.tango.setTarget(robot.R_MOTORS, robot.r_motors)
+            r_motors = 6000
+            tango.setTarget(robot.R_MOTORS, robot.r_motors)
 
             # Drive straight based on distance calculated in pylon[target]
             robot.r_motors = 6600
