@@ -5,8 +5,7 @@ from maestro import Controller
 import tkinter as tk
 
 class Robot:
-    def __init__(self, root):
-        self.root = root
+    def __init__(self):
         self.L_MOTORS = 1
         self.R_MOTORS = 0
         self.r_motors = 6000
@@ -75,8 +74,7 @@ def findPylon(robot, searching, foundPylon, missionSuccess, pylon, numData, targ
             finally:
                 print("Mission Successful")
 
-root = tk.Tk()
-robot = Robot(root)
+robot = Robot()
 searching = True
 foundPylon = False
 pylon = None
