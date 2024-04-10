@@ -59,11 +59,11 @@ def findPylon (self, searching, foundPylon, missionSuccess, pylon, numData, targ
                         isNull = False
                         if foundPylon:
                                 print("found Pylon!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                        # check if its less than previous
-                            if data1[target] != "null" or float(data1[target] != None:
-                                    if float(data1[target]) < previousHighest:
+                                # check if its less than previous
+                                if data1[target] != "null" or float(data1[target] != None:
+                                        if float(data1[target]) < previousHighest:
                                             previousHighest = data1[target]
-                                    else:
+                                else:
                                             print("rotating")
                                             # rotate for .5 seconds
                                             self.r_motors = 7000
