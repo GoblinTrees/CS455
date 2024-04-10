@@ -40,7 +40,7 @@ try:
         robot.tango.setTarget(robot.R_MOTORS, r_motors)
         try:
             temp = ser.readline()
-            data = ser.readline().split(",")
+            data = str(ser.readline()).split(",")
             print(data)
         except Exception as e:
             print("Error processing data:", e)
