@@ -82,7 +82,7 @@ foundPylon = False
 pylon = None
 numData = 0
 target = none
-previous highest = 0
+previoushighest = 0
 missionSuccess = False
 
 findPylon(robot, searching, foundPylon, missionSuccess, pylon, numData, target, previousHighest)
