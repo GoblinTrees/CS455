@@ -40,10 +40,10 @@ try:
         robot.tango.setTarget(robot.R_MOTORS, r_motors)
         try:
             temp = ser.readline()
-            print("line1: ", temp)
+            #print("line1: ", temp) #hex values
             data = str(ser.readline()).split(",")
-            print("line2: ", data)
-            #print(data[2])
+            print("line2: ", data) # decimal values
+            print(data[2])
         except Exception as e:
             print("Error processing data:", e)
             break  # Exit the loop if an error occurs
