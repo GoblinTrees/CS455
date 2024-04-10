@@ -81,7 +81,7 @@ searching = True
 foundPylon = False
 pylon = None
 numData = 0
-target = none
+target = None
 previoushighest = 0
 missionSuccess = False
 
