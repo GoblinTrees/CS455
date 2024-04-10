@@ -52,7 +52,7 @@ def findPylon(robot, searching, foundPylon, missionSuccess, pylon, numData, targ
 
         else:
             try:
-                data = ser.readline().decode().strip()
+                data = robot.ser.readline().decode().strip()
                 data_parts = data.split()
                 if len(data_parts) == 15:  # Check if the data has all parts
                     # Extract relevant data
