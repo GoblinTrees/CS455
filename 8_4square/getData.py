@@ -30,7 +30,6 @@ try:
     ser.timeout = 1
     ser.open()
     time.sleep(1)
-    ser.close()
     while searching:
         if foundPylon:
             # rotate for .5 seconds
@@ -79,4 +78,5 @@ try:
 except Exception as e:
     print("ERROR IN FIRST TRY OF GET DISTANCES:", e)
     pass
+ser.close()
 
