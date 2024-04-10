@@ -12,7 +12,6 @@ class Robot:
         self.l_motors = 6000
         self.tango = Controller()
         self.ser = serial.Serial()
-        self.ser.open()
 
         try:
             self.ser.port = '/dev/ttyUSB0'
