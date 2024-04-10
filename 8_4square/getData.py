@@ -5,29 +5,33 @@ from maestro import Controller
 
 class Robot:
     def __init__(self):
-        self.L_MOTORS = 1
-        self.R_MOTORS = 0
-        self.r_motors = 6000
-        self.l_motors = 6000
-        self.tango = Controller()
-        self.ser = serial.Serial()
+        L_MOTORS = 1
+        R_MOTORS = 0
+        r_motors = 6000
+        l_motors = 6000
+        tango = Controller()
+        
+robot = Robot()
+searching = True
+foundPylon = False
+pylon = None
+numData = 0
+target = None
+previousHighest = 0
+missionSuccess = False
 
-        try:
-            self.ser.open()
-            self.ser.port = '/dev/ttyUSB0'
-            self.ser.baudrate = 115200
-            self.ser.bytesize = serial.EIGHTBITS
-            self.ser.parity = serial.PARITY_NONE
-            self.ser.stopbits = serial.STOPBITS_ONE
-            self.ser.timeout = 1
-            self.ser.open()
-            time.sleep(1)
-            self.ser.close()
-        except Exception as e:
-            print("ERROR IN FIRST TRY OF GET DISTANCES:", e)
-            pass
-
-def findPylon(robot, searching, foundPylon, missionSuccess, pylon, numData, target, previousHighest):
+try:
+    ser = serial.Serial()
+    ser.open()
+    ser.port = '/dev/ttyUSB0'
+    ser.baudrate = 115200
+    ser.bytesize = serial.EIGHTBITS
+    ser.parity = serial.PARITY_NONE
+    ser.stopbits = serial.STOPBITS_ONE
+    ser.timeout = 1
+    ser.open()
+    time.sleep(1)
+    ser.close()
     while searching:
         if foundPylon:
             # rotate for .5 seconds
@@ -73,13 +77,7 @@ def findPylon(robot, searching, foundPylon, missionSuccess, pylon, numData, targ
                 break  # Exit the loop if an error occurs
             finally:
                 print("Mission Successful")
+except Exception as e:
+    print("ERROR IN FIRST TRY OF GET DISTANCES:", e)
+    pass
 
-robot = Robot()
-searching = True
-foundPylon = False
-pylon = None
-numData = 0
-target = None
-previousHighest = 0
-missionSuccess = False
-findPylon(robot, searching, foundPylon, missionSuccess, pylon, numData, target, previousHighest)
