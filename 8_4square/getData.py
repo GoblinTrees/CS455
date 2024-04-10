@@ -5,11 +5,11 @@ from maestro import Controller
 
 class Robot:
     def __init__(self):
-        L_MOTORS = 1
-        R_MOTORS = 0
-        r_motors = 6000
-        l_motors = 6000
-        tango = Controller()
+        self.L_MOTORS = 1
+        self.R_MOTORS = 0
+        self.r_motors = 6000
+        self.l_motors = 6000
+        self.tango = Controller()
         
 robot = Robot()
 searching = True
@@ -27,13 +27,13 @@ try:
     while searching:
         l_motors = 7000
         r_motors = 5000
-        tango.setTarget(L_MOTORS, l_motors)
-        tango.setTarget(R_MOTORS, r_motors)
+        robot.self.tango.setTarget(L_MOTORS, l_motors)
+        robot.self.tango.setTarget(R_MOTORS, r_motors)
         time.sleep(1)
         l_motors = 6000
         r_motors = 6000
-        tango.setTarget(L_MOTORS, l_motors)
-        tango.setTarget(R_MOTORS, r_motors)
+        robot.self.tango.setTarget(L_MOTORS, l_motors)
+        robot.self.tango.setTarget(R_MOTORS, r_motors)
         try:
             data = ser.readline().decode().strip()
             data_parts = data.split()
