@@ -27,13 +27,13 @@ try:
     while searching:
         l_motors = 7000
         r_motors = 5000
-        robot.self.tango.setTarget(L_MOTORS, l_motors)
-        robot.self.tango.setTarget(R_MOTORS, r_motors)
+        robot.tango.setTarget(L_MOTORS, l_motors)
+        robot.tango.setTarget(R_MOTORS, r_motors)
         time.sleep(1)
         l_motors = 6000
         r_motors = 6000
-        robot.self.tango.setTarget(L_MOTORS, l_motors)
-        robot.self.tango.setTarget(R_MOTORS, r_motors)
+        robot.tango.setTarget(L_MOTORS, l_motors)
+        robot.tango.setTarget(R_MOTORS, r_motors)
         try:
             data = ser.readline().decode().strip()
             data_parts = data.split()
