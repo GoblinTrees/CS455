@@ -29,7 +29,6 @@ try:
     ser.parity = serial.PARITY_NONE
     ser.stopbits = serial.STOPBITS_ONE
     ser.timeout = 1
-    ser.open()
     time.sleep(1)
     ser.close()
     while searching:
