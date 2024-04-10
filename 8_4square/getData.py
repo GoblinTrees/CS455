@@ -14,6 +14,7 @@ class Robot:
         self.ser = serial.Serial()
 
         try:
+            robot.ser.open()
             self.ser.port = '/dev/ttyUSB0'
             self.ser.baudrate = 115200
             self.ser.bytesize = serial.EIGHTBITS
