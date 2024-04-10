@@ -11,9 +11,10 @@ class Robot:
         self.r_motors = 6000
         self.l_motors = 6000
         self.tango = Controller()
+        ser = serial.Serial()
 
         try:
-            ser = serial.Serial()
+            # ser = serial.Serial()
             ser.port = '/dev/ttyUSB0'
             ser.baudrate = 115200
             ser.bytesize = serial.EIGHTBITS
