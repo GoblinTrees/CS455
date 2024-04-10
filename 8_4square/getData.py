@@ -28,7 +28,7 @@ try:
     while searching:
         count += 1
         if count >= 9:
-            sesrching = False
+            searching = False
         l_motors = 7000
         r_motors = 5000
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
