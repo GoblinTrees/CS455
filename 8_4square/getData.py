@@ -39,7 +39,8 @@ try:
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
         robot.tango.setTarget(robot.R_MOTORS, r_motors)
         try:
-            data = ser.readline().decode().strip()
+            temp = ser.readline()
+            data = ser.readline().split(",")
             print(data)
         except Exception as e:
             print("Error processing data:", e)
