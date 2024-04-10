@@ -13,6 +13,7 @@ class Robot:
         
 robot = Robot()
 searching = True
+count = 0
 
 try:
     ser = serial.Serial()
@@ -25,6 +26,9 @@ try:
     ser.open()
     time.sleep(1)
     while searching:
+        count += 1
+        if count >= 9:
+            sesrching = False
         l_motors = 7000
         r_motors = 5000
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
