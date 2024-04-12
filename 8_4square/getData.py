@@ -52,14 +52,14 @@ try:
         else:
             l_motors = 5000
             robot.tango.setTarget(robot.L_MOTORS, l_motors)
-            time.sleep(.5)
+            time.sleep(.25)
             l_motors = 6000
             robot.tango.setTarget(robot.L_MOTORS, l_motors)
         try:
             temp = ser.readline()
             #print("line1: ", temp) #hex values
             data = str(ser.readline()).split(",")
-            print("line2: ", data) # decimal values
+            #print("line2: ", data) # decimal values
             
             if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
                 print("bad data, trying again")
