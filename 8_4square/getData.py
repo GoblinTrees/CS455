@@ -15,6 +15,7 @@ robot = Robot()
 searching = True
 count = 0
 quadrant = False
+findExit = False
 quadNum = 5
 arr = np.zeros((10, 4))
 
@@ -38,18 +39,14 @@ try:
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
     while searching:
-        if count >= 20:
-            searching = False
+        if count >= 9:
+            count = 0
         try:
             temp = ser.readline()
             #print("line1: ", temp) #hex values
             data = str(ser.readline()).split(",")
             #print("line2: ", data) # decimal values
             if quadrant:
-                arr[0, 0] = str(data[1])
-                arr[0, 1] = str(data[2])
-                arr[0, 2] = str(data[3])
-                arr[0, 3] = str(data[4])
                 l_motors = 5000
                 robot.tango.setTarget(robot.L_MOTORS, l_motors)
                 time.sleep(.25)
@@ -64,12 +61,8 @@ try:
                 r_motors = 6000
                 robot.tango.setTarget(robot.L_MOTORS, l_motors)
                 robot.tango.setTarget(robot.R_MOTORS, r_motors)
-                temp = ser.readline()
-                data = str(ser.readline()).split(",")
-                arr[1, 0] = str(data[1])
-                arr[1, 1] = str(data[2])
-                arr[1, 2] = str(data[3])
-                arr[1, 3] = str(data[4])
+                findExit = True
+            if findExit:
                 if arr[0, quadNum] < arr[1, quadNum]:
                     #rotate 180 and drive out
                     print('180 drive out')
@@ -92,10 +85,10 @@ try:
             if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
                 print("bad data, trying again")
             else:
-                arr[0, 0] = str(data[1])
-                arr[0, 1] = str(data[2])
-                arr[0, 2] = str(data[3])
-                arr[0, 3] = str(data[4])
+                arr[count, 0] = str(data[1])
+                arr[count, 1] = str(data[2])
+                arr[count, 2] = str(data[3])
+                arr[count, 3] = str(data[4])
                 count += 1
             #print(arr)
             #searching = False
