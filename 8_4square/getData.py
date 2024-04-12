@@ -37,7 +37,7 @@ try:
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
     while searching:
         if count >= 9:
-            min = np.argmin(arr)
+            min = np.argmin(arr[0])
             print(min)
             if min % 4 == 0:
                 print("quadrant 0")
