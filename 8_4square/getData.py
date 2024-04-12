@@ -50,7 +50,7 @@ try:
                 print("quadrant 3")
             quadrant = True
         else:
-            l_motors = 5500
+            l_motors = 500
             robot.tango.setTarget(robot.L_MOTORS, l_motors)
             time.sleep(1)
             l_motors = 6000
