@@ -26,18 +26,18 @@ try:
     ser.timeout = 1
     ser.open()
     time.sleep(1)
+    l_motors = 7000
+    r_motors = 5000
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    robot.tango.setTarget(robot.R_MOTORS, r_motors)
+    time.sleep(1)
+    l_motors = 6000
+    r_motors = 6000
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    robot.tango.setTarget(robot.R_MOTORS, r_motors)
     while searching:
         if count >= 9:
             searching = False
-        l_motors = 7000
-        r_motors = 5000
-        robot.tango.setTarget(robot.L_MOTORS, l_motors)
-        robot.tango.setTarget(robot.R_MOTORS, r_motors)
-        time.sleep(1)
-        l_motors = 6000
-        r_motors = 6000
-        robot.tango.setTarget(robot.L_MOTORS, l_motors)
-        robot.tango.setTarget(robot.R_MOTORS, r_motors)
         try:
             temp = ser.readline()
             #print("line1: ", temp) #hex values
