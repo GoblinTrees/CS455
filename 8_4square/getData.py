@@ -37,7 +37,14 @@ try:
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
     while searching:
         if count >= 9:
-            print(np.argmin(arr))
+            if np.argmin(arr) % 4 == 0:
+                print("quadrant 0")
+            if np.argmin(arr) % 4 == 1:
+                print("quadrant 1")
+            if np.argmin(arr) % 4 == 2:
+                print("quadrant 2")
+            if np.argmin(arr) % 4 == 3:
+                print("quadrant 3")
             searching = False
         try:
             temp = ser.readline()
