@@ -14,6 +14,7 @@ class Robot:
 robot = Robot()
 searching = True
 count = 0
+arr = np.zeros((4, 10))
 
 try:
     ser = serial.Serial()
@@ -42,11 +43,18 @@ try:
             temp = ser.readline()
             #print("line1: ", temp) #hex values
             data = str(ser.readline()).split(",")
-            print("line2: ", data) # decimal values
-            print(data[1])
-            print(data[2])
-            print(data[3])
-            print(data[4])
+            #print("line2: ", data) # decimal values
+            
+            if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3] == 'null' or str(data[4]]) =='null':
+                print("bad data, trying again")
+            else:
+                arr[count, 0] = str(data[1])
+                arr[count, 1] = str(data[2])
+                arr[count, 2] = str(data[3])
+                arr[count, 3] = str(data[4])
+                count += 1
+            
+            print(arr)
         except Exception as e:
             print("Error processing data:", e)
             break  # Exit the loop if an error occurs
