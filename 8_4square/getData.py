@@ -37,7 +37,7 @@ try:
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
     while searching:
         if count >= 9:
-            print(argmin(arr))
+            print(np.argmin(arr))
             searching = False
         try:
             temp = ser.readline()
