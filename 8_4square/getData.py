@@ -39,8 +39,39 @@ try:
     while searching:
         if count >= 9:
             searching = False
+        try:
+            temp = ser.readline()
+            #print("line1: ", temp) #hex values
+            data = str(ser.readline()).split(",")
+            #print("line2: ", data) # decimal values
+            if quadrant:
+                
+                l_motors = 5000
+                robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                time.sleep(.25)
+                l_motors = 6000
+                robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                l_motors = 5600
+                r_motors = 6800
+                robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                robot.tango.setTarget(robot.R_MOTORS, r_motors)
+                time.sleep(1)
+                l_motors = 6000
+                r_motors = 6000
+                robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                robot.tango.setTarget(robot.R_MOTORS, r_motors)
+            if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
+                print("bad data, trying again")
+            else:
+                arr[0, 0] = str(data[1])
+                arr[0, 1] = str(data[2])
+                arr[0, 2] = str(data[3])
+                arr[0, 3] = str(data[4])
+                count += 1
+            print(arr)
+            #searching = False
             min = np.argmin(arr[0])
-            print(min)
+            #print(min)
             if min % 4 == 0:
                 print("quadrant 0")
             if min % 4 == 1:
@@ -49,28 +80,7 @@ try:
                 print("quadrant 2")
             if min % 4 == 3:
                 print("quadrant 3")
-        else:
-            l_motors = 5000
-            robot.tango.setTarget(robot.L_MOTORS, l_motors)
-            time.sleep(.25)
-            l_motors = 6000
-            robot.tango.setTarget(robot.L_MOTORS, l_motors)
-        try:
-            temp = ser.readline()
-            #print("line1: ", temp) #hex values
-            data = str(ser.readline()).split(",")
-            #print("line2: ", data) # decimal values
-            
-            if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
-                print("bad data, trying again")
-            else:
-                arr[count, 0] = str(data[1])
-                arr[count, 1] = str(data[2])
-                arr[count, 2] = str(data[3])
-                arr[count, 3] = str(data[4])
-                count += 1
-            
-            print(arr)
+            quadrant = True
         except Exception as e:
             print("Error processing data:", e)
             break  # Exit the loop if an error occurs
