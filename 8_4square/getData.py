@@ -38,15 +38,11 @@ try:
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
     while searching:
         if quadrant:
-            l_motors = 5600
-            r_motors = 6800
+            l_motors = 5500
             robot.tango.setTarget(robot.L_MOTORS, l_motors)
-            robot.tango.setTarget(robot.R_MOTORS, r_motors)
             time.sleep(1)
             l_motors = 6000
-            r_motors = 6000
             robot.tango.setTarget(robot.L_MOTORS, l_motors)
-            robot.tango.setTarget(robot.R_MOTORS, r_motors)
         if count >= 9:
             min = np.argmin(arr[0])
             print(min)
