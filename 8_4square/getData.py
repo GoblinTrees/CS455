@@ -46,34 +46,34 @@ try:
             #print("line1: ", temp) #hex values
             data = str(ser.readline()).split(",")
             #print("line2: ", data) # decimal values
-            if quadrant:
-                l_motors = 5000
-                robot.tango.setTarget(robot.L_MOTORS, l_motors)
-                time.sleep(.25)
-                l_motors = 6000
-                robot.tango.setTarget(robot.L_MOTORS, l_motors)
-                l_motors = 5600
-                r_motors = 6800
-                robot.tango.setTarget(robot.L_MOTORS, l_motors)
-                robot.tango.setTarget(robot.R_MOTORS, r_motors)
-                time.sleep(1)
-                l_motors = 6000
-                r_motors = 6000
-                robot.tango.setTarget(robot.L_MOTORS, l_motors)
-                robot.tango.setTarget(robot.R_MOTORS, r_motors)
-                findExit = True
-            if findExit:
-                if arr[0, quadNum] < arr[1, quadNum]:
+            #if quadrant:
+                #l_motors = 5000
+                #robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                #time.sleep(.25)
+                #l_motors = 6000
+                #robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                #l_motors = 5600
+                #r_motors = 6800
+                #robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                #robot.tango.setTarget(robot.R_MOTORS, r_motors)
+                #time.sleep(1)
+                #l_motors = 6000
+                #r_motors = 6000
+                #robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                #robot.tango.setTarget(robot.R_MOTORS, r_motors)
+                #findExit = True
+            #if findExit:
+                #if arr[0, quadNum] < arr[1, quadNum]:
                     #rotate 180 and drive out
-                    print('180 drive out')
+                    #print('180 drive out')
                     #l_motors = 5000
                     #robot.tango.setTarget(robot.L_MOTORS, l_motors)
                     #time.sleep(.25)
                     #l_motors = 6000
                     #robot.tango.setTarget(robot.L_MOTORS, l_motors)
-                else:
+                #else:
                     #drive out
-                    print('drive out')
+                    #print('drive out')
                     #l_motors = 5600
                     #r_motors = 6800
                     #robot.tango.setTarget(robot.L_MOTORS, l_motors)
