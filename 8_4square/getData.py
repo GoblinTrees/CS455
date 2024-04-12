@@ -14,6 +14,7 @@ class Robot:
 robot = Robot()
 searching = True
 count = 0
+quadrant = False
 arr = np.zeros((10, 4))
 
 try:
@@ -36,6 +37,16 @@ try:
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
     while searching:
+        if quadrant:
+            l_motors = 5600
+            r_motors = 6800
+            robot.tango.setTarget(robot.L_MOTORS, l_motors)
+            robot.tango.setTarget(robot.R_MOTORS, r_motors)
+            time.sleep(1)
+            l_motors = 6000
+            r_motors = 6000
+            robot.tango.setTarget(robot.L_MOTORS, l_motors)
+            robot.tango.setTarget(robot.R_MOTORS, r_motors)
         if count >= 9:
             min = np.argmin(arr[0])
             print(min)
@@ -47,7 +58,7 @@ try:
                 print("quadrant 2")
             if min % 4 == 3:
                 print("quadrant 3")
-            searching = False
+            quadrant = True
         try:
             temp = ser.readline()
             #print("line1: ", temp) #hex values
