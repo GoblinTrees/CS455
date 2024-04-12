@@ -14,7 +14,7 @@ class Robot:
 robot = Robot()
 searching = True
 count = 0
-arr = np.zeros((4, 10))
+arr = np.zeros((10, 4))
 
 try:
     ser = serial.Serial()
