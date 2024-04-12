@@ -37,12 +37,6 @@ try:
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
     while searching:
-        if quadrant:
-            l_motors = 5500
-            robot.tango.setTarget(robot.L_MOTORS, l_motors)
-            time.sleep(1)
-            l_motors = 6000
-            robot.tango.setTarget(robot.L_MOTORS, l_motors)
         if count >= 9:
             min = np.argmin(arr[0])
             print(min)
@@ -55,6 +49,12 @@ try:
             if min % 4 == 3:
                 print("quadrant 3")
             quadrant = True
+        else:
+            l_motors = 5500
+            robot.tango.setTarget(robot.L_MOTORS, l_motors)
+            time.sleep(1)
+            l_motors = 6000
+            robot.tango.setTarget(robot.L_MOTORS, l_motors)
         try:
             temp = ser.readline()
             #print("line1: ", temp) #hex values
