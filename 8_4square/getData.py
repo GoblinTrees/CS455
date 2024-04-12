@@ -45,7 +45,7 @@ try:
             data = str(ser.readline()).split(",")
             #print("line2: ", data) # decimal values
             
-            if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3] == 'null' or str(data[4]]) =='null':
+            if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
                 print("bad data, trying again")
             else:
                 arr[count, 0] = str(data[1])
