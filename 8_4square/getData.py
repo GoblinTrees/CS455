@@ -72,20 +72,22 @@ try:
                 arr[1, 3] = str(data[4])
                 if arr[0, quadNum] < arr[1, quadNum]:
                     #rotate 180 and drive out
-                    l_motors = 5000
-                    robot.tango.setTarget(robot.L_MOTORS, l_motors)
-                    time.sleep(.25)
-                    l_motors = 6000
-                    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                    print('180 drive out')
+                    #l_motors = 5000
+                    #robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                    #time.sleep(.25)
+                    #l_motors = 6000
+                    #robot.tango.setTarget(robot.L_MOTORS, l_motors)
                 else:
                     #drive out
-                    l_motors = 5600
-                    r_motors = 6800
-                    robot.tango.setTarget(robot.L_MOTORS, l_motors)
-                    robot.tango.setTarget(robot.R_MOTORS, r_motors)
-                    time.sleep(3)
-                    l_motors = 6000
-                    r_motors = 6000
+                    print('drive out')
+                    #l_motors = 5600
+                    #r_motors = 6800
+                    #robot.tango.setTarget(robot.L_MOTORS, l_motors)
+                    #robot.tango.setTarget(robot.R_MOTORS, r_motors)
+                    #time.sleep(3)
+                    #l_motors = 6000
+                    #r_motors = 6000
                     
             if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
                 print("bad data, trying again")
@@ -95,7 +97,7 @@ try:
                 arr[0, 2] = str(data[3])
                 arr[0, 3] = str(data[4])
                 count += 1
-            print(arr)
+            #print(arr)
             #searching = False
             min = np.argmin(arr[0])
             #print(min)
