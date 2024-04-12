@@ -38,6 +38,7 @@ try:
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
     while searching:
         if count >= 9:
+            searching = False
             min = np.argmin(arr[0])
             print(min)
             if min % 4 == 0:
@@ -48,9 +49,8 @@ try:
                 print("quadrant 2")
             if min % 4 == 3:
                 print("quadrant 3")
-            quadrant = True
         else:
-            l_motors = 500
+            l_motors = 5000
             robot.tango.setTarget(robot.L_MOTORS, l_motors)
             time.sleep(1)
             l_motors = 6000
