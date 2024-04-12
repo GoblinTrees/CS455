@@ -27,7 +27,6 @@ try:
     ser.open()
     time.sleep(1)
     while searching:
-        count += 1
         if count >= 9:
             searching = False
         l_motors = 7000
