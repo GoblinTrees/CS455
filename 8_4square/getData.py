@@ -26,8 +26,8 @@ try:
     ser.timeout = 1
     ser.open()
     time.sleep(1)
-    l_motors = 5800
-    r_motors = 6600
+    l_motors = 5600
+    r_motors = 6800
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
     time.sleep(1)
