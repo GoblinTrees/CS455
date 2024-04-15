@@ -75,7 +75,7 @@ def findQuadrant():
         #robot.engine.say("quadrant 3")
         #robot.engine.runAndWait()
         
-def findPylon(count, quadNum, robot):
+def findPylon(quadNum, robot):
     arr = np.zeros((15, 4))
     print(findDistances)
     arr[0] = findDistances()
@@ -114,7 +114,7 @@ def findPylon(count, quadNum, robot):
         print("distance: ", distance)
         
 quadNum = findQuadrant()
-findPylon(count, quadNum, robot)
-#while searching:
-    #findPylon(count, quadNum, robot)
+findPylon(quadNum, robot)
+while searching:
+    findPylon(quadNum, robot)
 
