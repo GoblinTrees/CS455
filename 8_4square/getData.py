@@ -4,7 +4,6 @@ import numpy as np
 import pyttsx3
 from maestro import Controller
 import math
-import atexit
 
 class Robot:
     def __init__(self):
@@ -38,13 +37,13 @@ def findDistances(count, arr):
         data = str(ser.readline()).split(",")
         if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
             print("bad data, trying again")
-            findDistances(ser, count, arr)
+            arr = findDistances(ser, count, arr)
         else:
             arr[count, 0] = str(data[1])
             arr[count, 1] = str(data[2])
             arr[count, 2] = str(data[3])
             arr[count, 3] = str(data[4])
-            count += 1
+            return arr
         ser.close()
     except Exception as e:
         print(e)
@@ -80,7 +79,8 @@ def findPylon(count, arr, quadNum, robot):
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
     if arr[count - 1, quadNum] > arr[count, quadNum]:
-        findDistances(count, arr)
+        arr = findDistances(count, arr)
+        count += 1
         findPylon(count, arr)
     else:
         # pointed at the pylon
