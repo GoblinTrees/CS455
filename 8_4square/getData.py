@@ -106,10 +106,39 @@ def findPylon(count, arr, quadNum, robot):
     
         distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
         # drive
-        print(distance)
+        print("distance: ", distance)
 arr = findDistances(count, arr)
-print(arr)
 quadNum = findQuadrant(arr, robot, quadNum)
+print("Quadrant Number: ", quadNum)
 while searching:
+    try:
+        #print("in try")
+        ser = serial.Serial()
+        ser.port = '/dev/ttyUSB0'
+        ser.baudrate = 115200
+        ser.bytesize = serial.EIGHTBITS
+        ser.parity = serial.PARITY_NONE
+        ser.stopbits = serial.STOPBITS_ONE
+        ser.timeout = 1
+        ser.open()
+        temp = ser.readline()
+        #print("line1: ", temp) #hex values
+        data = str(ser.readline()).split(",")
+        #print(data)
+        if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
+            print("bad data, trying again")
+            arr = findDistances(count, arr)
+        else:
+            arr[count, 0] = str(data[1])
+            arr[count, 1] = str(data[2])
+            arr[count, 2] = str(data[3])
+            arr[count, 3] = str(data[4])
+            #print(arr)
+            return arr
+        print(arr)
+        ser.close()
+    except Exception as e:
+        print(e)
+        ser.close()
     findPylon(count, arr, quadNum, robot)
 
