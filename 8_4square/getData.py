@@ -52,7 +52,6 @@ def findDistances():
 def findQuadrant():
     data = findDistances()
     min = np.argmin(data)
-    print(min)
     if min % 4 == 0:
         print("Quadrant Number: 0")
         return 0
@@ -91,7 +90,6 @@ def findPylon(quadNum, robot):
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
     else:
         # pointed at the pylon
-
         if quadNum == 0:
             a = arr[1, 0]
             c = arr[1, 1]
@@ -111,10 +109,18 @@ def findPylon(quadNum, robot):
     
         distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
         # drive
+        l_motors = 5000
+        r_motors = 7000
+        robot.tango.setTarget(robot.L_MOTORS, l_motors)
+        robot.tango.setTarget(robot.R_MOTORS, r_motors)
+        time.sleep(.35)
+        motors = 6000
+        robot.tango.setTarget(robot.L_MOTORS, motors)
+        robot.tango.setTarget(robot.R_MOTORS, motors)
         print("distance: ", distance)
         
 quadNum = findQuadrant()
 #findPylon(quadNum, robot)
-#while searching:
-    #findPylon(quadNum, robot)
+while searching:
+    findPylon(quadNum, robot)
 
