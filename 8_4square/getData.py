@@ -112,8 +112,8 @@ def findPylon(count, arr, quadNum, robot):
         print(distance)
     try:
         while searching:
-            findQuadrant(arr, robot)
-            findPylon(count, arr, quadNum)
+            findQuadrant(arr, robot, quadNum)
+            findPylon(count, arr, quadNum, robot)
 
             # hard limit to cancel program
     finally:
