@@ -43,7 +43,7 @@ def findDistances():
             return findDistances()
         else:
             print("got data")
-            return (data[1], data[2], data[3], data[4])
+            return [data[1], data[2], data[3], data[4]]
         ser.close()
     except Exception as e:
         print(e)
