@@ -40,7 +40,7 @@ def findDistances(count, arr):
         #print(data)
         if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
             print("bad data, trying again")
-            arr = findDistances(ser, count, arr)
+            arr = findDistances(count, arr)
         else:
             arr[count, 0] = str(data[1])
             arr[count, 1] = str(data[2])
