@@ -23,9 +23,9 @@ quadNum = 5
 arr = np.zeros((20, 4))
 
 def findDistances(count, arr):
-    print("in function")
+    #print("in function")
     try:
-        print("in try")
+        #print("in try")
         ser = serial.Serial()
         ser.port = '/dev/ttyUSB0'
         ser.baudrate = 115200
@@ -37,7 +37,7 @@ def findDistances(count, arr):
         temp = ser.readline()
         #print("line1: ", temp) #hex values
         data = str(ser.readline()).split(",")
-        print(data)
+        #print(data)
         if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
             print("bad data, trying again")
             arr = findDistances(ser, count, arr)
@@ -46,7 +46,7 @@ def findDistances(count, arr):
             arr[count, 1] = str(data[2])
             arr[count, 2] = str(data[3])
             arr[count, 3] = str(data[4])
-            print(arr)
+            #print(arr)
             return arr
         ser.close()
     except Exception as e:
@@ -83,9 +83,7 @@ def findPylon(count, arr, quadNum, robot):
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
     if arr[count - 1, quadNum] > arr[count, quadNum]:
-        arr = findDistances(count, arr)
-        print(arr)
-        count += 1
+        #print(arr)
         findPylon(count, arr)
     else:
         # pointed at the pylon
