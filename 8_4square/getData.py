@@ -69,7 +69,7 @@ def findQuadrant(arr, robot, quadNum):
         quadNum = 3
         #robot.engine.say("quadrant 3")
         #robot.engine.runAndWait()
-    print(quadNum)
+    return quadNum
 
 def findPylon(count, arr, quadNum, robot):
     #rotate right
@@ -112,6 +112,6 @@ def findPylon(count, arr, quadNum, robot):
         # drive
         print(distance)
 while searching:
-    findQuadrant(arr, robot, quadNum)
+    quadNum = findQuadrant(arr, robot, quadNum)
     findPylon(count, arr, quadNum, robot)
 
