@@ -75,7 +75,7 @@ def findPylon(count, arr, quadNum, robot):
     #rotate right
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    time.sleep(1)
+    time.sleep(.35)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
