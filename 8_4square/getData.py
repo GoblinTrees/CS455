@@ -55,20 +55,21 @@ def findQuadrant(arr, robot, quadNum):
     #print(min)
     if min % 4 == 0:
         quadNum = 0
-        robot.engine.say("quadrant 0")
-        robot.engine.runAndWait()
+        #robot.engine.say("quadrant 0")
+        #robot.engine.runAndWait()
     if min % 4 == 1:
         quadNum = 1
-        robot.engine.say("quadrant 1")
-        robot.engine.runAndWait()
+        #robot.engine.say("quadrant 1")
+        #robot.engine.runAndWait()
     if min % 4 == 2:
         quadNum = 2
-        robot.engine.say("quadrant 2")
-        robot.engine.runAndWait()
+        #robot.engine.say("quadrant 2")
+        #robot.engine.runAndWait()
     if min % 4 == 3:
         quadNum = 3
-        robot.engine.say("quadrant 3")
-        robot.engine.runAndWait()
+        #robot.engine.say("quadrant 3")
+        #robot.engine.runAndWait()
+    print(quadNum)
 
 def findPylon(count, arr, quadNum, robot):
     #rotate right
