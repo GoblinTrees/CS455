@@ -35,6 +35,7 @@ def findDistances(count, arr):
         temp = ser.readline()
         #print("line1: ", temp) #hex values
         data = str(ser.readline()).split(",")
+        print(data)
         if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
             print("bad data, trying again")
             arr = findDistances(ser, count, arr)
