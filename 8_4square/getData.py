@@ -84,20 +84,24 @@ def findQuadrant(arr):
     min = np.argmin(arr[0])
     #print(min)
     if min % 4 == 0:
-        quadNum = 0
+        print("Quadrant Number: 0")
+        return 0
         #robot.engine.say("quadrant 0")
         #robot.engine.runAndWait()
     if min % 4 == 1:
-        quadNum = 1
+        print("Quadrant Number: 1")
+        return 1
         #robot.engine.say("quadrant 1")
         #robot.engine.runAndWait()
     if min % 4 == 2:
-        quadNum = 2
+        print("Quadrant Number: 2")
+        return 2
         #robot.engine.say("quadrant 2")
         #robot.engine.runAndWait()
     if min % 4 == 3:
-        quadNum = 3
-    print("Quadrant Number: ", quadNum)
+        print("Quadrant Number: 3")
+        return 3
+    
         #robot.engine.say("quadrant 3")
         #robot.engine.runAndWait()
         
@@ -134,7 +138,7 @@ def findPylon(count, arr, quadNum, robot):
         # drive
         print("distance: ", distance)
         
-findQuadrant(arr)
+quadNum = findQuadrant(arr)
 while searching:
     findPylon(count, arr, quadNum, robot)
 
