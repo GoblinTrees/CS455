@@ -88,6 +88,7 @@ def findPylon(quadNum, robot):
     print(arr[1, quadNum])
     if arr[0, quadNum] > arr[1, quadNum]:
         print("keep turning")
+        return True
     else:
         # pointed at the pylon
         print("time to drive")
@@ -119,10 +120,10 @@ def findPylon(quadNum, robot):
         robot.tango.setTarget(robot.L_MOTORS, motors)
         robot.tango.setTarget(robot.R_MOTORS, motors)
         print("distance: ", distance)
-        break
+        return False
         
 quadNum = findQuadrant()
 #findPylon(quadNum, robot)
 while searching:
-    findPylon(quadNum, robot)
+    searching = findPylon(quadNum, robot)
 
