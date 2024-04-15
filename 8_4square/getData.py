@@ -42,6 +42,7 @@ def findDistances():
             print("bad data, trying again")
             return findDistances()
         else:
+            print("got data")
             return data
         ser.close()
     except Exception as e:
