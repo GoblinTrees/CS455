@@ -23,7 +23,9 @@ quadNum = 5
 arr = np.zeros((20, 4))
 
 def findDistances(count, arr):
+    print("in function")
     try:
+        print("in try")
         ser = serial.Serial()
         ser.port = '/dev/ttyUSB0'
         ser.baudrate = 115200
