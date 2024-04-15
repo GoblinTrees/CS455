@@ -83,8 +83,7 @@ def findPylon(count, arr, quadNum, robot):
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
     if arr[count - 1, quadNum] > arr[count, quadNum]:
-        #print(arr)
-        findPylon(count, arr)
+        print("keep turning")
     else:
         # pointed at the pylon
         # turn 30 degrees
@@ -114,9 +113,9 @@ def findPylon(count, arr, quadNum, robot):
         distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
         # drive
         print(distance)
+arr = findDistances(count, arr)
+print(arr)
+quadNum = findQuadrant(arr, robot, quadNum)
 while searching:
-    arr = findDistances(count, arr)
-    print(arr)
-    quadNum = findQuadrant(arr, robot, quadNum)
     findPylon(count, arr, quadNum, robot)
 
