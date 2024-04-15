@@ -51,8 +51,7 @@ def findDistances():
 
 def findQuadrant():
     data = findDistances()
-    arr[0] = (data[1], data[2], data[3], data[4])
-    min = np.argmin(arr[0])
+    min = np.argmin(data)
     #print(min)
     if min % 4 == 0:
         print("Quadrant Number: 0")
