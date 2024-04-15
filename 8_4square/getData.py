@@ -78,8 +78,8 @@ def findQuadrant():
 def findPylon(count, quadNum, robot):
     arr = np.zeros((15, 4))
     print(findDistances)
-    #arr[0] = findDistances()
-    #arr[1] = findDistances()
+    arr[0] = findDistances()
+    arr[1] = findDistances()
     
     if arr[0, quadNum] > arr[1, quadNum]:
         print("keep turning")
