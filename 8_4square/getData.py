@@ -110,13 +110,7 @@ def findPylon(count, arr, quadNum, robot):
         distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
         # drive
         print(distance)
-    try:
-        while searching:
-            findQuadrant(arr, robot, quadNum)
-            findPylon(count, arr, quadNum, robot)
-
-            # hard limit to cancel program
-    finally:
-        robot.tango.setTarget(robot.R_MOTORS, 6000)
-        robot.tango.setTarget(robot.L_MOTORS, 6000)
+while searching:
+    findQuadrant(arr, robot, quadNum)
+    findPylon(count, arr, quadNum, robot)
 
