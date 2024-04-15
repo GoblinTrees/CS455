@@ -40,7 +40,7 @@ def findDistances():
         #print(data)
         if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
             print("bad data, trying again")
-            findDistances()
+            return findDistances()
         else:
             return data
         ser.close()
