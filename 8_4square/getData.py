@@ -53,8 +53,10 @@ def findDistances(count, arr):
     except Exception as e:
         print(e)
         ser.close()
-def findQuadrant(arr):
+
+def findQuadrant():
     try:
+        arr = np.zeros((5, 4))
         #print("in try")
         ser = serial.Serial()
         ser.port = '/dev/ttyUSB0'
