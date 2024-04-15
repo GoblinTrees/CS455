@@ -22,7 +22,7 @@ findExit = False
 quadNum = 5
 arr = np.zeros((15, 4))
 
-def findDistances(count, arr):
+def findDistances():
     #print("in function")
     try:
         #print("in try")
@@ -40,49 +40,17 @@ def findDistances(count, arr):
         #print(data)
         if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
             print("bad data, trying again")
+            findDistances()
         else:
-            arr[count, 0] = str(data[1])
-            arr[count, 1] = str(data[2])
-            arr[count, 2] = str(data[3])
-            arr[count, 3] = str(data[4])
-            count += 1
-            #print(arr)
-            return arr
-        print(arr)
+            return data
         ser.close()
     except Exception as e:
         print(e)
         ser.close()
 
 def findQuadrant():
-    try:
-        arr = np.zeros((5, 4))
-        #print("in try")
-        ser = serial.Serial()
-        ser.port = '/dev/ttyUSB0'
-        ser.baudrate = 115200
-        ser.bytesize = serial.EIGHTBITS
-        ser.parity = serial.PARITY_NONE
-        ser.stopbits = serial.STOPBITS_ONE
-        ser.timeout = 1
-        ser.open()
-        temp = ser.readline()
-        #print("line1: ", temp) #hex values
-        data = str(ser.readline()).split(",")
-        #print(data)
-        if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
-            print("bad data, trying again")
-            arr = findDistances(count, arr)
-        else:
-            arr[count, 0] = str(data[1])
-            arr[count, 1] = str(data[2])
-            arr[count, 2] = str(data[3])
-            arr[count, 3] = str(data[4])
-        print(arr)
-        ser.close()
-    except Exception as e:
-        print(e)
-        ser.close()
+    data = findDistances()
+    arr[0] = (data[0], data[1], data[2], data[3])
     min = np.argmin(arr[0])
     #print(min)
     if min % 4 == 0:
@@ -142,5 +110,6 @@ def findPylon(count, arr, quadNum, robot):
         
 quadNum = findQuadrant()
 while searching:
-    findPylon(count, arr, quadNum, robot)
+    findDistances
+    findPylon(count, quadNum, robot)
 
