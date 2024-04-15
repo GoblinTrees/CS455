@@ -20,7 +20,7 @@ count = 0
 quadrant = False
 findExit = False
 quadNum = 5
-arr = np.zeros((20, 4))
+arr = np.zeros((15, 4))
 
 def findDistances(count, arr):
     #print("in function")
@@ -48,6 +48,7 @@ def findDistances(count, arr):
             arr[count, 3] = str(data[4])
             #print(arr)
             return arr
+        print(arr)
         ser.close()
     except Exception as e:
         print(e)
