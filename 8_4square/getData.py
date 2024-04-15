@@ -46,6 +46,7 @@ def findDistances(count, arr):
             arr[count, 1] = str(data[2])
             arr[count, 2] = str(data[3])
             arr[count, 3] = str(data[4])
+            count += 1
             #print(arr)
             return arr
         print(arr)
