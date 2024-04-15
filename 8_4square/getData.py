@@ -54,27 +54,6 @@ def findDistances(count, arr):
         print(e)
         ser.close()
 
-def findQuadrant(arr, robot, quadNum):
-    min = np.argmin(arr[0])
-    #print(min)
-    if min % 4 == 0:
-        quadNum = 0
-        #robot.engine.say("quadrant 0")
-        #robot.engine.runAndWait()
-    if min % 4 == 1:
-        quadNum = 1
-        #robot.engine.say("quadrant 1")
-        #robot.engine.runAndWait()
-    if min % 4 == 2:
-        quadNum = 2
-        #robot.engine.say("quadrant 2")
-        #robot.engine.runAndWait()
-    if min % 4 == 3:
-        quadNum = 3
-        #robot.engine.say("quadrant 3")
-        #robot.engine.runAndWait()
-    return quadNum
-
 def findPylon(count, arr, quadNum, robot):
     if arr[count - 1, quadNum] > arr[count, quadNum]:
         print("keep turning")
@@ -138,5 +117,24 @@ while searching:
     except Exception as e:
         print(e)
         ser.close()
+    min = np.argmin(arr[0])
+    #print(min)
+    if min % 4 == 0:
+        quadNum = 0
+        #robot.engine.say("quadrant 0")
+        #robot.engine.runAndWait()
+    if min % 4 == 1:
+        quadNum = 1
+        #robot.engine.say("quadrant 1")
+        #robot.engine.runAndWait()
+    if min % 4 == 2:
+        quadNum = 2
+        #robot.engine.say("quadrant 2")
+        #robot.engine.runAndWait()
+    if min % 4 == 3:
+        quadNum = 3
+    print(quadNum)
+        #robot.engine.say("quadrant 3")
+        #robot.engine.runAndWait()
     findPylon(count, arr, quadNum, robot)
 
