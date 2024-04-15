@@ -54,40 +54,7 @@ def findDistances(count, arr):
     except Exception as e:
         print(e)
         ser.close()
-
-def findPylon(count, arr, quadNum, robot):
-    if arr[count - 1, quadNum] > arr[count, quadNum]:
-        print("keep turning")
-        #rotate right
-        l_motors = 5000
-        robot.tango.setTarget(robot.L_MOTORS, l_motors)
-        time.sleep(.35)
-        l_motors = 6000
-        robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    else:
-        # pointed at the pylon
-
-        if quadNum == 0:
-            a = arr[count, 0]
-            c = arr[count, 1]
-            b = math.sqrt(a*a + c*c)
-        elif quadNum == 1:
-            a = arr[count, 2]
-            c = arr[count, 1]
-            b = math.sqrt(a*a + c*c)
-        elif quadNum == 2:
-            a = arr[count, 2]
-            c = arr[count, 3]
-            b = math.sqrt(a*a + c*c)
-        else:
-            a = arr[count, 0]
-            c = arr[count, 3]
-            b = math.sqrt(a*a + c*c)
-    
-        distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
-        # drive
-        print("distance: ", distance)
-while searching:
+def findQuadrant():
     try:
         #print("in try")
         ser = serial.Serial()
@@ -131,8 +98,44 @@ while searching:
         #robot.engine.runAndWait()
     if min % 4 == 3:
         quadNum = 3
-    print(quadNum)
+    print("Quadrant Number: ", quadNum)
         #robot.engine.say("quadrant 3")
         #robot.engine.runAndWait()
+        
+def findPylon(count, arr, quadNum, robot):
+    if arr[count - 1, quadNum] > arr[count, quadNum]:
+        print("keep turning")
+        #rotate right
+        l_motors = 5000
+        robot.tango.setTarget(robot.L_MOTORS, l_motors)
+        time.sleep(.35)
+        l_motors = 6000
+        robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    else:
+        # pointed at the pylon
+
+        if quadNum == 0:
+            a = arr[count, 0]
+            c = arr[count, 1]
+            b = math.sqrt(a*a + c*c)
+        elif quadNum == 1:
+            a = arr[count, 2]
+            c = arr[count, 1]
+            b = math.sqrt(a*a + c*c)
+        elif quadNum == 2:
+            a = arr[count, 2]
+            c = arr[count, 3]
+            b = math.sqrt(a*a + c*c)
+        else:
+            a = arr[count, 0]
+            c = arr[count, 3]
+            b = math.sqrt(a*a + c*c)
+    
+        distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
+        # drive
+        print("distance: ", distance)
+        
+findQuadrant()
+while searching:
     findPylon(count, arr, quadNum, robot)
 
