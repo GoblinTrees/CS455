@@ -75,8 +75,12 @@ def findQuadrant():
         #robot.engine.say("quadrant 3")
         #robot.engine.runAndWait()
         
-def findPylon(count, arr, quadNum, robot):
-    if arr[count - 1, quadNum] > arr[count, quadNum]:
+def findPylon(count, quadNum, robot):
+    arr = np.zeros((15, 4))
+    arr[0] = findDistances()
+    arr[1] = findDistances()
+    
+    if arr[0, quadNum] > arr[1, quadNum]:
         print("keep turning")
         #rotate right
         l_motors = 5000
