@@ -93,20 +93,20 @@ def findPylon(count, quadNum, robot):
         # pointed at the pylon
 
         if quadNum == 0:
-            a = arr[count, 0]
-            c = arr[count, 1]
+            a = arr[1, 0]
+            c = arr[1, 1]
             b = math.sqrt(a*a + c*c)
         elif quadNum == 1:
-            a = arr[count, 2]
-            c = arr[count, 1]
+            a = arr[1, 2]
+            c = arr[1, 1]
             b = math.sqrt(a*a + c*c)
         elif quadNum == 2:
-            a = arr[count, 2]
-            c = arr[count, 3]
+            a = arr[1, 2]
+            c = arr[1, 3]
             b = math.sqrt(a*a + c*c)
         else:
-            a = arr[count, 0]
-            c = arr[count, 3]
+            a = arr[1, 0]
+            c = arr[1, 3]
             b = math.sqrt(a*a + c*c)
     
         distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
