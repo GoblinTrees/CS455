@@ -20,7 +20,7 @@ count = 0
 quadrant = False
 findExit = False
 quadNum = 5
-arr = np.zeros((100, 4))
+arr = np.zeros((20, 4))
 
 def findDistances(count, arr):
     try:
@@ -81,6 +81,7 @@ def findPylon(count, arr, quadNum, robot):
 
     if arr[count - 1, quadNum] > arr[count, quadNum]:
         arr = findDistances(count, arr)
+        print(arr)
         count += 1
         findPylon(count, arr)
     else:
@@ -88,7 +89,7 @@ def findPylon(count, arr, quadNum, robot):
         # turn 30 degrees
         l_motors = 5000
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
-        time.sleep(.5)
+        time.sleep(.25)
         l_motors = 6000
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
