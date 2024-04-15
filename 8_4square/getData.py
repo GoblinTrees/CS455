@@ -114,7 +114,7 @@ def findPylon(quadNum, robot):
         print("distance: ", distance)
         
 quadNum = findQuadrant()
-findPylon(quadNum, robot)
-while searching:
-    findPylon(quadNum, robot)
+#findPylon(quadNum, robot)
+#while searching:
+    #findPylon(quadNum, robot)
 
