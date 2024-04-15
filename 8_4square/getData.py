@@ -53,7 +53,7 @@ def findDistances(count, arr):
     except Exception as e:
         print(e)
         ser.close()
-def findQuadrant():
+def findQuadrant(arr):
     try:
         #print("in try")
         ser = serial.Serial()
