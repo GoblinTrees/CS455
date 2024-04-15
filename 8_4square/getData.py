@@ -86,9 +86,6 @@ def findPylon(count, arr, quadNum, robot):
         distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
         # drive
         print("distance: ", distance)
-arr = findDistances(count, arr)
-quadNum = findQuadrant(arr, robot, quadNum)
-print("Quadrant Number: ", quadNum)
 while searching:
     try:
         #print("in try")
