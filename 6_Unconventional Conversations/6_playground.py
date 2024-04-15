@@ -9,6 +9,7 @@ import random
 from openai import OpenAI
 
 # client = OpenAI()  # Automatically uses API key from environment variables
+client = OpenAI()
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -285,12 +286,14 @@ if __name__ == "__main__":
         thread1 = threading.Thread(target=talk_back, name="Thread 1", daemon=False, args=(response_cleaned,))
         thread2 = threading.Thread(target=printslo, name="Thread 2", args=(response_cleaned,))
 
+        thread1.start()
         thread2.start()
 
-
+        # thread1.join()
+        # thread2.join()
         engine.runAndWait()
-        print(f"---End of response for {str(personality)}---")
+        print("---EOR---")
+        break
 
     print("-> That is all! <- ")
 
-thread1.start()

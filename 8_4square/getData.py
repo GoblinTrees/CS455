@@ -1,105 +1,122 @@
 import serial
 import time
 import numpy as np
+import pyttsx3
 from maestro import Controller
-import tkinter as tk
+import math
+import atexit
 
 class Robot:
-    def __init__(self, root):
-        self.root = root
+    def __init__(self):
         self.L_MOTORS = 1
         self.R_MOTORS = 0
         self.r_motors = 6000
         self.l_motors = 6000
         self.tango = Controller()
+        self.engine = pyttsx3.init()
+        
+robot = Robot()
+searching = True
+count = 0
+quadrant = False
+findExit = False
+quadNum = 5
+arr = np.zeros((100, 4))
 
-try:
+def findDistances(count, arr):
+    try:
         ser = serial.Serial()
         ser.port = '/dev/ttyUSB0'
         ser.baudrate = 115200
         ser.bytesize = serial.EIGHTBITS
-        ser.parity =serial.PARITY_NONE
+        ser.parity = serial.PARITY_NONE
         ser.stopbits = serial.STOPBITS_ONE
         ser.timeout = 1
         ser.open()
-        time.sleep(1)
+        temp = ser.readline()
+        #print("line1: ", temp) #hex values
+        data = str(ser.readline()).split(",")
+        if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
+            print("bad data, trying again")
+            findDistances(ser, count, arr)
+        else:
+            arr[count, 0] = str(data[1])
+            arr[count, 1] = str(data[2])
+            arr[count, 2] = str(data[3])
+            arr[count, 3] = str(data[4])
+            count += 1
         ser.close()
-except Exception as e:
-        print("ERROR IN FIRST TRY OF GET DISTANCES:",e)
-        pass
+    except Exception as e:
+        print(e)
+        ser.close()
 
-ser.open()
-searching = True
-foundPylon = False
-missionSuccess = False
-pylon = np.zeros((4,), dtype=int)
-numData = 0
-target = None
-previousHighest = None
+def findQuadrant(arr, robot, quadNum):
+    min = np.argmin(arr[0])
+    #print(min)
+    if min % 4 == 0:
+        quadNum = 0
+        robot.engine.say("quadrant 0")
+        robot.engine.runAndWait()
+    if min % 4 == 1:
+        quadNum = 1
+        robot.engine.say("quadrant 1")
+        robot.engine.runAndWait()
+    if min % 4 == 2:
+        quadNum = 2
+        robot.engine.say("quadrant 2")
+        robot.engine.runAndWait()
+    if min % 4 == 3:
+        quadNum = 3
+        robot.engine.say("quadrant 3")
+        robot.engine.runAndWait()
 
-def findPylon (self):
+def findPylon(count, arr, quadNum, robot):
+    #rotate right
+    l_motors = 5000
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    time.sleep(1)
+    l_motors = 6000
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+
+    if arr[count - 1, quadNum] > arr[count, quadNum]:
+        findDistances(count, arr)
+        findPylon(count, arr)
+    else:
+        # pointed at the pylon
+        # turn 30 degrees
+        l_motors = 5000
+        robot.tango.setTarget(robot.L_MOTORS, l_motors)
+        time.sleep(.5)
+        l_motors = 6000
+        robot.tango.setTarget(robot.L_MOTORS, l_motors)
+
+        if quadNum == 0:
+            a = arr[count, 0]
+            c = arr[count, 1]
+            b = math.sqrt(a*a + c*c)
+        elif quadNum == 1:
+            a = arr[count, 2]
+            c = arr[count, 1]
+            b = math.sqrt(a*a + c*c)
+        elif quadNum == 2:
+            a = arr[count, 2]
+            c = arr[count, 3]
+            b = math.sqrt(a*a + c*c)
+        else:
+            a = arr[count, 0]
+            c = arr[count, 3]
+            b = math.sqrt(a*a + c*c)
+    
+        distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
+        # drive
+        print(distance)
+    try:
         while searching:
-                if foundPylon:
-                        # rotate for .5 seconds
-                        self.r_motors = 7000
-                        self.tango.setTarget(self.R_MOTORS, self.r_motors)
-                        time.sleep(.5)
-                        self.r_motors = 6000
-                        self.tango.setTarget(self.R_MOTORS, self.r_motors)
+            findQuadrant(arr, robot)
+            findPylon(count, arr, quadNum)
 
-                try:
-                        # data looks like this when it first gets here
-                        # mc 0f 00000663 000005a3 00000512 000004cb  ffffffff ffffffff ffffffff 095f c1 00146fb7 a0:0 22be
-                        # 0  1  2        3        4        5        6        7        8        9        10   11 12       13   14
-                        data=str(ser.readline())
-                        data1 = str(ser.readline())
-                        data1 = data1.split(',')
-                        isNull = False
-                        if foundPylon:
-                        # check if its less than previous
-                                if data1[target] < previousHighest:
-                                        previousHighest = data1[target]
-                                else:
-                                        # rotate for .5 seconds
-                                        self.r_motors = 7000
-                                        self.tango.setTarget(self.R_MOTORS, self.r_motors)
-                                        time.sleep(.5)
-                                        self.r_motors = 6000
-                                        self.tango.setTarget(self.R_MOTORS, self.r_motors)
+            # hard limit to cancel program
+    finally:
+        robot.tango.setTarget(robot.R_MOTORS, 6000)
+        robot.tango.setTarget(robot.L_MOTORS, 6000)
 
-                                        # drive straight based on distance calculated in pylon[target]
-                                        self.r_motors = 6600
-                                        self.l_motors = 5800
-                                        self.tango.setTarget(self.L_MOTORS, self.l_motors)
-                                        self.tango.setTarget(self.R_MOTORS, self.r_motors)
-                                        time.sleep(3) # figure out how far this drives
-                                        self.r_motors = 6000
-                                        self.l_motors = 6000
-                                        self.tango.setTarget(self.L_MOTORS, self.l_motors)
-                                        self.tango.setTarget(self.R_MOTORS, self.r_motors)
-                                        searching = False
-
-                        else:
-                                if numData == 10:
-                                        pylon[0] = pylon[0]/10
-                                        pylon[1] = pylon[1]/10
-                                        pylon[2] = pylon[2]/10
-                                        pylon[3] = pylon[3]/10
-                                        target = pylon.argmax()
-                                        foundPylon = True
-                                        previousHighest = pylon[target]
-                                else:
-                                        for i in range(4):
-                                                if data1[i] > 2000000 or data1[i] == None:
-                                                        isNull = True
-                                        if isNull == False:
-                                                for i in range(4):
-                                                        numData += 1
-                                                        pylon[i] += data1[i]
-                finally:
-                        print("Mission Successful")
-                                
-root = tk.Tk()
-robot = Robot(root)
-findPylon(robot)
-root.mainloop()
