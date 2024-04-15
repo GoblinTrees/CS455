@@ -77,25 +77,20 @@ def findQuadrant():
 def findPylon(quadNum, robot):
     arr = np.zeros((15, 4))
     arr[0] = findDistances()
-    
-    arr[1] = findDistances()
     print(arr[0, quadNum])
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     time.sleep(.35)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    arr[1] = findDistances()
+    
     print(arr[1, quadNum])
     if arr[0, quadNum] > arr[1, quadNum]:
         print("keep turning")
-        #rotate right
-        l_motors = 5000
-        robot.tango.setTarget(robot.L_MOTORS, l_motors)
-        time.sleep(.35)
-        l_motors = 6000
-        robot.tango.setTarget(robot.L_MOTORS, l_motors)
     else:
         # pointed at the pylon
+        print("time to drive")
         if quadNum == 0:
             a = arr[1, 0]
             c = arr[1, 1]
@@ -119,11 +114,12 @@ def findPylon(quadNum, robot):
         r_motors = 7000
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
         robot.tango.setTarget(robot.R_MOTORS, r_motors)
-        time.sleep(.35)
+        time.sleep(1)
         motors = 6000
         robot.tango.setTarget(robot.L_MOTORS, motors)
         robot.tango.setTarget(robot.R_MOTORS, motors)
         print("distance: ", distance)
+        break
         
 quadNum = findQuadrant()
 #findPylon(quadNum, robot)
