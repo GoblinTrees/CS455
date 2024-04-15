@@ -133,8 +133,6 @@ while searching:
             arr[count, 1] = str(data[2])
             arr[count, 2] = str(data[3])
             arr[count, 3] = str(data[4])
-            #print(arr)
-            return arr
         print(arr)
         ser.close()
     except Exception as e:
