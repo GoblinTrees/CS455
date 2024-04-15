@@ -75,23 +75,16 @@ def findQuadrant(arr, robot, quadNum):
     return quadNum
 
 def findPylon(count, arr, quadNum, robot):
-    #rotate right
-    l_motors = 5000
-    robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    time.sleep(.35)
-    l_motors = 6000
-    robot.tango.setTarget(robot.L_MOTORS, l_motors)
-
     if arr[count - 1, quadNum] > arr[count, quadNum]:
         print("keep turning")
-    else:
-        # pointed at the pylon
-        # turn 30 degrees
+        #rotate right
         l_motors = 5000
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
-        time.sleep(.25)
+        time.sleep(.35)
         l_motors = 6000
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    else:
+        # pointed at the pylon
 
         if quadNum == 0:
             a = arr[count, 0]
