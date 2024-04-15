@@ -76,10 +76,15 @@ def findQuadrant():
         
 def findPylon(quadNum, robot):
     arr = np.zeros((15, 4))
-    print(findDistances)
     arr[0] = findDistances()
+    
     arr[1] = findDistances()
     print(arr[0, quadNum])
+    l_motors = 5000
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    time.sleep(.35)
+    l_motors = 6000
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
     print(arr[1, quadNum])
     if arr[0, quadNum] > arr[1, quadNum]:
         print("keep turning")
