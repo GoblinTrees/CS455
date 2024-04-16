@@ -8,8 +8,6 @@ import random
 
 from openai import OpenAI
 
-# client = OpenAI()  # Automatically uses API key from environment variables
-client = OpenAI()
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
