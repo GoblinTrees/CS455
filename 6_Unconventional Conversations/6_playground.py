@@ -1,16 +1,11 @@
 import time
 
-import openai
 import pyttsx3
 import speech_recognition as sr
 import threading
 import random
 
-from openai import OpenAI
 
-
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
 
 personalities = ["friendly", "comedian", "spongebob", "gandalf", "professor"]
 
