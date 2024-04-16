@@ -138,36 +138,6 @@ per_starters = {
 }
 
 
-def chat_with_openai(personality, input: dict):
-    getStarter(personality).append(input)
-    # print("getstarter\n")
-    # print(getStarter(personality))
-    # print("->Typeof: " +str(type(getStarter(personality)[0])))
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=getStarter(personality),
-        temperature=0.7,
-        max_tokens=40
-
-        # learning example
-        # messages=[
-        #     {
-        #         "role": "user",
-        #         "content": "Say this is a test",
-        #     }
-        # ],
-        # model="gpt-3.5-turbo",
-    )
-
-    # Check if response is not empty and choices are available
-    if response.choices and len(response.choices) > 0:
-        # Return the text of the first choice
-        # return response.choices[0].get("message", {}).get("content", "").strip()
-
-        # This is current method : response.choices[0].message.content.strip()
-        return response.choices[0].message.content.strip()
-    else:
-        return "No response from AI"  # Handle the case where there's no response
 
 
 def getPrompt(personality):
