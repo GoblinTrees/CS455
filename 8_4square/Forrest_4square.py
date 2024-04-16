@@ -97,7 +97,7 @@ def findPylon(quadNum, robot):
         return True
     else:
         # pointed at the pylon
-        print("time to drive")
+        print("time to drive")f
         if quadNum == 0:
             a = arr[1, 0]
             c = arr[1, 1]
