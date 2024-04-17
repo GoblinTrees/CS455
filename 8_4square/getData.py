@@ -45,7 +45,7 @@ def findDistances():
             if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) == 'null':
                 print("bad data, trying again")
                 i = i -1
-            if str(data[1]) == 'nan' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) == 'null':
+            if str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(data[3]) == 'nan' or str(data[4]) == 'nan':
                 print("bad data, trying again")
                 i = i - 1
             else:
