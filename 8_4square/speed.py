@@ -1,4 +1,4 @@
-import Controller from Maestro
+from maestro import Controller
 import time
 
 tango = Controller()
