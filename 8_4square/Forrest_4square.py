@@ -37,9 +37,14 @@ def findDistances():
         ser.stopbits = serial.STOPBITS_ONE
         ser.timeout = 1
         ser.open()
+        
         temp = ser.readline()
-        # print("line1: ", temp) #hex values
         data = str(ser.readline()).split(",")
+        temp = ser.readline()
+        data = str(ser.readline()).split(",")
+        temp = ser.readline()
+        data = str(ser.readline()).split(",")
+        
         # print(data)
         if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) == 'null':
             print("bad data, trying again")
