@@ -126,14 +126,14 @@ def findPylon(quadNum, robot):
             b = math.sqrt(a*a + c*c)
     
         distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
-        #parametrize distance
+        time = distance/.387 +1
         print("exited")
         # drive
         l_motors = 5400
         r_motors = 7000
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
         robot.tango.setTarget(robot.R_MOTORS, r_motors)
-        time.sleep(1)
+        time.sleep(time)
         motors = 6000
         robot.tango.setTarget(robot.L_MOTORS, motors)
         robot.tango.setTarget(robot.R_MOTORS, motors)
