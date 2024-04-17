@@ -102,7 +102,7 @@ def findPylon(quadNum, robot):
     arr[1] = findDistances()
     print(arr[0])
     print(arr[1])
-    if arr[0, quadNum] > arr[1, quadNum]:
+    if arr[0, quadNum] < arr[1, quadNum]:
         print("keep turning")
         return True
     else:
