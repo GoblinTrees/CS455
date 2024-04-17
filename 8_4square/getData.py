@@ -54,10 +54,10 @@ def findDistances():
                 num3 += float(data[3])
                 num4 += float(data[4])
 
-        num1 = num1 / 3
-        num2 = num2 / 3
-        num3 = num3 / 3
-        num4 = num4 / 3
+        num1 = num1 / 10
+        num2 = num2 / 10
+        num3 = num3 / 10
+        num4 = num4 / 10
 
         print("got data")
         ser.close()
