@@ -240,7 +240,7 @@ class Kore():
 # End of Bootup function
 
 
-\
+
 
 # main executable funtion
 if __name__ == "__main__":
@@ -252,7 +252,12 @@ if __name__ == "__main__":
     # Start both threads
     flask_thread.start()
 
-    # Wait for both threads to finish
-    flask_thread.join()
+    fordict = kore.tango_default
+    fordict.update("L_motors",5800)
+    fordict.update("R_motors",6600)
+
+    kore.update(fordict)
+    time.sleep(1)
+    kore.update(kore.tango_default)
 
 
