@@ -39,7 +39,7 @@ def findDistances():
         num2 = 0
         num3 = 0
         num4 = 0
-        for i in range(3):
+        for i in range(10):
             temp = ser.readline()
             data = str(ser.readline()).split(",")
             if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) == 'null':
