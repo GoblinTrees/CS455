@@ -253,8 +253,8 @@ if __name__ == "__main__":
     # flask_thread.start()
 
     fordict = kore.tango_default
-    fordict.update({"L_Motors": 5800})
-    fordict.update({"R_Motors": 6600})
+    fordict.update({"L_Motors": 5600})
+    fordict.update({"R_Motors": 6800})
 
     kore.update(fordict)
     time.sleep(1)
