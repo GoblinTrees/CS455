@@ -1,5 +1,5 @@
 import serial
-import time
+import time as t
 import numpy as np
 import pyttsx3
 from maestro import Controller
@@ -96,7 +96,7 @@ def findPylon(quadNum, robot):
     arr[0] = findDistances()
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    time.sleep(.35)
+    t.sleep(.35)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     arr[1] = findDistances()
@@ -133,7 +133,7 @@ def findPylon(quadNum, robot):
         r_motors = 7000
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
         robot.tango.setTarget(robot.R_MOTORS, r_motors)
-        time.sleep(driveTime)
+        t.sleep(driveTime)
         motors = 6000
         robot.tango.setTarget(robot.L_MOTORS, motors)
         robot.tango.setTarget(robot.R_MOTORS, motors)
