@@ -247,10 +247,10 @@ if __name__ == "__main__":
     kore = Kore()
 
     # Create threads for Flask and Tkinter
-    flask_thread = threading.Thread(target=kore.boot)
+    # flask_thread = threading.Thread(target=kore.boot)
 
     # Start both threads
-    flask_thread.start()
+    # flask_thread.start()
 
     fordict = kore.tango_default
     fordict.update("L_motors",5800)
