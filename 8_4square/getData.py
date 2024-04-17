@@ -34,17 +34,31 @@ def findDistances():
         ser.stopbits = serial.STOPBITS_ONE
         ser.timeout = 1
         ser.open()
-        temp = ser.readline()
-        #print("line1: ", temp) #hex values
-        data = str(ser.readline()).split(",")
-        #print(data)
-        if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) =='null':
-            print("bad data, trying again")
-            return findDistances()
-        else:
-            print("got data")
-            return [data[1], data[2], data[3], data[4]]
+
+        num1 = 0
+        num2 = 0
+        num3 = 0
+        num4 = 0
+        for i in range(3):
+            temp = ser.readline()
+            data = str(ser.readline()).split(",")
+            if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) == 'null':
+                print("bad data, trying again")
+                i = i -1
+            else:
+                num1 += data[1]
+                num2 += data[2]
+                num3 += data[3]
+                num4 += data[4]
+
+        num1 = num1 / 3
+        num2 = num2 / 3
+        num3 = num3 / 3
+        num4 = num4 / 3
+
+        print("got data")
         ser.close()
+        return [num1, num2, num3, num4]
     except Exception as e:
         print(e)
         ser.close()
@@ -109,6 +123,8 @@ def findPylon(quadNum, robot):
             b = math.sqrt(a*a + c*c)
     
         distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
+        #parametrize distance
+        print("exited")
         # drive
         l_motors = 5400
         r_motors = 7000
