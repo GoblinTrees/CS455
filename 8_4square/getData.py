@@ -1,5 +1,5 @@
 import serial
-import time
+from time import sleep
 import numpy as np
 import pyttsx3
 from maestro import Controller
