@@ -56,15 +56,15 @@ def findDistances():
 
             else:
                 confidenceInt += 1
-                num1 += float(data[1])
-                num2 += float(data[2])
-                num3 += float(data[3])
-                num4 += float(data[4])
+                num1 += float(data[0])
+                num2 += float(data[1])
+                num3 += float(data[2])
+                num4 += float(data[3])
                 #2nd data validation
+                print(data[0])
                 print(data[1])
                 print(data[2])
                 print(data[3])
-                print(data[4])
 
         num1 = num1 / 10
         num2 = num2 / 10
