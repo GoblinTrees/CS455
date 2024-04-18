@@ -107,7 +107,7 @@ def findQuadrant():
 def turn90():
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    t.sleep(.35)
+    t.sleep(.5)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
