@@ -1,3 +1,5 @@
+import time
+
 import serial
 import time as t
 import numpy as np
@@ -107,7 +109,7 @@ def findQuadrant():
 def turn90():
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    t.sleep(.85)
+    t.sleep(.80)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
@@ -128,6 +130,7 @@ def findPylon(quadNum, robot):
         arr[i] = findDistances()
         turn90()
     min = np.argmin(arr)
+    print("Min: ",min)
     row = min % 4
     for i in range(row):
         turn90()
