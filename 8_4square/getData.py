@@ -104,63 +104,101 @@ def findQuadrant():
     
         #robot.engine.say("quadrant 3")
         #robot.engine.runAndWait()
-        
-def findPylon(quadNum, robot):
-    arr = np.zeros((15, 4))
-    arr[0] = findDistances()
+def turn90():
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     t.sleep(.35)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    arr[1] = findDistances()
-    print(arr[0])
-    print(arr[1])
-    if arr[0, quadNum] < arr[1, quadNum]:
-        print("keep turning1 - less than distances")
-        return True
-    elif arr[0, quadNum] == arr[1, quadNum]:
-        print("keep turning2- equal distances")
-        return True
-    else:
-        # pointed at the pylon
-        print("time to drive")
-        if quadNum == 0:
-            a = arr[1, 0]
-            c = arr[1, 1]
-            b = math.sqrt(a*a + c*c)
-        elif quadNum == 1:
-            a = arr[1, 2]
-            c = arr[1, 1]
-            b = math.sqrt(a*a + c*c)
-        elif quadNum == 2:
-            a = arr[1, 2]
-            c = arr[1, 3]
-            b = math.sqrt(a*a + c*c)
-        else:
-            a = arr[1, 0]
-            c = arr[1, 3]
-            b = math.sqrt(a*a + c*c)
-    
-        distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
+
+def driveForward():
+    l_motors = 5400
+    r_motors = 7000
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    robot.tango.setTarget(robot.R_MOTORS, r_motors)
+    t.sleep(1.5)
+    motors = 6000
+    robot.tango.setTarget(robot.L_MOTORS, motors)
+    robot.tango.setTarget(robot.R_MOTORS, motors)
+
+def findPylon(quadNum, robot):
+    arr = np.zeros((4, 4))
+
+    for i in range(4):
+        arr[i] = findDistances()
+        turn90()
+    min = np.argmin(arr)
+    row = min % 4
+    for i in range(row):
+        turn90()
+
+    #analyze distances
 
 
-        driveTime = distance/.387 +1
-        print("exited")
-        # drive
-        l_motors = 5400
-        r_motors = 7000
-        robot.tango.setTarget(robot.L_MOTORS, l_motors)
-        robot.tango.setTarget(robot.R_MOTORS, r_motors)
-        t.sleep(driveTime)
-        motors = 6000
-        robot.tango.setTarget(robot.L_MOTORS, motors)
-        robot.tango.setTarget(robot.R_MOTORS, motors)
-        print("distance: ", distance)
-        return False
+
+    #legacy
+    # arr[0] = findDistances()
+    # turn90()
+    # arr[1] = findDistances()
+    # print(arr[0])
+    # print(arr[1])
+    # while (arr[0], quadNum) > .5:
+    #     if arr[0, quadNum] < arr[1, quadNum]:
+    #         print("keep turning1 - less than distances")
+    #         return True
+    #     elif arr[0, quadNum] == arr[1, quadNum]:
+    #         print("keep turning2- equal distances")
+    #         return True
+    #     else:
+
+
+
+
+
+
+
+
+
+    # pointed at the pylon
+    # print("time to drive")
+    # if quadNum == 0:
+    #     a = arr[1, 0]
+    #     c = arr[1, 1]
+    #     b = math.sqrt(a*a + c*c)
+    # elif quadNum == 1:
+    #     a = arr[1, 2]
+    #     c = arr[1, 1]
+    #     b = math.sqrt(a*a + c*c)
+    # elif quadNum == 2:
+    #     a = arr[1, 2]
+    #     c = arr[1, 3]
+    #     b = math.sqrt(a*a + c*c)
+    # else:
+    #     a = arr[1, 0]
+    #     c = arr[1, 3]
+    #     b = math.sqrt(a*a + c*c)
+    #
+    # distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
+    #
+    #
+    # driveTime = distance/.387 +1
+    # print("exited")
+    # # drive
+    # l_motors = 5400
+    # r_motors = 7000
+    # robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    # robot.tango.setTarget(robot.R_MOTORS, r_motors)
+    # t.sleep(driveTime)
+    # motors = 6000
+    # robot.tango.setTarget(robot.L_MOTORS, motors)
+    # robot.tango.setTarget(robot.R_MOTORS, motors)
+    # print("distance: ", distance)
+    #     return False
         
 quadNum = findQuadrant()
 #findPylon(quadNum, robot)
-while searching:
-    searching = findPylon(quadNum, robot)
+
+while (arr[0], quadNum) < .5:
+    findPylon(quadNum, robot)
+    driveForward()
 
