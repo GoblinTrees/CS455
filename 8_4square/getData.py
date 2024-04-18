@@ -47,9 +47,9 @@ def findDistances():
             dataentry = ser.readline()
             data = [dataentry[1],dataentry[2],dataentry[3],dataentry[4]]
             print(data[1])
-            if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) == 'null':
+            if str(data[0]) == 'null' or str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null':
                 print("bad data1, trying again")
-            elif str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(data[3]) == 'nan' or str(data[4]) == 'nan':
+            elif str(data[0]) == 'nan' or str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(data[3]) == 'nan':
                 print("bad data2, trying again")
             elif (data[1] == 0 or data[2] == 0 or data[3] == 0 or data[4] == 0):
                 print("baddata3")
