@@ -53,11 +53,11 @@ def findDistances():
                 num2 += float(data[2])
                 num3 += float(data[3])
                 num4 += float(data[4])
-        #2nd data validation
-        print(data[1])
-        print(data[2])
-        print(data[3])
-        print(data[4])
+                #2nd data validation
+                print(data[1])
+                print(data[2])
+                print(data[3])
+                print(data[4])
 
         num1 = num1 / 10
         num2 = num2 / 10
