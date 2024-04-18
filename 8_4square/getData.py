@@ -124,7 +124,7 @@ def driveForward():
 def findPylon(quadNum, robot):
     arr = np.zeros((4, 4))
 
-    for i in range(5):
+    for i in range(4):
         arr[i] = findDistances()
         turn90()
     min = np.argmin(arr)
