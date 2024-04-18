@@ -51,7 +51,7 @@ def findDistances():
                 print("bad data1, trying again")
             elif str(data[0]) == 'nan' or str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(data[3]) == 'nan':
                 print("bad data2, trying again")
-            elif (data[1] == 0 or data[2] == 0 or data[3] == 0 or data[4] == 0):
+            elif (data[0] == 0 or data[1] == 0 or data[2] == 0 or data[3] == 0):
                 print("baddata3")
 
             else:
