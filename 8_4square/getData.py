@@ -198,7 +198,7 @@ def findPylon(quadNum, robot):
 quadNum = findQuadrant()
 #findPylon(quadNum, robot)
 
-while (arr[0], quadNum) < .5:
+while (True):
     findPylon(quadNum, robot)
     driveForward()
 
