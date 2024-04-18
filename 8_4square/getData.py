@@ -106,6 +106,23 @@ def findQuadrant():
     
         #robot.engine.say("quadrant 3")
         #robot.engine.runAndWait()
+
+# def findDirection():
+#     arr = np.zeros((2, 4))
+#
+#     arr[0] = findDistances()
+#     driveForward()
+#     arr[1] = findDistances()
+#     driveBackward()
+
+
+
+
+
+
+
+
+
 def turn90():
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
@@ -113,9 +130,37 @@ def turn90():
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
+def findAngle(distance1,distance2):
+    angle: int
+    drivedist = 1
+    d =distance1**2 +distance2**2 -drivedist**2
+    c = 2*distance2*distance1
+    angle = math.acos(d/c)
+    return angle
+
+
+def turnAngle(angle):
+    #.01 sec per degree
+
+
+    l_motors = 5000
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    t.sleep(.01 * angle)
+    l_motors = 6000
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
 def driveForward():
     l_motors = 5400
     r_motors = 7000
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    robot.tango.setTarget(robot.R_MOTORS, r_motors)
+    t.sleep(.5)
+    motors = 6000
+    robot.tango.setTarget(robot.L_MOTORS, motors)
+    robot.tango.setTarget(robot.R_MOTORS, motors)
+
+def driveBackward():
+    l_motors = 6600
+    r_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
     t.sleep(.5)
@@ -198,10 +243,25 @@ def findPylon(quadNum, robot):
     # print("distance: ", distance)
     #     return False
         
-quadNum = findQuadrant()
+# quadNum = findQuadrant()
 #findPylon(quadNum, robot)
 
-while (True):
-    findPylon(quadNum, robot)
-    driveForward()
+# while (True):
+#     findPylon(quadNum, robot)
+#     driveForward()
+
+arrn = np.zeros((5, 4))
+
+arrn[0] = findDistances()
+quad = findQuadrant()
+arrn[1] = findDistances()
+
+d1 = arrn[0, quad]
+d2 = arrn[1, quad]
+
+ang = findAngle(d1,d2)
+
+turnAngle(ang)
+
+
 
