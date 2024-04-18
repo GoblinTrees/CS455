@@ -41,9 +41,8 @@ def findDistances():
         num4 = 0
 
         confidenceInt =0
-
         while confidenceInt < 10:
-            print("I: ",i)
+            print("ConInt: ", confidenceInt)
             temp = ser.readline()
             data = str(ser.readline()).split(",")
             if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) == 'null':
@@ -138,6 +137,8 @@ def findPylon(quadNum, robot):
             b = math.sqrt(a*a + c*c)
     
         distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
+
+
         driveTime = distance/.387
         print("exited")
         # drive
