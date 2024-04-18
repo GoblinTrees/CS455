@@ -49,6 +49,10 @@ def findDistances():
             elif str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(data[3]) == 'nan' or str(data[4]) == 'nan':
                 print("bad data2, trying again")
                 i = i - 1
+            elif (num1 == 0 or num2 == 0 or num3 == 0 or num4 == 0):
+                print("baddata3")
+                i=i-1
+
             else:
                 num1 += float(data[1])
                 num2 += float(data[2])
@@ -64,6 +68,7 @@ def findDistances():
         num2 = num2 / 10
         num3 = num3 / 10
         num4 = num4 / 10
+
 
         print("got data")
         ser.close()
