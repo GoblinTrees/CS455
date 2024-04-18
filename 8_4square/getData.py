@@ -75,6 +75,7 @@ def findDistances():
         return [num1, num2, num3, num4]
     finally:
         print("finally")
+        #doneofdjakdhfjkalhjdfla
         ser.close()
 
 def findQuadrant():
