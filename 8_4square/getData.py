@@ -142,7 +142,7 @@ def findPylon(quadNum, robot):
         distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
 
 
-        driveTime = distance/.387
+        driveTime = distance/.387 +1
         print("exited")
         # drive
         l_motors = 5400
