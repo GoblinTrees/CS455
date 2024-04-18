@@ -43,16 +43,21 @@ def findDistances():
             temp = ser.readline()
             data = str(ser.readline()).split(",")
             if str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null' or str(data[4]) == 'null':
-                print("bad data, trying again")
+                print("bad data1, trying again")
                 i = i -1
             elif str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(data[3]) == 'nan' or str(data[4]) == 'nan':
-                print("bad data, trying again")
+                print("bad data2, trying again")
                 i = i - 1
             else:
                 num1 += float(data[1])
                 num2 += float(data[2])
                 num3 += float(data[3])
                 num4 += float(data[4])
+        #2nd data validation
+        print(data[1])
+        print(data[2])
+        print(data[3])
+        print(data[4])
 
         num1 = num1 / 10
         num2 = num2 / 10
