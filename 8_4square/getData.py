@@ -117,7 +117,10 @@ def findPylon(quadNum, robot):
     print(arr[0])
     print(arr[1])
     if arr[0, quadNum] < arr[1, quadNum]:
-        print("keep turning")
+        print("keep turning1")
+        return True
+    elif arr[0, quadNum] == arr[1, quadNum]:
+        print("keep turning2")
         return True
     else:
         # pointed at the pylon
