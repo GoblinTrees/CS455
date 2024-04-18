@@ -1,5 +1,4 @@
 import time
-
 import serial
 import time as t
 import numpy as np
@@ -78,27 +77,75 @@ def findDistances():
         #doneofdjakdhfjkalhjdfla
         ser.close()
 
-def findQuadrant():
-    data = findDistances()
-    min = np.argmin(data)
-    return min
+def find_closest_corner_angle(distances, current_orientation):
+    # Check if the input list contains 4 distances
+    if len(distances) != 4:
+        raise ValueError("Input list must contain 4 distances")
 
-def turn90():
-    l_motors = 5000
-    robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    t.sleep(.87)
-    l_motors = 6000
-    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    # Calculate the distances squared
+    dist_sq = [d ** 2 for d in distances]
 
-def findAngle(distance1,distance2):
-    angle: int
-    drivedist = 1
-    d =distance1**2 +distance2**2 -drivedist**2
-    c = 2*distance2*distance1
-    angle = math.acos(d/c)
-    return angle
+    # Calculate the angles using the law of cosines
+    angles = [math.acos((dist_sq[(i + 1) % 4] + dist_sq[(i + 3) % 4] - dist_sq[i]) / (2 * distances[(i + 1) % 4] * distances[(i + 3) % 4])) for i in range(4)]
 
-def turnAngle(angle):
+    # Find the index of the smallest angle
+    min_angle_index = angles.index(min(angles))
+
+    # Calculate the angle between the current heading and the closest corner
+    closest_corner_angle = min_angle_index * (math.pi / 2)
+
+    # Calculate the difference between current orientation and closest corner angle
+    angle_difference = closest_corner_angle - current_orientation
+
+    # Normalize angle difference to be between -pi and pi
+    angle_difference = (angle_difference + math.pi) % (2 * math.pi) - math.pi
+
+    # Determine the direction to turn
+    if abs(angle_difference) < math.pi:
+        # Turn in the direction that minimizes the angle difference
+        if angle_difference > 0:
+            turn_direction = "right"
+        else:
+            turn_direction = "left"
+    else:
+        # Turn in the opposite direction
+        if angle_difference > 0:
+            turn_direction = "left"
+        else:
+            turn_direction = "right"
+
+    return turn_direction, abs(angle_difference)
+
+# Orientation method, starts with 0 degrees pointing at the right side of the square
+def estimate_orientation_with_error(distances, error_bounds):
+    # Check if the input lists contain 4 distances and 4 error bounds
+    if len(distances) != 4 or len(error_bounds) != 4:
+        raise ValueError("Input lists must contain 4 elements")
+
+    # Calculate the ranges of distances considering error bounds
+    distance_ranges = [(dist - error, dist + error) for dist, error in zip(distances, error_bounds)]
+
+    # Calculate the differences between opposite sensors' ranges
+    opposite_differences = [abs(dist_range[0] - dist_range[2]) for dist_range in distance_ranges]
+
+    # Find the sensor pair with the smallest difference
+    min_difference_index = np.argmin(opposite_differences)
+
+    # Find the sensor pair with the largest difference
+    max_difference_index = np.argmax(opposite_differences)
+
+    # Estimate orientation based on differences
+    if max_difference_index == min_difference_index:
+        # The robot is likely oriented diagonally relative to the square
+        orientation = (max_difference_index * np.pi / 2 + np.pi) % (2 * np.pi)
+    else:
+        # The robot is likely oriented facing one of the sides of the square
+        orientation = (min_difference_index * np.pi / 2) % (2 * np.pi)
+
+    return orientation
+
+# uncertain about these motor values for if they will turn the robot in the correct direction
+def turnLeft(angle):
     #.01 sec per degree
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
@@ -106,55 +153,52 @@ def turnAngle(angle):
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
-def driveForward():
+def turnRight(angle):
+    #.01 sec per degree
+    r_motors = 7000
+    robot.tango.setTarget(robot.R_MOTORS, r_motors)
+    t.sleep(.01 * angle)
+    r_motors = 6000
+    robot.tango.setTarget(robot.R_MOTORS, r_motors)
+
+def leaveSquare(distance):
+    # parametrized distance, uses the distance to the pylon instead of nominal distance so it should be an overestimate.
+    exitTime = distance/.347
     l_motors = 5400
     r_motors = 7000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
-    t.sleep(.5)
+    t.sleep(exitTime)
     motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, motors)
     robot.tango.setTarget(robot.R_MOTORS, motors)
+    print("exited")
 
-def driveBackward():
-    l_motors = 6600
-    r_motors = 5000
-    robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    robot.tango.setTarget(robot.R_MOTORS, r_motors)
-    t.sleep(.5)
-    motors = 6000
-    robot.tango.setTarget(robot.L_MOTORS, motors)
-    robot.tango.setTarget(robot.R_MOTORS, motors)
+def findQuadrant():
+    data = findDistances()
+    min = np.argmin(data)
+    return min
 
-def findPylon(quadNum, robot):
-    arr = np.zeros((5, 4))
-
-    for i in range(5):
-        arr[i] = findDistances()
-        turn90()
-    min = np.argmin(arr)
-    print("Min: ",min)
-    row = min % 4
-    for i in range(row):
-        turn90()
-
+# Code that runs
 def main():
-    arrn = np.zeros((5, 4))
+    quadNum = findQuadrant()
+    # Inputs: distance and acceptable error bounds
+    distances = findDistances() # finds the average distance to the sensors after 10 data points
+    error_bounds = [.5, .5, .5, .5]  # assuming the two closest sensor distances will be within .5 meters of one another
 
-    # drive straight and find distances at two end points
-    arrn[0] = findDistances()
-    driveForward()
-    quad = findQuadrant()
-    arrn[1] = findDistances()
+    estimated_orientation = estimate_orientation_with_error(distances, error_bounds)
+    print("Estimated orientation:", np.degrees(estimated_orientation), "degrees")
 
-    
-    d1 = arrn[0, quad]
-    d2 = arrn[1, quad]
+    direction, angle = find_closest_corner_angle(distances, estimated_orientation)
+    print("Turn", direction, "to face closest corner, angle:", math.degrees(angle), "degrees")
 
-    ang = findAngle(d1,d2)
-    turnAngle(ang)
+    if direction == "left":
+        turnLeft(angle)
+        leaveSquare(distances[quadNum])
+    elif direction == "right":
+        turnRight(angle)
+        leaveSquare(distances[quadNum])
+    else:
+        print("No direction found")
 
 main()
-
-
-
