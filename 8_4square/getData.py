@@ -73,8 +73,8 @@ def findDistances():
         print("got data")
         ser.close()
         return [num1, num2, num3, num4]
-    except Exception as e:
-        print(e)
+    finally:
+        print("finally")
         ser.close()
 
 def findQuadrant():
