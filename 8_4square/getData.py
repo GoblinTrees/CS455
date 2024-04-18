@@ -122,9 +122,9 @@ def driveForward():
     robot.tango.setTarget(robot.R_MOTORS, motors)
 
 def findPylon(quadNum, robot):
-    arr = np.zeros((4, 4))
+    arr = np.zeros((5, 4))
 
-    for i in range(4):
+    for i in range(5):
         arr[i] = findDistances()
         turn90()
     min = np.argmin(arr)
