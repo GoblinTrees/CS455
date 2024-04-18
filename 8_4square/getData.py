@@ -17,12 +17,8 @@ class Robot:
         self.engine = pyttsx3.init()
         
 robot = Robot()
-searching = True
 count = 0
-quadrant = False
-findExit = False
 quadNum = 5
-arr = np.zeros((15, 4))
 
 def findDistances():
     #print("in function")
@@ -85,43 +81,7 @@ def findDistances():
 def findQuadrant():
     data = findDistances()
     min = np.argmin(data)
-    if min % 4 == 0:
-        print("Quadrant Number: 0")
-        return 0
-        #robot.engine.say("quadrant 0")
-        #robot.engine.runAndWait()
-    if min % 4 == 1:
-        print("Quadrant Number: 1")
-        return 1
-        #robot.engine.say("quadrant 1")
-        #robot.engine.runAndWait()
-    if min % 4 == 2:
-        print("Quadrant Number: 2")
-        return 2
-        #robot.engine.say("quadrant 2")
-        #robot.engine.runAndWait()
-    if min % 4 == 3:
-        print("Quadrant Number: 3")
-        return 3
-    
-        #robot.engine.say("quadrant 3")
-        #robot.engine.runAndWait()
-
-# def findDirection():
-#     arr = np.zeros((2, 4))
-#
-#     arr[0] = findDistances()
-#     driveForward()
-#     arr[1] = findDistances()
-#     driveBackward()
-
-
-
-
-
-
-
-
+    return min
 
 def turn90():
     l_motors = 5000
@@ -138,16 +98,14 @@ def findAngle(distance1,distance2):
     angle = math.acos(d/c)
     return angle
 
-
 def turnAngle(angle):
     #.01 sec per degree
-
-
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     t.sleep(.01 * angle)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
+
 def driveForward():
     l_motors = 5400
     r_motors = 7000
@@ -180,89 +138,23 @@ def findPylon(quadNum, robot):
     for i in range(row):
         turn90()
 
-    #analyze distances
+def main():
+    arrn = np.zeros((5, 4))
 
+    # drive straight and find distances at two end points
+    arrn[0] = findDistances()
+    driveForward()
+    quad = findQuadrant()
+    arrn[1] = findDistances()
 
+    
+    d1 = arrn[0, quad]
+    d2 = arrn[1, quad]
 
-    #legacy
-    # arr[0] = findDistances()
-    # turn90()
-    # arr[1] = findDistances()
-    # print(arr[0])
-    # print(arr[1])
-    # while (arr[0], quadNum) > .5:
-    #     if arr[0, quadNum] < arr[1, quadNum]:
-    #         print("keep turning1 - less than distances")
-    #         return True
-    #     elif arr[0, quadNum] == arr[1, quadNum]:
-    #         print("keep turning2- equal distances")
-    #         return True
-    #     else:
+    ang = findAngle(d1,d2)
+    turnAngle(ang)
 
-
-
-
-
-
-
-
-
-    # pointed at the pylon
-    # print("time to drive")
-    # if quadNum == 0:
-    #     a = arr[1, 0]
-    #     c = arr[1, 1]
-    #     b = math.sqrt(a*a + c*c)
-    # elif quadNum == 1:
-    #     a = arr[1, 2]
-    #     c = arr[1, 1]
-    #     b = math.sqrt(a*a + c*c)
-    # elif quadNum == 2:
-    #     a = arr[1, 2]
-    #     c = arr[1, 3]
-    #     b = math.sqrt(a*a + c*c)
-    # else:
-    #     a = arr[1, 0]
-    #     c = arr[1, 3]
-    #     b = math.sqrt(a*a + c*c)
-    #
-    # distance = .5/b * math.sqrt(a + b + c) * math.sqrt(b + c - a) * math.sqrt(a - b + c) * math.sqrt(a + b - c)
-    #
-    #
-    # driveTime = distance/.387 +1
-    # print("exited")
-    # # drive
-    # l_motors = 5400
-    # r_motors = 7000
-    # robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    # robot.tango.setTarget(robot.R_MOTORS, r_motors)
-    # t.sleep(driveTime)
-    # motors = 6000
-    # robot.tango.setTarget(robot.L_MOTORS, motors)
-    # robot.tango.setTarget(robot.R_MOTORS, motors)
-    # print("distance: ", distance)
-    #     return False
-        
-# quadNum = findQuadrant()
-#findPylon(quadNum, robot)
-
-# while (True):
-#     findPylon(quadNum, robot)
-#     driveForward()
-
-arrn = np.zeros((5, 4))
-
-arrn[0] = findDistances()
-driveForward()
-quad = findQuadrant()
-arrn[1] = findDistances()
-
-d1 = arrn[0, quad]
-d2 = arrn[1, quad]
-
-ang = findAngle(d1,d2)
-
-turnAngle(ang)
+main()
 
 
 
