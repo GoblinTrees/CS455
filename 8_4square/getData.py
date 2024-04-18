@@ -253,6 +253,7 @@ def findPylon(quadNum, robot):
 arrn = np.zeros((5, 4))
 
 arrn[0] = findDistances()
+driveForward()
 quad = findQuadrant()
 arrn[1] = findDistances()
 
