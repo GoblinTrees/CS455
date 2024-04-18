@@ -118,7 +118,7 @@ def driveForward():
     r_motors = 7000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
-    t.sleep(1.5)
+    t.sleep(.5)
     motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, motors)
     robot.tango.setTarget(robot.R_MOTORS, motors)
