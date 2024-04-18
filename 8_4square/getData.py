@@ -107,7 +107,7 @@ def findQuadrant():
 def turn90():
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    t.sleep(.90)
+    t.sleep(.85)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
@@ -124,7 +124,7 @@ def driveForward():
 def findPylon(quadNum, robot):
     arr = np.zeros((4, 4))
 
-    for i in range(4):
+    for i in range(5):
         arr[i] = findDistances()
         turn90()
     min = np.argmin(arr)
