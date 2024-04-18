@@ -109,7 +109,7 @@ def findQuadrant():
 def turn90():
     l_motors = 5000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    t.sleep(.85)
+    t.sleep(.87)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
@@ -131,7 +131,7 @@ def findPylon(quadNum, robot):
         turn90()
     min = np.argmin(arr)
     print("Min: ",min)
-    row = min % 3
+    row = min % 4
     for i in range(row):
         turn90()
 
