@@ -15,10 +15,10 @@ class Robot:
         self.tango = Controller()
         self.engine = pyttsx3.init()
 
-        def speak(self, words: str):
-            self.engine.say(words)
-            self.engine.runAndWait()
-        
+    def speak(self, words: str):
+        self.engine.say(words)
+        self.engine.runAndWait()
+
 robot = Robot()
 count = 0
 quadNum = 5
@@ -41,7 +41,7 @@ def findDistances():
         num3 = 0
         num4 = 0
 
-        confidenceInt =0
+        confidenceInt = 0
         while confidenceInt < 10:
             print("ConInt: ", confidenceInt)
             temp = ser.readline()
@@ -129,7 +129,7 @@ def estimate_orientation_with_error(distances, error_bounds):
     distance_ranges = [(dist - error, dist + error) for dist, error in zip(distances, error_bounds)]
 
     # Calculate the differences between opposite sensors' ranges
-    opposite_differences = [abs(dist_range[0] - dist_range[2]) for dist_range in distance_ranges]
+    opposite_differences = [abs(dist_range[0] - dist_range[1]) for dist_range in distance_ranges]
 
     # Find the sensor pair with the smallest difference
     min_difference_index = np.argmin(opposite_differences)
