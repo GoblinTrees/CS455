@@ -45,9 +45,11 @@ def findDistances():
         while confidenceInt < 10:
             print("ConInt: ", confidenceInt)
             temp = ser.readline()
-            dataentry = ser.readline()
-            data = [dataentry[1],dataentry[2],dataentry[3],dataentry[4]]
-            print("Data: ",data)
+            dataentry = str(ser.readline()).split(",")
+            data = [dataentry[1], dataentry[2], dataentry[3], dataentry[4]]
+
+            print("Dataentry: ", dataentry)
+            print("Data: ", data)
             if str(data[0]) == 'null' or str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null':
                 print("bad data1, trying again")
             elif str(data[0]) == 'nan' or str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(data[3]) == 'nan':
