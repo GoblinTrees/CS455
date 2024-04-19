@@ -50,8 +50,8 @@ def findDistances():
             dataentry = str(ser.readline()).split(",")
             data = [dataentry[1],dataentry[2],dataentry[3],dataentry[4]]
 
-            print("Dataentry: ",dataentry)
-            print("Data: ",data)
+            #print("Dataentry: ",dataentry)
+            #print("Data: ",data)
 
 
             if str(data[0]) == 'null' or str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null':
@@ -182,15 +182,18 @@ def findExit():
 
     # if the change is negative, the robot drove away from the pylon, rotate 180 then drive straight until it leaves the square
     if diff < -.05:
+        print('turning 180 degrees')
         turn90()
         turn90()
         leaveSquare(arrn[1, quad])
     # if the change is negligible, rotate 90 degrees and try again
     elif 0 < diff and diff < .05:
+        print('no real change detected')
         turn90()
         findExit()
     # if the change is positive, the robot drove towards the pylon, just exit the square
     elif diff > .05:
+        print('facing the right way')
         leaveSquare(arrn[1, quad])
     # extra case for nan, null, or other weird input
     else:
