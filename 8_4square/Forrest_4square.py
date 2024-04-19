@@ -1,11 +1,11 @@
 import time
-
 import serial
 import time as t
 import numpy as np
 import pyttsx3
 from maestro import Controller
 import math
+
 
 class Robot:
     def __init__(self):
@@ -15,10 +15,15 @@ class Robot:
         self.l_motors = 6000
         self.tango = Controller()
         self.engine = pyttsx3.init()
+
+    def speak(self,words:str):
+        self.engine.say(words)
+        self.engine.runAndWait()
         
 robot = Robot()
 count = 0
 quadNum = 5
+
 
 def findDistances():
     #print("in function")
@@ -150,6 +155,7 @@ def leaveSquare(distance):
     robot.tango.setTarget(robot.L_MOTORS, motors)
     robot.tango.setTarget(robot.R_MOTORS, motors)
     print("exited")
+    robot.speak("Exited")
 
 def findExit():
     # drive straight and find distances at two end points
@@ -161,6 +167,7 @@ def findExit():
     # Find the quadrant and print it out
     quad = findQuadrant()
     print("In quadrant ", quad)
+    robot.speak("In quadrant "+ str(quad))
     
 
     # find the difference between the target at the two end points
@@ -180,7 +187,10 @@ def findExit():
         leaveSquare(arrn[1, quad])
     # extra case for nan, null, or other weird input
     else:
+        robot.speak("I'm lost")
         print("Could not find exit")
+
+
 
 findExit()
 
