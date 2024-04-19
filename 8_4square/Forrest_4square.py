@@ -73,10 +73,10 @@ def findDistances():
                 # print(data[2])
                 # print(data[3])
 
-        num1 = num1 / 1000
-        num2 = num2 / 1000
-        num3 = num3 / 1000
-        num4 = num4 / 1000
+        num1 = num1 / 10
+        num2 = num2 / 10
+        num3 = num3 / 10
+        num4 = num4 / 10
 
 
         print("got data")
@@ -89,10 +89,10 @@ def findDistances():
 
 def findQuadrant():
     data = findDistances()
-    print("Quadrant data:")
-    print(data)
+    # print("Quadrant data:")
+    # print(data)
     min = np.argmin(data)
-    print("Min: ",min)
+    # print("Min: ",min)
     return min
 
 def turn90():
