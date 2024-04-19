@@ -179,6 +179,10 @@ def findExit():
 
     # find the difference between the target at the two end points
     diff = arrn[0, quad] - arrn[1, quad]
+    print("Arrn[0]: ", arrn[0, quad])
+    print("Arrn[1]: ", arrn[1, quad])
+    print("diff: ", diff)
+
 
     # if the change is negative, the robot drove away from the pylon, rotate 180 then drive straight until it leaves the square
     if diff < -.05:
