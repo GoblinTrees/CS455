@@ -85,9 +85,10 @@ def findDistances():
 
 def findQuadrant():
     data = findDistances()
-    print("Quadrant data:\n")
+    print("Quadrant data:")
     print(data)
     min = np.argmin(data)
+    print("Min:",min)
     return min
 
 def turn90():
