@@ -47,7 +47,7 @@ def findDistances():
         while confidenceInt < 10:
             print("ConInt: ", confidenceInt)
             temp = ser.readline()
-            dataentry = ser.readline()
+            dataentry = str(ser.readline()).split(",")
             data = [dataentry[1],dataentry[2],dataentry[3],dataentry[4]]
 
             print("Dataentry: ",dataentry)
