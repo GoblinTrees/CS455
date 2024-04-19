@@ -88,7 +88,7 @@ def findQuadrant():
     print("Quadrant data:")
     print(data)
     min = np.argmin(data)
-    print("Min:",min)
+    print("Min: ",min)
     return min
 
 def turn90():
