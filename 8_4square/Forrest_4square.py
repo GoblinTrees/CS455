@@ -152,7 +152,7 @@ def findPylon(quadNum, robot):
 
 def leaveSquare(distance):
     # parametrized distance, uses the distance to the pylon instead of nominal distance so it should be an overestimate.
-    exitTime = distance/.347
+    exitTime = distance/.75
     l_motors = 5400
     r_motors = 7000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
