@@ -123,7 +123,7 @@ def driveForward():
     r_motors = 7000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
-    t.sleep(1)
+    t.sleep(.75)
     motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, motors)
     robot.tango.setTarget(robot.R_MOTORS, motors)
@@ -185,13 +185,13 @@ def findExit():
 
 
     # if the change is negative, the robot drove away from the pylon, rotate 180 then drive straight until it leaves the square
-    if diff < -.05:
+    if diff < -.04:
         print('turning 180 degrees')
         turn90()
         turn90()
         leaveSquare(arrn[1, quad])
     # if the change is negligible, rotate 90 degrees and try again
-    elif 0 < diff and diff < .05:
+    elif 0 < diff and diff < .04:
         print('no real change detected')
         turn90()
         findExit()
