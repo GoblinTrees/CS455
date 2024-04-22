@@ -20,9 +20,9 @@ def getDistance():
     GPIO.setup(trigPin, GPIO.OUT)
     GPIO.setup(echoPin, GPIO.IN)
     GPIO.output(trigPin, False)
-    t.sleep(.1)
+    time.sleep(.1)
     GPIO.output(trigPin, True)
-    t.sleep(.00001)
+    time.sleep(.00001)
     GPIO.output(trigPin, False)
     timeout = time.time()
     while GPIO.input(echoPin) == 0:
