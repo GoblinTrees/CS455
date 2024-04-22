@@ -31,7 +31,7 @@ def getDistance():
             return None
     pulseStart = t.time()
     timeout = t.time()
-    while(GPIO.input(echoPin) == 1:
+    while(GPIO.input(echoPin) == 1):
         if(time.time() - timeout) > 3:
             print("timeout while receiving echo")
             return None
