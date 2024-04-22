@@ -5,8 +5,8 @@ import time
 GPIO.setmode(GPIO.BCM)
 
 # set GPIO Pins
-TRIG_PIN = 23
-ECHO_PIN = 24
+TRIG_PIN = 14
+ECHO_PIN = 17
 
 # set trig as output anc ECHO as input
 GPIO.setup(TRIG_PIN, GPIO.OUT)
@@ -43,5 +43,5 @@ def getDistance():
     distance = round(distance,2)
     return distance
     
-print(getDistance())
+print("Diatance: ", getDistance())
 
