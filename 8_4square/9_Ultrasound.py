@@ -15,8 +15,8 @@ GPIO.setup(ECHO_PIN, GPIO.IN)
 def getDistance():
     # set TRIG to LOW for a short time to ensure a clean signal
     GPIO.setmode(GPIO.BCM)
-    trigPin = 14
-    echoPin = 17
+    trigPin = 24
+    echoPin = 23
     GPIO.setup(trigPin, GPIO.OUT)
     GPIO.setup(echoPin, GPIO.IN)
     GPIO.output(trigPin, False)
@@ -24,22 +24,22 @@ def getDistance():
     GPIO.output(trigPin, True)
     t.sleep(.00001)
     GPIO.output(trigPin, False)
-    timeout = t.time()
+    timeout = time.time()
     while GPIO.input(echoPin) == 0:
-        if (t.time() - timeout) > 3:
+        if (time.time() - timeout) > 3:
             print("timeout during echo")
             return None
-    pulseStart = t.time()
-    timeout = t.time()
+    pulseStart = time.time()
+    timeout = time.time()
     while(GPIO.input(echoPin) == 1):
         if(time.time() - timeout) > 3:
             print("timeout while receiving echo")
             return None
-    pulseEnd = t.time()
+    pulseEnd = time.time()
     pulseDuration = pulseEnd - pulseStart
     distance = pulseDuration * 17150
     distance = round(distance, 2)
     return distance
     
-print("Diatance: ", getDistance())
+print("Distance: ", getDistance())
 
