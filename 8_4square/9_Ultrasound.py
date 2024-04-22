@@ -12,7 +12,6 @@ ECHO_PIN = 24
 GPIO.setup(TRIG_PIN, GPIO.OUT)
 GPIO.setup(ECHO_PIN, GPIO.IN)
 
-
 def getDistance():
     # set TRIG to LOW for a short time to ensure a clean signal
     GPIO.output(TRIG_PIN, False)
@@ -43,3 +42,6 @@ def getDistance():
     distance = pulse_duration * 17150
     distance = round(distance,2)
     return distance
+    
+print(getDistance())
+
