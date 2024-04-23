@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Robot Control</title>
+
+    <script>
+        var ip_add = "{{ ip_address }}"; // Get the IP address from Flask
+        var form_send = ip_add + "/control";
+        var voice_send = ip_add + "/voice";
+
+        function sendData() {
+            var form = document.getElementById("robotControlForm");
+            var sliders = form.getElementsByTagName("input");
+            var L_Motors = document.getElementById("L_Motors").value;
+            var R_Motors = document.getElementById("R_Motors").value;
+            var formData = new FormData();
+
+            // Loop through sliders, add their values to formData
+            for (var i = 0; i < sliders.length; i++) {
+                if (sliders[i].type === "range") {
+                    formData.append(sliders[i].name, sliders[i].value);
+                }
+            }
+
+            formData.append("L_Motors", L_Motors);
+            formData.append("R_Motors", R_Motors);
+
+            // Send formData to the Flask backend
+            fetch("/gui", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(data); // Log the response from the backend
+                })
+                .catch(error => {
+                    console.error("There was a problem with the fetch operation:", error);
+                });
+        }
+
+        // Function to call sendData() whenever the input event occurs on sliders
+        function bindInputEvents() {
+            var form = document.getElementById("robotControlForm");
+            form.action = form_send;
+            var inputs = form.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type === "range") {
+                    inputs[i].addEventListener("input", sendData);
+                }
+            }
+
+        }
+
+        // Bind input events when the document is loaded
+        document.addEventListener("DOMContentLoaded", bindInputEvents);
+
+        function updateDashboard() {
+            var sliders = document.querySelectorAll('input[type="range"]');
+
+
+            var dashboardContent = "";
+            sliders.forEach(function (slider) {
+                dashboardContent += "<p>" + slider.name + ": " + slider.value + "</p>";
+            });
+
+
+            document.getElementById("sliderValues").innerHTML = dashboardContent;
+            sendData();
+        }
+
+        // Bind input events when the document is loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            bindInputEvents();
+            updateDashboard(); // Update dashboard initially
+        });
+    </script>
+
+    <style>
+
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif; /* You can change the font-family if needed */
+            background-color: #f0f0f0; /* Set a background color for the body */
+        }
+
+
+        /* Stylized button */
+        button {
+            background-color: #4CAF50; /* Green background */
+            border: none; /* Remove border */
+            color: white; /* White text */
+            padding: 10px 20px; /* Padding for spacing */
+            text-align: center; /* Center-align text */
+            text-decoration: none; /* Remove default underline */
+            display: inline-block; /* Make it inline-block for proper alignment */
+            font-size: 16px; /* Font size */
+            cursor: pointer; /* Cursor style */
+            border-radius: 4px; /* Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition for background color */
+        }
+
+        /* Change button background color on hover */
+        button:hover {
+            background-color: #45a049; /* Darker shade of green */
+        }
+
+
+        /* Styles for head sliders */
+        #head_sliders {
+            background-color: chocolate;
+            width: 250px;
+            margin-bottom: 20px;
+        }
+
+        /* Styles for left arm sliders */
+        #L_arm_sliders {
+            background-color: salmon;
+            width: 250px;
+            margin-right: 20px;
+        }
+
+        /* Styles for right arm sliders */
+        #R_arm_sliders {
+            background-color: salmon;
+            width: 250px;
+        }
+
+        /* Styles for body sliders */
+        #body_sliders {
+            background-color: dodgerblue;
+            width: 250px;
+            margin-bottom: 20px;
+        }
+
+        /* Styles for wheel sliders */
+        #Wheel_Sliders {
+            background-color: darkgreen;
+            width: 250px;
+        }
+
+        #outer {
+            background-color: darkgray;
+            width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #upper {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 20px;
+        }
+
+        #base {
+            display: flex;
+            flex-direction: row;
+            padding: 20px;
+            align-content: center;
+            align-items: center;
+        }
+
+
+        #strip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+        }
+
+        #strip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+        }
+
+        #dashboard {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        #dashboard h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        #sliderValues p {
+            margin: 5px 0;
+        }
+
+        .button-container {
+            text-align: center;
+            background-color: #575757;
+            width: 600px;
+            height: auto;
+        }
+
+        .button-container button {
+            margin: 0 5px; /* Adjust the margin as needed */
+            background-color: #2d2a2a;
+            color: darkgoldenrod;
+            width: 40px;
+            height: auto;
+        }
+
+        .input-container {
+            height: 60px; /* Minimum height */
+            max-height: 200px; /* Maximum height */
+            overflow-y: auto; /* Add scroll if content exceeds height */
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            resize: none; /* Prevent resizing horizontally */
+            font-size: 16px;
+        }
+
+        .button-container1 {
+            background-color: #333; /* Dark theme background color */
+            color: #fff; /* Dark theme text color */
+            padding: 20px; /* Add padding for spacing */
+            text-align: center; /* Center-align text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        #queueOuter {
+            background-color: #333; /* Dark theme background color */
+            color: #fff; /* Dark theme text color */
+            padding: 20px; /* Add padding for spacing */
+            text-align: center; /* Center-align text */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 350px;
+            height: 435px;
+
+        }
+
+        #queueContainer {
+            background-color: #f0f0f0; /* Light theme background color */
+            color: #333; /* Light theme text color */
+            padding: 20px; /* Add padding for spacing */
+            text-align: center; /* Center-align text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+            height: 415px;
+
+        }
+
+        .button-container2 {
+            background-color: #333; /* Dark theme background color */
+            color: #fff; /* Dark theme text color */
+            padding: 20px; /* Add padding for spacing */
+            text-align: center; /* Center-align text */
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="base">
+    <div id="dashboard">
+        <h3>Slider Values</h3>
+        <div id="sliderValues">
+            <!-- Slider values will be displayed here dynamically -->
+        </div>
+    </div>
+    <div>
+        <iframe id="dummyframe" name="dummyframe" style="display: none;"></iframe>
+        <form action="http://192.168.88.58:3245/gui" id="robotControlForm" method="post" target="dummyframe">
+            <div id="outer">
+                <div id="head_sliders">
+                    <label for="slider1">HeadTilt:</label>
+                    <input id="slider1" max="9000" min="3000" name="HeadTilt" step="200" type="range" value="6000"><br>
+
+                    <label for="slider2">HeadTurn:</label>
+                    <input id="slider2" max="9000" min="3000" name="HeadTurn" step="200" type="range" value="6000"><br>
+                </div>
+                <div id="upper">
+                    <div id="L_arm_sliders">
+                        <label for="slider3">LShoulder:</label>
+                        <input id="slider3" max="9000" min="3000" name="LShoulder" step="200" type="range" value="6000"><br>
+
+                        <label for="slider4">LBicep</label>
+                        <input id="slider4" max="9000" min="3000" name="LBicep" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider5">Lelbow</label>
+                        <input id="slider5" max="9000" min="3000" name="Lelbow" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider6">Lwrist</label>
+                        <input id="slider6" max="9000" min="3000" name="Lwrist" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider7">Lclaw</label>
+                        <input id="slider7" max="9000" min="3000" name="Lclaw" step="200" type="range" value="6000"><br>
+                    </div>
+
+                    <div id="R_arm_sliders">
+                        <label for="slider8">RShoulder</label>
+                        <input id="slider8" max="9000" min="3000" name="Rshoulder" step="200" type="range" value="6000"><br>
+
+                        <label for="slider9">RBicep</label>
+                        <input id="slider9" max="9000" min="3000" name="RBicep" step="200" type="range"
+                               value="6600"><br>
+
+                        <label for="slider10">Relbow</label>
+                        <input id="slider10" max="9000" min="3000" name="Relbow" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider11">Rwrist</label>
+                        <input id="slider11" max="9000" min="3000" name="Rwrist" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider12">Rclaw</label>
+                        <input id="slider12" max="9000" min="3000" name="Rclaw" step="200" type="range"
+                               value="6000"><br>
+                    </div>
+
+                </div>
+                <div id="Wheel_Sliders">
+                    <div id="timers">
+                        <label for="slider20">Duration</label>
+                        <input id="slider20" max="180" min="0" name="duration" step="1" type="range" value="0"><br>
+                        <label for="slider21">Delay</label>
+                        <input id="slider21" max="180" min="0" name="delay" step="1" type="range" value="0"><br>
+                    </div>
+                    <div id="body_sliders">
+                        <label for="slider13">Waist:</label>
+                        <input id="slider13" max="9000" min="3000" name="Waist" step="200" type="range"
+                               value="6000"><br>
+                    </div>
+                    <label for="L_Motors">L_Motor</label>
+                    <input id="L_Motors" max="9000" min="3000" name="L_Motors" step="200" type="range" value="6000"><br>
+                    <label for="R_Motors">R_Motor</label>
+                    <input id="R_Motors" max="9000" min="3000" name="R_Motors" step="200" type="range" value="6000"><br>
+                </div>
+                <input onclick="sendData()" type="button" value="Send">
+            </div>
+        </form>
+        <div class="input-container">
+            <textarea class="input-field" placeholder="Speak friend and enter" rows="1"></textarea>
+        </div>
+        <div class="button-container1">
+            <button onclick="window.close()">Exit</button>
+            <button onclick="window.location.href='url2';">Button 2</button>
+            <button onclick="window.location.href='url3';">Button 3</button>
+            <button onclick="window.location.href='url4';">Button 4</button>
+            <button onclick="window.location.href='url5';">Button 5</button>
+            <button onclick="window.location.href='url6';">Button 6</button>
+            <button onclick="">Remove from Queue</button>
+            <button onclick="">Add To Queue</button>
+        </div>
+    </div>
+
+
+</div>
+<div id="queueOuter">
+    <h3>Queue</h3>
+    <div id="queueContainer">
+
+        <div class="input-container" id="queue">
+            <!-- Queue items will be displayed here dynamically -->
+        </div>
+    </div>
+    <div class="button-container2">
+        <!-- Add a button to remove items from the queue -->
+        <button onclick="removeFromQueue()">Remove from Queue</button>
+        <!-- Add a button to add items to the queue -->
+        <button onclick="addToQueue()">Add To Queue</button>
+    </div>
+</div>
+<script>
+
+    function updateDashboard() {
+        var sliders = document.querySelectorAll('input[type="range"]');
+
+
+        var dashboardContent = "";
+        sliders.forEach(function (slider) {
+            dashboardContent += "<p>" + slider.name + ": " + slider.value + "</p>";
+        });
+
+        // var delaySlider = document.getElementById('slider21');
+        // var durationSlider = document.getElementById('slider20');
+        //
+        // dashboardContent += "<p>" + delaySlider.name + ": " + delaySlider.value + "</p>";
+        // dashboardContent += "<p>" + durationSlider.name + ": " + durationSlider.value + "</p>";
+
+
+        document.getElementById("sliderValues").innerHTML = dashboardContent;
+        sendData();
+    }
+
+    // Bind input events when the document is loaded
+    document.addEventListener("DOMContentLoaded", function () {
+        bindInputEvents();
+        updateDashboard(); // Update dashboard initially
+    });
+
+    // Function to bind input events to sliders
+    function bindInputEvents() {
+        var form = document.getElementById("robotControlForm");
+        var sliders = form.getElementsByTagName("input");
+        for (var i = 0; i < sliders.length; i++) {
+            if (sliders[i].type === "range") {
+                sliders[i].addEventListener("input", updateDashboard); // Add event listener to each slider
+            }
+        }
+    }
+
+
+    // Define a global array to act as the queue
+    var queue = [];
+
+    // Function to add items to the queue
+    function addToQueue() {
+        var form = document.getElementById("robotControlForm");
+        var sliders = form.getElementsByTagName("input");
+        var queueItem = {}; // Object to hold the slider values
+
+        // Loop through sliders, add their values to the queue item
+        for (var i = 0; i < sliders.length; i++) {
+            if (sliders[i].type === "range") {
+                queueItem[sliders[i].name] = sliders[i].value;
+            }
+        }
+
+        // Add the queue item to the queue array
+        queue.push(queueItem);
+
+        // Update the displayed queue
+        updateQueueDisplay();
+    }
+
+    // Function to remove items from the queue
+    function removeFromQueue() {
+        if (queue.length > 0) {
+            queue.shift(); // Remove the first item from the queue
+            updateQueueDisplay(); // Update the displayed queue
+        }
+    }
+
+    // Function to update the displayed queue
+    function updateQueueDisplay() {
+        var queueContent = "";
+
+        // Loop through the queue items and display them
+        for (var i = 0; i < queue.length; i++) {
+            queueContent += "<p>Item " + (i + 1) + ": " + JSON.stringify(queue[i]) + "</p>";
+        }
+
+        // Update the content of the queue div
+        document.getElementById("queue").innerHTML = queueContent;
+    }
+</script>
+</body>
+</html>
