@@ -152,6 +152,7 @@ def turnAngle(angle):
 
 def driveForward():
     global allStop
+
     if allStop == False:
         l_motors = 5400
         r_motors = 7000
@@ -239,7 +240,7 @@ def getObject():
 
 
 def checkagain():
-    global allStop:
+    global allStop
     if allStop == False:
         pass
     elif allStop == True:
