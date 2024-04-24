@@ -1,5 +1,27 @@
 import RPi.GPIO as GPIO
-import time
+import serial
+import time as t
+import numpy as np
+import pyttsx3
+from maestro import Controller
+import math
+
+
+class Robot:
+    def __init__(self):
+        self.L_MOTORS = 1
+        self.R_MOTORS = 0
+        self.r_motors = 6000
+        self.l_motors = 6000
+        self.tango = Controller()
+        self.engine = pyttsx3.init()
+
+    def speak(self, words: str):
+        self.engine.say(words)
+        self.engine.runAndWait()
+
+
+robot = Robot()
 
 # set GPIO mode
 GPIO.setmode(GPIO.BCM)
@@ -15,34 +37,56 @@ GPIO.setup(ECHO_PIN, GPIO.IN)
 GPIO.setwarnings(False)
 
 
-def getDistance():
-    # set TRIG to LOW for a short time to ensure a clean signal
+def getObject():
     GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+
     trigPin = 24
     echoPin = 23
     GPIO.setup(trigPin, GPIO.OUT)
     GPIO.setup(echoPin, GPIO.IN)
     GPIO.output(trigPin, False)
-    time.sleep(1)
+    t.sleep(.1)
     GPIO.output(trigPin, True)
-    time.sleep(1)
+    t.sleep(.00001)
     GPIO.output(trigPin, False)
-    timeout = time.time()
+    timeout = t.time()
     while GPIO.input(echoPin) == 0:
-        if (time.time() - timeout) > 3:
+        if (t.time() - timeout) > 3:
             print("timeout during echo")
             return None
-    pulseStart = time.time()
-    timeout = time.time()
+    pulseStart = t.time()
+    timeout = t.time()
     while(GPIO.input(echoPin) == 1):
-        if(time.time() - timeout) > 3:
+        if(t.time() - timeout > 3):
             print("timeout while receiving echo")
             return None
-    pulseEnd = time.time()
+    pulseEnd = t.time()
     pulseDuration = pulseEnd - pulseStart
     distance = pulseDuration * 17150
-    distance = round(distance, 2)
+    distance = float(round(distance, 2))
     return distance
-    
-print("Distance: ", getDistance())
+
+def leaveSquare(distance, objectDistance: float):
+    if objectDistance < 1.5:
+        print("object detected, please move before i drive")
+        t.sleep(2)
+        return True
+    # parametrized distance, uses the distance to the pylon instead of nominal distance so it should be an overestimate.
+    else:
+        exitTime = distance/.75
+        l_motors = 5400
+        r_motors = 7000
+        robot.tango.setTarget(robot.L_MOTORS, l_motors)
+        robot.tango.setTarget(robot.R_MOTORS, r_motors)
+        t.sleep(exitTime)
+        motors = 6000
+        robot.tango.setTarget(robot.L_MOTORS, motors)
+        robot.tango.setTarget(robot.R_MOTORS, motors)
+        print("exited")
+        robot.speak("Exited")
+        return False
+
+leaveSquare((1, getObject()))
+print("Distance: ", getObject())
 
