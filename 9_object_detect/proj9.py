@@ -119,7 +119,7 @@ def findAngle(distance1,distance2):
 def turnAngle(angle):
     #.01 sec per degree
     l_motors = 5000
-    robot.tango.setTarget(robot.L_MOTORS, l_motors)
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)fGPI
     t.sleep(.01 * angle)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
@@ -177,6 +177,8 @@ def leaveSquare(distance, objectDistance):
         return False
 def getObject():
     GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+
     trigPin = 14
     echoPin = 17
     GPIO.setup(trigPin, GPIO.OUT)
