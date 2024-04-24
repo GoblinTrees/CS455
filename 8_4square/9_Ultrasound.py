@@ -87,9 +87,9 @@ def leaveSquare(distance, objDis):
         robot.speak("Exited")
         return False
 
-temp = getObject()
-while temp > 20:
-    temp = getObject()
-    leaveSquare(1, temp)
-    print("Distance: ", temp)
+temp = True
+while temp:
+    dist = getObject()
+    temp = leaveSquare(1, dist)
+    print("Distance: ", dist)
 
