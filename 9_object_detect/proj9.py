@@ -180,7 +180,7 @@ def leaveSquare(distance, objDis):
     # parametrized distance, uses the distance to the pylon instead of nominal distance so it should be an overestimate.
     else:
         exitTime = distance/.75
-        exitPartial = exitTime/.5
+        exitPartial = math.ceil(exitTime/.5)
         for i in range(exitPartial):
             if (allStop == False):
                 driveForward()
