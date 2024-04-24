@@ -74,6 +74,7 @@ def findDistances():
         confidenceInt =0
         try:
             while confidenceInt < 10:
+
                 # print("ConInt: ", confidenceInt)
                 temp = ser.readline()
 
@@ -202,8 +203,15 @@ def leaveSquare(distance, objDis):
             if (allStop == False):
                 driveForward()
             else:
+
                 i -= 1
                 print("blocked")
+                objDis = getObject()
+                if objDis > 50:
+                    allStop = False
+                    print("object detected, please move before i drive")
+
+
         print("exited")
         robot.speak("Exited")
         notExited = False
@@ -239,18 +247,14 @@ def getObject():
     return distance
 
 
-def checkagain():
-    global allStop
-    if allStop == False:
-        pass
-    elif allStop == True:
-        pass
+
 def findExit():
     global allStop
     global runcount
     global notExited
 
     while (notExited):
+        print("While::findexit")
         if (runcount == 1):
             notExited = False
             return
