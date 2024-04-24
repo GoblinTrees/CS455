@@ -40,7 +40,7 @@ runcount = 0
 
 
 
-def interrupt(runcount):
+def interrupt():
     global allStop
     global notExited
     while True:
@@ -229,7 +229,7 @@ def getObject():
     distance = float(round(distance, 2))
     return distance
             
-def findExit(notExited):
+def findExit():
     global allStop
     global runcount
     global notExited
@@ -293,9 +293,9 @@ def findExit(notExited):
 
 
 
-t1 = threading.Thread(target=interrupt, args=(runcount,))
+t1 = threading.Thread(target=interrupt)
 t1.start()
 
-tmain = threading.Thread(target=findExit, args=(notExited,))
+tmain = threading.Thread(target=findExit)
 tmain.start()
 
