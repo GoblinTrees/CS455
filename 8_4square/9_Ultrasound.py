@@ -87,8 +87,6 @@ def leaveSquare(distance, objDis):
         robot.speak("Exited")
         return False
 
-temp = getObject()
-leaveSquare((1, temp))
-print("Distance: ", temp)
-#fjdaifdhajkfei
+leaveSquare(1, getObject())
+print("Distance: ", getObject())
 
