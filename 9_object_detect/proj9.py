@@ -7,6 +7,9 @@ import pyttsx3
 from maestro import Controller
 import math
 import RPi.GPIO as GPIO
+import threading
+
+
 
 
 
@@ -28,7 +31,18 @@ count = 0
 quadNum = 5
 disSet = 50
 
+allStop = False
+notExited = True
 
+
+def interrupt():
+    while True:
+        dist = getObject()
+        if dist <disSet:
+            allStop = True
+            print("INTERRUPTION")
+
+        else: allStop = False
 def findDistances():
     #print("in function")
     try:
@@ -131,7 +145,7 @@ def driveForward():
     r_motors = 7000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
     robot.tango.setTarget(robot.R_MOTORS, r_motors)
-    t.sleep(.75)
+    t.sleep(.5)
     motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, motors)
     robot.tango.setTarget(robot.R_MOTORS, motors)
@@ -166,16 +180,16 @@ def leaveSquare(distance, objDis):
     # parametrized distance, uses the distance to the pylon instead of nominal distance so it should be an overestimate.
     else:
         exitTime = distance/.75
-        l_motors = 5400
-        r_motors = 7000
-        robot.tango.setTarget(robot.L_MOTORS, l_motors)
-        robot.tango.setTarget(robot.R_MOTORS, r_motors)
-        t.sleep(exitTime)
-        motors = 6000
-        robot.tango.setTarget(robot.L_MOTORS, motors)
-        robot.tango.setTarget(robot.R_MOTORS, motors)
+        exitPartial = exitTime/.5
+        for i in range(exitPartial):
+            if (allStop == False):
+                driveForward()
+            else:
+                i -= 1
+                print("blocked")
         print("exited")
         robot.speak("Exited")
+        notExited = False
         return False
 def getObject():
     GPIO.setmode(GPIO.BCM)
@@ -208,54 +222,63 @@ def getObject():
     return distance
             
 def findExit():
-    # drive straight and find distances at two end points
-    arrn = np.zeros((5, 4))
-    arrn[0] = findDistances()
-    driveForward()
-    arrn[1] = findDistances()
-    
-    # Find the quadrant and print it out
-    quad = findQuadrant()
-    print("In quadrant ", quad)
-    robot.speak("In quadrant "+ str(quad))
-    
+    while (notExited):
+        if (allStop == False):
+            # drive straight and find distances at two end points
+            arrn = np.zeros((5, 4))
+            arrn[0] = findDistances()
+            driveForward()
+            arrn[1] = findDistances()
 
-    # find the difference between the target at the two end points
-    diff = arrn[0, quad] - arrn[1, quad]
-    print("Arrn[0]: ", arrn[0])
-    print("Arrn[1]: ", arrn[1])
-    print("diff: ", diff)
+            # Find the quadrant and print it out
+            quad = findQuadrant()
+            print("In quadrant ", quad)
+            robot.speak("In quadrant "+ str(quad))
 
 
-    # if the change is negative, the robot drove away from the pylon, rotate 180 then drive straight until it leaves the square
-    if diff < -.04:
-        print('turning 180 degrees')
-        turn90()
-        turn90()
-        notLeft = True
-        while notLeft:
-            dist = getObject()
-            notLeft = leaveSquare(1, dist)
-            print("Distance: ", dist)
-
-    # if the change is negligible, rotate 90 degrees and try again
-    elif 0 < diff and diff < .04:
-        print('no real change detected')
-        turn90()
-        findExit()
-    # if the change is positive, the robot drove towards the pylon, just exit the square
-    elif diff > .05:
-        print('facing the right way')
-        notLeft = True
-        while notLeft:
-            dist = getObject()
-            notLeft = leaveSquare(1, dist)
-            print("Distance: ", dist)
-    # extra case for nan, null, or other weird input
-    else:
-        robot.speak("I'm lost")
-        print("Could not find exit")
+            # find the difference between the target at the two end points
+            diff = arrn[0, quad] - arrn[1, quad]
+            print("Arrn[0]: ", arrn[0])
+            print("Arrn[1]: ", arrn[1])
+            print("diff: ", diff)
 
 
+            # if the change is negative, the robot drove away from the pylon, rotate 180 then drive straight until it leaves the square
+            if diff < -.04:
+                print('turning 180 degrees')
+                turn90()
+                turn90()
+                notLeft = True
+                while notLeft:
+                    dist = getObject()
+                    notLeft = leaveSquare(1, dist)
+                    print("Distance: ", dist)
 
-findExit()
+            # if the change is negligible, rotate 90 degrees and try again
+            elif 0 < diff and diff < .04:
+                print('no real change detected')
+                turn90()
+                findExit()
+            # if the change is positive, the robot drove towards the pylon, just exit the square
+            elif diff > .05:
+                print('facing the right way')
+                notLeft = True
+                while notLeft:
+                    dist = getObject()
+                    notLeft = leaveSquare(1, dist)
+                    print("Distance: ", dist)
+            # extra case for nan, null, or other weird input
+            else:
+                robot.speak("I'm lost")
+                print("Could not find exit")
+        elif (allStop == True):
+            print("Not moving; allStop is True")
+
+
+
+t1 = threading.Thread(interrupt)
+t1.start()
+
+tmain = threading.Thread(findExit)
+tmain.start()
+
