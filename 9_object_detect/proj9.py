@@ -156,7 +156,7 @@ def findPylon(quadNum, robot):
     for i in range(row):
         turn90()
 
-def leaveSquare(distance, objectDistance):
+def leaveSquare(distance, objectDistance: float):
     if objectDistance < 1.5:
         print("object detected, please move before i drive")
         time.sleep(2)
