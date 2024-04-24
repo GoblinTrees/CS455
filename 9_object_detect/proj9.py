@@ -216,6 +216,8 @@ def leaveSquare(distance, objDis):
         robot.speak("Exited")
         notExited = False
         return False
+
+
 def getObject():
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
@@ -254,7 +256,7 @@ def findExit():
     global notExited
 
     while (notExited):
-        print("While::findexit")
+        # print("While::findexit")
         if (runcount == 1):
             notExited = False
             return
