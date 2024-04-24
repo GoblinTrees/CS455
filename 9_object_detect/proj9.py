@@ -288,9 +288,9 @@ def findExit(notExited):
 
 
 
-t1 = threading.Thread(target=interrupt, args=(runcount))
+t1 = threading.Thread(target=interrupt, args=(runcount,))
 t1.start()
 
-tmain = threading.Thread(target=findExit, args=(notExited))
+tmain = threading.Thread(target=findExit, args=(notExited,))
 tmain.start()
 
