@@ -152,7 +152,7 @@ def turnAngle(angle):
 
 def driveForward():
     global allStop
-    if allStop ==False:
+    if allStop == False:
         l_motors = 5400
         r_motors = 7000
         robot.tango.setTarget(robot.L_MOTORS, l_motors)
