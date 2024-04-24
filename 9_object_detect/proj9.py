@@ -46,12 +46,13 @@ def interrupt():
     global runcount
     while True:
         dist = getObject()
-        if dist <disSet:
+        if dist < disSet:
             allStop = True
             runcount -= 1
             print("INTERRUPTION")
 
-        else: allStop = False
+        else:
+            allStop = False
 def findDistances():
     #print("in function")
     try:
@@ -150,14 +151,17 @@ def turnAngle(angle):
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
 
 def driveForward():
-    l_motors = 5400
-    r_motors = 7000
-    robot.tango.setTarget(robot.L_MOTORS, l_motors)
-    robot.tango.setTarget(robot.R_MOTORS, r_motors)
-    t.sleep(.5)
-    motors = 6000
-    robot.tango.setTarget(robot.L_MOTORS, motors)
-    robot.tango.setTarget(robot.R_MOTORS, motors)
+    global allStop
+    if allStop ==False:
+        l_motors = 5400
+        r_motors = 7000
+        robot.tango.setTarget(robot.L_MOTORS, l_motors)
+        robot.tango.setTarget(robot.R_MOTORS, r_motors)
+        t.sleep(.5)
+        motors = 6000
+        robot.tango.setTarget(robot.L_MOTORS, motors)
+        robot.tango.setTarget(robot.R_MOTORS, motors)
+
 
 def driveBackward():
     l_motors = 6600
@@ -232,7 +236,14 @@ def getObject():
     distance = pulseDuration * 17150
     distance = float(round(distance, 2))
     return distance
-            
+
+
+def checkagain():
+    global allStop:
+    if allStop == False:
+        pass
+    elif allStop == True:
+        pass
 def findExit():
     global allStop
     global runcount
@@ -243,7 +254,6 @@ def findExit():
             notExited = False
             return
         runcount += 1
-        allStop = False
 
 
         if (allStop == False):
