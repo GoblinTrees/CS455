@@ -26,6 +26,8 @@ class Robot:
 robot = Robot()
 count = 0
 quadNum = 5
+disSet = 50
+
 
 def findDistances():
     #print("in function")
@@ -156,10 +158,10 @@ def findPylon(quadNum, robot):
     for i in range(row):
         turn90()
 
-def leaveSquare(distance, objectDistance):
-    if float(objectDistance) < 50:
+def leaveSquare(distance, objDis):
+    if objDis < 50:
         print("object detected, please move before i drive")
-        time.sleep(2)
+        t.sleep(2)
         return True
     # parametrized distance, uses the distance to the pylon instead of nominal distance so it should be an overestimate.
     else:
@@ -233,8 +235,9 @@ def findExit():
         notLeft = True
         while notLeft:
             dist = getObject()
+            notLeft = leaveSquare(1, dist)
+            print("Distance: ", dist)
 
-            notLeft = leaveSquare(arrn[1, quad], dist)
     # if the change is negligible, rotate 90 degrees and try again
     elif 0 < diff and diff < .04:
         print('no real change detected')
@@ -245,8 +248,9 @@ def findExit():
         print('facing the right way')
         notLeft = True
         while notLeft:
-            dist = getObject
-            notLeft = leaveSquare(arrn[1, quad], dist)
+            dist = getObject()
+            notLeft = leaveSquare(1, dist)
+            print("Distance: ", dist)
     # extra case for nan, null, or other weird input
     else:
         robot.speak("I'm lost")
