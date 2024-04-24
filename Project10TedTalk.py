@@ -73,6 +73,7 @@ class Robot():
 
     def speak(self, line):
         self.engine.say(line)
+        print(line)
         self.engine.runAndWait()
 
     def moveBody(self):
