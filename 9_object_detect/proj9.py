@@ -47,7 +47,7 @@ def interrupt():
         dist = getObject()
         if dist <disSet:
             allStop = True
-            runcount = runcount - 1
+            runcount -= 1
             print("INTERRUPTION")
 
         else: allStop = False
