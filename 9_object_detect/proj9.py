@@ -41,6 +41,8 @@ runcount = 0
 
 
 def interrupt(runcount):
+    global allStop
+    global notExited
     while True:
         dist = getObject()
         if dist <disSet:
@@ -228,6 +230,9 @@ def getObject():
     return distance
             
 def findExit(notExited):
+    global allStop
+    global runcount
+    global notExited
 
     while (notExited):
         if (runcount == 1):
