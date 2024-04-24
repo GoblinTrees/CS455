@@ -43,6 +43,7 @@ runcount = 0
 def interrupt():
     global allStop
     global notExited
+    global runcount
     while True:
         dist = getObject()
         if dist <disSet:
