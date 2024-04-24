@@ -289,8 +289,8 @@ def findExit():
             else:
                 robot.speak("I'm lost")
                 print("Could not find exit")
-        elif (allStop == True):
-            print("Not moving; allStop is True")
+        # elif (allStop == True):
+        #     print("Not moving; allStop is True")
 
 
 
