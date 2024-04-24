@@ -67,7 +67,7 @@ def getObject():
     distance = float(round(distance, 2))
     return distance
 
-def leaveSquare(distance, objectDistance: float):
+def leaveSquare(distance, objectDistance):
     if objectDistance < 1.5:
         print("object detected, please move before i drive")
         t.sleep(2)
