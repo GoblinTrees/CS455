@@ -90,4 +90,5 @@ def leaveSquare(distance, objDis):
 temp = getObject()
 leaveSquare((1, temp))
 print("Distance: ", temp)
+#fjdaifdhajkfei
 
