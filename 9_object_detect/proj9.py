@@ -202,7 +202,7 @@ def getObject():
     pulseEnd = t.time()
     pulseDuration = pulseEnd - pulseStart
     distance = pulseDuration * 17150
-    distance = round(distance, 2)
+    distance = float(round(distance, 2))
     return distance
             
 def findExit():
