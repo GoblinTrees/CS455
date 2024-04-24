@@ -46,14 +46,14 @@ class Robot():
         self.l_motors = 6000
 
         self.l_shoulder = 6000
-        self.l_bicep = 6000
+        self.l_bicep = 5800
         self.l_elbow = 6000
         self.l_forarm = 6000
         self.l_wrist = 6000
         self.l_fingers = 6000
 
         self.r_shoulder = 6000
-        self.r_bicep = 6000
+        self.r_bicep = 6200
         self.r_elbow = 6000
         self.r_forarm = 6000
         self.r_wrist = 6000
@@ -73,11 +73,14 @@ class Robot():
 
     def speak(self, line):
         self.engine.say(line)
+        print(line)
         self.engine.runAndWait()
 
     def moveBody(self):
         armMovement = random.choice(armMovements)
         headMovement = random.choice(headMovements)
+        print(armMovement)
+        print(headMovement)
 
         armThread = threading.Thread(target = self.moveArm, args = (armMovement,))
         headThread = threading.Thread(target = self.moveHead, args = (headMovement,))
@@ -98,11 +101,11 @@ class Robot():
                 self.tango.setTarget(HEADTILT, self.headTilt)
                 
             case "look left":
-                self.headTurn = 4500
+                self.headTurn = 7500
                 self.tango.setTarget(HEADTURN, self.headTurn)
 
             case "look right":
-                self.headTurn = 7500
+                self.headTurn = 4500
                 self.tango.setTarget(HEADTURN, self.headTurn)
 
             case "look up":
@@ -117,14 +120,14 @@ class Robot():
         match armChoice:
             case "reset":
                 self.l_shoulder = 6000
-                self.l_bicep = 6000
+                self.l_bicep = 5800
                 self.l_elbow = 6000
                 self.l_forarm = 6000
                 self.l_wrist = 6000
                 self.l_fingers = 6000
 
                 self.r_shoulder = 6000
-                self.r_bicep = 6000
+                self.r_bicep = 6200
                 self.r_elbow = 6000
                 self.r_forarm = 6000
                 self.r_wrist = 6000
@@ -145,17 +148,17 @@ class Robot():
                 self.tango.setTarget(R_FINGERS, self.r_fingers)
                 
             case "prl":
-                self.l_shoulder = 5000
+                self.l_shoulder = 6500
 
                 self.tango.setTarget(L_SHOULDER, self.l_shoulder)
 
             case "prr":
-                self.r_shoulder = 5000
+                self.r_shoulder = 5500
 
                 self.tango.setTarget(R_SHOULDER, self.r_shoulder)
 
             case "prb":
-                self.l_shoulder = 5000
+                self.l_shoulder = 7000
                 self.r_shoulder = 5000
 
                 self.tango.setTarget(L_SHOULDER, self.l_shoulder)
@@ -163,7 +166,7 @@ class Robot():
 
             case "lowerl":
                 self.l_shoulder = 6000
-                self.l_bicep = 6000
+                self.l_bicep = 5800
                 self.l_elbow = 6000
                 self.l_forarm = 6000
                 self.l_wrist = 6000
@@ -178,7 +181,7 @@ class Robot():
 
             case "lowerr":
                 self.r_shoulder = 6000
-                self.r_bicep = 6000
+                self.r_bicep = 6200
                 self.r_elbow = 6000
                 self.r_forarm = 6000
                 self.r_wrist = 6000
@@ -192,29 +195,29 @@ class Robot():
                 self.tango.setTarget(R_FINGERS, self.r_fingers)
                 
             case "pointl":
-                self.l_shoulder = 4000
-                self.l_bicep = 4000
+                self.l_shoulder = 7000
+                self.l_bicep = 5000
 
                 self.tango.setTarget(L_SHOULDER, self.l_shoulder)
                 self.tango.setTarget(L_BICEP, self.l_bicep)
                 
             case "pointr":
-                self.r_shoulder = 4000
-                self.r_bicep = 4000
+                self.r_shoulder = 5000
+                self.r_bicep = 7000
 
                 self.tango.setTarget(R_SHOULDER, self.r_shoulder)
                 self.tango.setTarget(R_BICEP, self.r_bicep)
 
             case "upl":
-                self.l_shoulder = 3000
+                self.l_shoulder = 8000
                 self.l_bicep = 5000
 
                 self.tango.setTarget(L_SHOULDER, self.l_shoulder)
                 self.tango.setTarget(L_BICEP, self.l_bicep)
 
             case "upr":
-                self.r_shoulder = 3000
-                self.r_bicep = 5000
+                self.r_shoulder = 4000
+                self.r_bicep = 7000
 
                 self.tango.setTarget(R_SHOULDER, self.r_shoulder)
                 self.tango.setTarget(R_BICEP, self.r_bicep)
