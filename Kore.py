@@ -1,12 +1,10 @@
 import time
 
 from flask import Flask, render_template, request, abort
-import tkinter as tk
 import pyttsx3
-from tkinter import *
 from maestro import Controller
 from sys import version_info
-import threading
+import threadQ
 
 
 
@@ -42,6 +40,11 @@ def control_robot():
     Waist = int(request.form['Waist'])
     L_motors = int(request.form['L_Motors'])
     R_motors = int(request.form['R_Motors'])
+    Duration = int(request.form['duration'])
+    Delay = int(request.form['delay'])
+
+
+    #TODO finish using duration/delay
 
     # Motor Mapping
     R_motors = int(12000) - R_motors
@@ -178,6 +181,10 @@ class Kore():
             "L_Motors": 1,
             "R_Motors": 0,
         }
+
+        #the threading Queue-> uses Queue methods to add, then use procQ to go through all functions
+        self.threadQ = threadQ()
+
 
 
     def getChan(self, key):
