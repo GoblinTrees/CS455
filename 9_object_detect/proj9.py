@@ -276,9 +276,9 @@ def findExit():
 
 
 
-t1 = threading.Thread(interrupt)
+t1 = threading.Thread(target=interrupt)
 t1.start()
 
-tmain = threading.Thread(findExit)
+tmain = threading.Thread(target=findExit)
 tmain.start()
 
