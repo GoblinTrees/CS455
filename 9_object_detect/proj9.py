@@ -187,6 +187,14 @@ def findPylon(quadNum, robot):
     for i in range(row):
         turn90()
 
+
+global interrupted
+interrupted = False
+def checkInterrupt():
+    global interrupted
+    return interrupted
+
+
 def leaveSquare(distance, objDis):
     global notExited
     global allStop
@@ -203,7 +211,6 @@ def leaveSquare(distance, objDis):
             if (allStop == False):
                 driveForward()
             else:
-
                 i -= 1
                 print("blocked")
                 objDis = getObject()
@@ -211,7 +218,8 @@ def leaveSquare(distance, objDis):
                     allStop = False
                     print("object detected, please move before i drive")
 
-
+        if (checkInterrupt()):
+            driveForward()
         print("exited")
         robot.speak("Exited")
         notExited = False
@@ -312,7 +320,7 @@ def findExit():
                 robot.speak("I'm lost")
                 print("Could not find exit")
         elif (allStop == True):
-            print("Not moving; allStop is True")
+            print("Not moving; allStop is True, resetting allStop")
             allStop = False
 
 
