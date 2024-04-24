@@ -68,7 +68,7 @@ def getObject():
     return distance
 
 def leaveSquare(distance, objDis):
-    if objDis < 1.5:
+    if objDis < 50:
         print("object detected, please move before i drive")
         t.sleep(2)
         return True
