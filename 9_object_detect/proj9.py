@@ -311,6 +311,7 @@ def findExit():
                 print("Could not find exit")
         elif (allStop == True):
             print("Not moving; allStop is True")
+            allStop = False
 
 
 
