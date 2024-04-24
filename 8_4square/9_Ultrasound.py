@@ -67,8 +67,8 @@ def getObject():
     distance = float(round(distance, 2))
     return distance
 
-def leaveSquare(distance, objectDistance):
-    if objectDistance < 1.5:
+def leaveSquare(distance, objDis):
+    if objDis < 1.5:
         print("object detected, please move before i drive")
         t.sleep(2)
         return True
@@ -87,6 +87,7 @@ def leaveSquare(distance, objectDistance):
         robot.speak("Exited")
         return False
 
-leaveSquare((1, getObject()))
-print("Distance: ", getObject())
+temp = getObject()
+leaveSquare((1, temp))
+print("Distance: ", temp)
 
