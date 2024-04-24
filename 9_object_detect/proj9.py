@@ -32,7 +32,12 @@ quadNum = 5
 disSet = 50
 
 allStop = False
+global notExited
 notExited = True
+
+global runcount
+runcount = 0
+
 
 
 def interrupt():
@@ -40,6 +45,7 @@ def interrupt():
         dist = getObject()
         if dist <disSet:
             allStop = True
+            runcount -= 1
             print("INTERRUPTION")
 
         else: allStop = False
@@ -221,8 +227,14 @@ def getObject():
     distance = float(round(distance, 2))
     return distance
             
-def findExit():
+def findExit(notExited):
+
     while (notExited):
+        if (runcount == 1):
+            notExited = False
+            return
+        runcount += 1
+
         if (allStop == False):
             # drive straight and find distances at two end points
             arrn = np.zeros((5, 4))
@@ -279,6 +291,6 @@ def findExit():
 t1 = threading.Thread(target=interrupt)
 t1.start()
 
-tmain = threading.Thread(target=findExit)
+tmain = threading.Thread(target=findExit, args=(notExited))
 tmain.start()
 
