@@ -156,8 +156,8 @@ def findPylon(quadNum, robot):
     for i in range(row):
         turn90()
 
-def leaveSquare(distance, objectDistance: float):
-    if objectDistance < 1.5:
+def leaveSquare(distance, objectDistance):
+    if float(objectDistance) < 50:
         print("object detected, please move before i drive")
         time.sleep(2)
         return True
@@ -233,6 +233,7 @@ def findExit():
         notLeft = True
         while notLeft:
             dist = getObject()
+
             notLeft = leaveSquare(arrn[1, quad], dist)
     # if the change is negligible, rotate 90 degrees and try again
     elif 0 < diff and diff < .04:
