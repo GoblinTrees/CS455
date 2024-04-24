@@ -182,6 +182,7 @@ def findPylon(quadNum, robot):
         turn90()
 
 def leaveSquare(distance, objDis):
+    global notExited
     if objDis < 50:
         print("object detected, please move before i drive")
         t.sleep(2)
