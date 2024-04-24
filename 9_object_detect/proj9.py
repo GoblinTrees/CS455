@@ -119,7 +119,7 @@ def findAngle(distance1,distance2):
 def turnAngle(angle):
     #.01 sec per degree
     l_motors = 5000
-    robot.tango.setTarget(robot.L_MOTORS, l_motors)fGPI
+    robot.tango.setTarget(robot.L_MOTORS, l_motors)
     t.sleep(.01 * angle)
     l_motors = 6000
     robot.tango.setTarget(robot.L_MOTORS, l_motors)
