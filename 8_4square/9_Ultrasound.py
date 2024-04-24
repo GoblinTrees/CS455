@@ -18,8 +18,8 @@ GPIO.setwarnings(False)
 def getDistance():
     # set TRIG to LOW for a short time to ensure a clean signal
     GPIO.setmode(GPIO.BCM)
-    trigPin = 14
-    echoPin = 17
+    trigPin = 24
+    echoPin = 23
     GPIO.setup(trigPin, GPIO.OUT)
     GPIO.setup(echoPin, GPIO.IN)
     GPIO.output(trigPin, False)
