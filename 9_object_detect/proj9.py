@@ -179,8 +179,8 @@ def getObject():
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
 
-    trigPin = 14
-    echoPin = 17
+    trigPin = 24
+    echoPin = 23
     GPIO.setup(trigPin, GPIO.OUT)
     GPIO.setup(echoPin, GPIO.IN)
     GPIO.output(trigPin, False)
