@@ -183,12 +183,14 @@ def findPylon(quadNum, robot):
 
 def leaveSquare(distance, objDis):
     global notExited
+    global allStop
     if objDis < 50:
         print("object detected, please move before i drive")
         t.sleep(2)
         return True
     # parametrized distance, uses the distance to the pylon instead of nominal distance so it should be an overestimate.
     else:
+        allStop = False
         exitTime = distance/.75
         exitPartial = math.ceil(exitTime/.5)
         for i in range(exitPartial):
@@ -241,6 +243,8 @@ def findExit():
             notExited = False
             return
         runcount += 1
+        allStop = False
+
 
         if (allStop == False):
             # drive straight and find distances at two end points
@@ -290,8 +294,8 @@ def findExit():
             else:
                 robot.speak("I'm lost")
                 print("Could not find exit")
-        # elif (allStop == True):
-        #     print("Not moving; allStop is True")
+        elif (allStop == True):
+            print("Not moving; allStop is True")
 
 
 
