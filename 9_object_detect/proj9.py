@@ -40,12 +40,12 @@ runcount = 0
 
 
 
-def interrupt():
+def interrupt(runcount):
     while True:
         dist = getObject()
         if dist <disSet:
             allStop = True
-            runcount -= 1
+            runcount = runcount - 1
             print("INTERRUPTION")
 
         else: allStop = False
@@ -288,7 +288,7 @@ def findExit(notExited):
 
 
 
-t1 = threading.Thread(target=interrupt)
+t1 = threading.Thread(target=interrupt, args=(runcount))
 t1.start()
 
 tmain = threading.Thread(target=findExit, args=(notExited))
