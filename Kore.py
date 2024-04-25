@@ -259,12 +259,7 @@ if __name__ == "__main__":
 
     kore.update(kore.tango_default)
 
-    # Create threads for Flask and Tkinter
-    flask_thread = threading.Thread(target=kore.boot)
-
-
-    # Start both threads
-    flask_thread.start()
+    kore.boot()
 
 
 
