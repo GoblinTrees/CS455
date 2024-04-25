@@ -1,3 +1,4 @@
+import threading
 import time
 
 from flask import Flask, render_template, request, abort
@@ -253,22 +254,20 @@ class Kore():
 if __name__ == "__main__":
     kore = Kore()
 
+
+
+
+    kore.update(kore.tango_default)
+
     # Create threads for Flask and Tkinter
-    # flask_thread = threading.Thread(target=kore.boot)
+    flask_thread = threading.Thread(target=kore.boot)
+
 
     # Start both threads
-    # flask_thread.start()
+    flask_thread.start()
 
-    fordict = kore.tango_default
-    fordict.update({"L_Motors": 5400})
-    fordict.update({"R_Motors": 7000})
 
-    kore.update(fordict)
-    time.sleep(1)
 
-    fordict.update({"L_Motors": 6000})
-    fordict.update({"R_Motors": 6000})
-    kore.update(fordict)
 
 
 
