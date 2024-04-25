@@ -183,7 +183,7 @@ class Kore():
         }
 
         #the threading Queue-> uses Queue methods to add, then use procQ to go through all functions
-        self.threadQ = threadQ()
+        self.threadQ = threadQ.ThreadedQueue
 
 
 
