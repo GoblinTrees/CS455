@@ -37,14 +37,14 @@ def pose():
         if random_number == 1:  # Go direct
             kore.update(endpose)
             time.sleep(random.randint(1000, 3000))
-            startpose = endpose
+            startpose = kore.send_values()
             continue
         elif random_number == 2:  # Go fivesteps
             steps: list = Pl.fiveStep(startpose, endpose)
             for s in steps:
                 kore.update(s)
                 time.sleep(50)
-                startpose = endpose
+                startpose = kore.send_values()
             continue
         elif random_number == 3:  # Go back after a random amount of time
             kore.update(endpose)
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
     speechThread = threading.Thread(target=speak_text, args=(text,))
 
-    poseThread = threading.Thread(target=pose(), args=(text,))
+    poseThread = threading.Thread(target=pose, args=())
 
     # run both threads, but finish and exit when speech is done
     speechThread.start()
@@ -74,7 +74,8 @@ if __name__ == "__main__":
 
     poseThread.start()
 
-    engine.runAndWait()
+    engine.runAndWait()     #after ending the speech, reset the funtions
+    print("\n\n---End of program---\n\n")
     kore.update(kore.tango_default)
 
     # testing code
