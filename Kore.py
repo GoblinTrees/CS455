@@ -6,7 +6,7 @@ import pyttsx3
 from maestro import Controller
 from sys import version_info
 import threadQ
-
+import Pose_Lib as Pl
 
 
 app = Flask(__name__)
@@ -21,6 +21,7 @@ def home():
     kore.update(kore.tango_default)
 
     return render_template('index.html', ip_address=ip_add)
+
 
 @app.route('/control', methods=['POST'])
 def control_robot():
@@ -44,8 +45,7 @@ def control_robot():
     Duration = int(request.form['duration'])
     Delay = int(request.form['delay'])
 
-    #finish duro/delay
-
+    # finish duro/delay
 
     # Motor Mapping
     R_Motors = int(12000) - R_Motors
@@ -91,20 +91,29 @@ def voice():
 
     return "Hello from Flask"
 
+
 @app.route("/gui", methods=['GET', 'POST'])
 def gui():
     host_ip = request.host
     client_ip = request.remote_addrclient_ip = request.remote_addr
-    print("Host ip: "+str(host_ip))
-    print("Client ip: "+str(client_ip))
+    print("Host ip: " + str(host_ip))
+    print("Client ip: " + str(client_ip))
 
     if (str(host_ip) != str(client_ip)):
         print("::ERR, GUI RESPONSE NOT VALID -> CANNOT CALL FROM OUTSIDE TANGO")
-        abort(403)  # Forbidden
 
-    #Passed forbidden zone: show gui interface
+@app.before_first_request
+def initialize():
+    # Perform initialization tasks here, for example:
+    print("Initializing the application...")
+    print("Running tests::\n")
+    testcode()
+    # Passed forbidden zone: show gui interface
 
 
+def testcode(code: function):
+    code()
+    pass
 # End of FlaskIO---------------------------------------------------------
 
 
@@ -183,10 +192,8 @@ class Kore():
             "R_Motors": 0,
         }
 
-        #the threading Queue-> uses Queue methods to add, then use procQ to go through all functions
+        # the threading Queue-> uses Queue methods to add, then use procQ to go through all functions
         self.threadQ = threadQ.ThreadedQueue
-
-
 
     def getChan(self, key):
         return self.tango_channels.get(key)
@@ -228,7 +235,6 @@ class Kore():
                 self.tango.setTarget(self.getChan(key), self.getVal(key))
                 print("Updated Key-Value:" + str(key) + "-" + str(self.getVal(key)))
 
-
     def ping(self):
         return print("Pinged Kore")
 
@@ -240,14 +246,47 @@ class Kore():
     def send_values(self):
         return self.tango_values
 
-# Bootup function----------------------------------------------------------
+    # Bootup function----------------------------------------------------------
     def boot(self):
         # This line boots the FlaskIO
         app.run(host="0.0.0.0", port=5245, debug=True)
 
+    def pose():
+        stop_flag = False
+        random_pose_key = Pl.get_random_pose_key(Pl.all_poses)
+        print("Random starter pose from 'all_poses': ", random_pose_key)
+        startpose = Pl.all_poses.get(random_pose_key)
+        kore.update(startpose)
+
+        while not stop_flag:
+            random_pose_key2 = Pl.get_random_pose_key(Pl.all_poses)
+            print("Random starter pose from 'all_poses': ", random_pose_key2)
+            endpose = Pl.all_poses.get(random_pose_key2)
+
+            # random choice of transition
+            random_number = random.randint(1, 3)
+            if random_number == 1:  # Go direct
+                kore.update(endpose)
+                time.sleep(random.randint(1000, 3000))
+                startpose = kore.send_values()
+                continue
+            elif random_number == 2:  # Go fivesteps
+                steps: list = Pl.fiveStep(startpose, endpose)
+                for s in steps:
+                    kore.update(s)
+                    time.sleep(50)
+                    startpose = kore.send_values()
+                continue
+            elif random_number == 3:  # Go back after a random amount of time
+                kore.update(endpose)
+                time.sleep(random.randint(1000, 5000))
+                kore.update(startpose)
+                continue
+            else:
+                continue
+
+
 # End of Bootup function
-
-
 
 
 # main executable funtion
@@ -255,14 +294,6 @@ if __name__ == "__main__":
     kore = Kore
     print("")
 
-
-
     kore.update(kore.tango_default)
 
     kore.boot()
-
-
-
-
-
-

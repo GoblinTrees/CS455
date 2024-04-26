@@ -57,7 +57,7 @@ def pose():
 
 
 if __name__ == "__main__":
-    kore = Kore.Kore()
+    kore = Kore.Kore
     kore.boot()
 
     kore.update(kore.tango_default)
@@ -83,3 +83,5 @@ if __name__ == "__main__":
     # testing code
     print("Testing\n")
     kore.update(Pl.all_poses.get(Pl.get_random_pose_key(Pl.all_poses)))
+    time.sleep(3)
+    kore.update(kore.tango_default)
