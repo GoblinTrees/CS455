@@ -35,8 +35,7 @@ class Robot():
         self.tango = Controller()
 
         # The taskmaster executor
-        self.exec = ThreadPoolExecutor(max_workers=None)
-        
+
         self.engine = pyttsx3.init()
         
         self.body = 6000
