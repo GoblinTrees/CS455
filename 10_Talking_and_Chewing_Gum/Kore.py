@@ -30,7 +30,7 @@ def home():
     return render_template('index.html', ip_address=ip_add)
 
 
-@app.route('/test')
+@app.route('/testing')
 def testing(text):
     print("Testing-->\n")
     # kore.update(Pl.all_poses.get(Pl.get_random_pose_key(Pl.all_poses)))
