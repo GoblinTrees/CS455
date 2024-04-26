@@ -1,6 +1,6 @@
 import time
 
-from .. import Kore
+import Kore
 import random
 import Pose_Lib as Pl
 import threading

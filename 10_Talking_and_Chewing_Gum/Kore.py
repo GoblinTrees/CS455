@@ -44,8 +44,8 @@ def control_robot():
     Duration = int(request.form['duration'])
     Delay = int(request.form['delay'])
 
-    #finish duro/delay
 
+    #TODO finish using duration/delay
 
     # Motor Mapping
     R_Motors = int(12000) - R_Motors
