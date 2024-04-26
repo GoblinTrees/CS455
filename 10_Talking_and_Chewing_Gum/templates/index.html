@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Robot Control</title>
+
+    <script>
+        var ip_add = "{{ ip_address }}"; // Get the IP address from Flask
+        var form_send = ip_add + "/control";
+        var voice_send = ip_add + "/voice";
+
+        function sendData() {
+            var form = document.getElementById("robotControlForm");
+            var sliders = form.getElementsByTagName("input");
+            var L_Motors = document.getElementById("L_Motors").value;
+            var R_Motors = document.getElementById("R_Motors").value;
+            var formData = new FormData();
+
+            // Loop through sliders, add their values to formData
+            for (var i = 0; i < sliders.length; i++) {
+                if (sliders[i].type === "range") {
+                    formData.append(sliders[i].name, sliders[i].value);
+                }
+            }
+
+            // Add joystick values to formData
+            //edited here
+            formData.append("L_Motors", L_Motors);
+            formData.append("R_Motors", R_Motors);
+
+            // Send formData to the Flask backend
+            fetch("/control", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(data); // Log the response from the backend
+                })
+                .catch(error => {
+                    console.error("There was a problem with the fetch operation:", error);
+                });
+        }
+
+        // Function to call sendData() whenever the input event occurs on sliders or joysticks
+        function bindInputEvents() {
+            var form = document.getElementById("robotControlForm");
+            form.action = form_send;
+            var inputs = form.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type === "range") {
+                    inputs[i].addEventListener("input", sendData);
+                }
+            }
+
+        }
+
+        // Bind input events when the document is loaded
+        document.addEventListener("DOMContentLoaded", bindInputEvents);
+
+        function updateDashboard() {
+            var sliders = document.querySelectorAll('input[type="range"]');
+
+
+            var dashboardContent = "";
+            sliders.forEach(function (slider) {
+                dashboardContent += "<p>" + slider.name + ": " + slider.value + "</p>";
+            });
+
+            // var delaySlider = document.getElementById('slider21');
+            // var durationSlider = document.getElementById('slider20');
+            //
+            // dashboardContent += "<p>" + delaySlider.name + ": " + delaySlider.value + "</p>";
+            // dashboardContent += "<p>" + durationSlider.name + ": " + durationSlider.value + "</p>";
+
+
+            document.getElementById("sliderValues").innerHTML = dashboardContent;
+            sendData();
+        }
+
+        // Bind input events when the document is loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            bindInputEvents();
+            updateDashboard(); // Update dashboard initially
+        });
+    </script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif; /* You can change the font-family if needed */
+            background-color: #f0f0f0; /* Set a background color for the body */
+        }
+
+        /* Styles for head sliders */
+        #head_sliders {
+            background-color: chocolate;
+            width: 250px;
+            margin-bottom: 20px;
+        }
+
+        /* Styles for left arm sliders */
+        #L_arm_sliders {
+            background-color: salmon;
+            width: 250px;
+            margin-right: 20px;
+        }
+
+        /* Styles for right arm sliders */
+        #R_arm_sliders {
+            background-color: salmon;
+            width: 250px;
+        }
+
+        /* Styles for body sliders */
+        #body_sliders {
+            background-color: dodgerblue;
+            width: 250px;
+            margin-bottom: 20px;
+        }
+
+        /* Styles for wheel sliders */
+        #Wheel_Sliders {
+            background-color: darkgreen;
+            width: 250px;
+        }
+
+        #outer {
+            background-color: darkgray;
+            width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #upper {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 20px;
+        }
+
+        #base {
+            display: flex;
+            flex-direction: row;
+            padding: 20px;
+            align-content: center;
+            align-items: center;
+        }
+
+
+        #strip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+        }
+
+        #strip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+        }
+
+        #dashboard {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        #dashboard h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        #sliderValues p {
+            margin: 5px 0;
+        }
+
+        .button-container {
+            text-align: center;
+            background-color: #575757;
+            width: 600px;
+            height: auto;
+        }
+
+        .button-container button {
+            margin: 0 5px; /* Adjust the margin as needed */
+            background-color: #2d2a2a;
+            color: darkgoldenrod;
+            width: 40px;
+            height: auto;
+        }
+
+        .input-container {
+            height: 60px; /* Minimum height */
+            max-height: 200px; /* Maximum height */
+            overflow-y: auto; /* Add scroll if content exceeds height */
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            resize: none; /* Prevent resizing horizontally */
+            font-size: 16px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="base">
+    <div id="dashboard">
+        <h3>Slider Values</h3>
+        <div id="sliderValues">
+            <!-- Slider values will be displayed here dynamically -->
+        </div>
+    </div>
+    <div>
+        <iframe id="dummyframe" name="dummyframe" style="display: none;"></iframe>
+        <form action="http://192.168.88.58:3245/control" id="robotControlForm" method="post" target="dummyframe">
+            <div id="outer">
+                <div id="head_sliders">
+                    <label for="slider1">HeadTilt:</label>
+                    <input id="slider1" max="9000" min="3000" name="HeadTilt" step="200" type="range" value="6000"><br>
+
+                    <label for="slider2">HeadTurn:</label>
+                    <input id="slider2" max="9000" min="3000" name="HeadTurn" step="200" type="range" value="6000"><br>
+                </div>
+                <div id="upper">
+                    <div id="L_arm_sliders">
+                        <label for="slider3">LShoulder:</label>
+                        <input id="slider3" max="9000" min="3000" name="LShoulder" step="200" type="range" value="6000"><br>
+
+                        <label for="slider4">LBicep</label>
+                        <input id="slider4" max="9000" min="3000" name="LBicep" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider5">Lelbow</label>
+                        <input id="slider5" max="9000" min="3000" name="Lelbow" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider6">Lwrist</label>
+                        <input id="slider6" max="9000" min="3000" name="Lwrist" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider7">Lclaw</label>
+                        <input id="slider7" max="9000" min="3000" name="Lclaw" step="200" type="range" value="6000"><br>
+                    </div>
+
+                    <div id="R_arm_sliders">
+                        <label for="slider8">RShoulder</label>
+                        <input id="slider8" max="9000" min="3000" name="Rshoulder" step="200" type="range" value="6000"><br>
+
+                        <label for="slider9">RBicep</label>
+                        <input id="slider9" max="9000" min="3000" name="RBicep" step="200" type="range"
+                               value="6600"><br>
+
+                        <label for="slider10">Relbow</label>
+                        <input id="slider10" max="9000" min="3000" name="Relbow" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider11">Rwrist</label>
+                        <input id="slider11" max="9000" min="3000" name="Rwrist" step="200" type="range"
+                               value="6000"><br>
+
+                        <label for="slider12">Rclaw</label>
+                        <input id="slider12" max="9000" min="3000" name="Rclaw" step="200" type="range"
+                               value="6000"><br>
+                    </div>
+
+                </div>
+                <div id="Wheel_Sliders">
+                    <div id="timers">
+                    <label for="slider20">Duration</label>
+                    <input id="slider20" max="180" min="0" name="duration" step="1" type="range" value="0"><br>
+                        <label for="slider21">Delay</label>
+                    <input id="slider21" max="180" min="0" name="delay" step="1" type="range" value="0"><br
+                </div>
+                    <div id="body_sliders">
+                        <label for="slider13">Waist:</label>
+                        <input id="slider13" max="9000" min="3000" name="Waist" step="200" type="range"
+                               value="6000"><br>
+                    </div>
+                    <label for="L_Motors">L_Motor</label>
+                    <input id="L_Motors" max="9000" min="3000" name="L_Motors" step="200" type="range" value="6000"><br>
+                    <label for="R_Motors">R_Motor</label>
+                    <input id="R_Motors" max="9000" min="3000" name="R_Motors" step="200" type="range" value="6000"><br>
+                </div>
+                <input onclick="sendData()" type="button" value="Send">
+            </div>
+        </form>
+        <div class="input-container">
+            <textarea class="input-field" placeholder="Speak friend and enter" rows="1"></textarea>
+        </div>
+        <div class="button-container">
+            <button onclick="window.location.href='url1';">Button 1</button>
+            <button onclick="window.location.href='url2';">Button 2</button>
+            <button onclick="window.location.href='url3';">Button 3</button>
+            <button onclick="window.location.href='url4';">Button 4</button>
+            <button onclick="window.location.href='url5';">Button 5</button>
+            <button onclick="window.location.href='url6';">Button 6</button>
+            <button onclick="sendVoice()">Speak</button>
+            <button onclick="window.location.href='index.html';">E_stop</button>
+        </div>
+
+    </div>
+    <div id="strip">
+
+        <div id="joyDiv" style=" width: 100px; height: 100px; background-color: #7700FF">
+            <script src="joy.js"></script>
+            <script>
+                var JoyStick = (function (container, parameters, callback) {
+                    parameters = parameters || {};
+                    var title = (typeof parameters.title === "undefined" ? "joystick" : parameters.title),
+                        width = (typeof parameters.width === "undefined" ? 0 : parameters.width),
+                        height = (typeof parameters.height === "undefined" ? 0 : parameters.height),
+                        internalFillColor = (typeof parameters.internalFillColor === "undefined" ? "#00AA00" : parameters.internalFillColor),
+                        internalLineWidth = (typeof parameters.internalLineWidth === "undefined" ? 2 : parameters.internalLineWidth),
+                        internalStrokeColor = (typeof parameters.internalStrokeColor === "undefined" ? "#003300" : parameters.internalStrokeColor),
+                        externalLineWidth = (typeof parameters.externalLineWidth === "undefined" ? 2 : parameters.externalLineWidth),
+                        externalStrokeColor = (typeof parameters.externalStrokeColor === "undefined" ? "#008000" : parameters.externalStrokeColor),
+                        autoReturnToCenter = (typeof parameters.autoReturnToCenter === "undefined" ? true : parameters.autoReturnToCenter);
+
+                    callback = callback || function (StickStatus) {
+                    };
+
+                    // Create Canvas element and add it in the Container object
+                    var objContainer = document.getElementById(container);
+
+                    // Fixing Unable to preventDefault inside passive event listener due to target being treated as passive in Chrome [Thanks to https://github.com/artisticfox8 for this suggestion]
+                    objContainer.style.touchAction = "none";
+
+                    var canvas = document.createElement("canvas");
+                    canvas.id = title;
+                    if (width === 0) {
+                        width = objContainer.clientWidth;
+                    }
+                    if (height === 0) {
+                        height = objContainer.clientHeight;
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    objContainer.appendChild(canvas);
+                    var context = canvas.getContext("2d");
+
+                    var pressed = 0; // Bool - 1=Yes - 0=No
+                    var circumference = 2 * Math.PI;
+                    var internalRadius = (canvas.width - ((canvas.width / 2) + 10)) / 2;
+                    var maxMoveStick = internalRadius + 5;
+                    var externalRadius = internalRadius + 30;
+                    var centerX = canvas.width / 2;
+                    var centerY = canvas.height / 2;
+                    var directionHorizontalLimitPos = canvas.width / 10;
+                    var directionHorizontalLimitNeg = directionHorizontalLimitPos * -1;
+                    var directionVerticalLimitPos = canvas.height / 10;
+                    var directionVerticalLimitNeg = directionVerticalLimitPos * -1;
+                    // Used to save current position of stick
+                    var movedX = centerX;
+                    var movedY = centerY;
+
+                    // Check if the device support the touch or not
+                    if ("ontouchstart" in document.documentElement) {
+                        canvas.addEventListener("touchstart", onTouchStart, false);
+                        document.addEventListener("touchmove", onTouchMove, false);
+                        document.addEventListener("touchend", onTouchEnd, false);
+                    } else {
+                        canvas.addEventListener("mousedown", onMouseDown, false);
+                        document.addEventListener("mousemove", onMouseMove, false);
+                        document.addEventListener("mouseup", onMouseUp, false);
+                    }
+                    // Draw the object
+                    drawExternal();
+                    drawInternal();
+
+                    /******************************************************
+                     * Private methods
+                     *****************************************************/
+
+                    /**
+                     * @desc Draw the external circle used as reference position
+                     */
+                    function drawExternal() {
+                        context.beginPath();
+                        context.arc(centerX, centerY, externalRadius, 0, circumference, false);
+                        context.lineWidth = externalLineWidth;
+                        context.strokeStyle = externalStrokeColor;
+                        context.stroke();
+                    }
+
+                    /**
+                     * @desc Draw the internal stick in the current position the user have moved it
+                     */
+                    function drawInternal() {
+                        context.beginPath();
+                        if (movedX < internalRadius) {
+                            movedX = maxMoveStick;
+                        }
+                        if ((movedX + internalRadius) > canvas.width) {
+                            movedX = canvas.width - (maxMoveStick);
+                        }
+                        if (movedY < internalRadius) {
+                            movedY = maxMoveStick;
+                        }
+                        if ((movedY + internalRadius) > canvas.height) {
+                            movedY = canvas.height - (maxMoveStick);
+                        }
+                        context.arc(movedX, movedY, internalRadius, 0, circumference, false);
+                        // create radial gradient
+                        var grd = context.createRadialGradient(centerX, centerY, 5, centerX, centerY, 200);
+                        // Light color
+                        grd.addColorStop(0, internalFillColor);
+                        // Dark color
+                        grd.addColorStop(1, internalStrokeColor);
+                        context.fillStyle = grd;
+                        context.fill();
+                        context.lineWidth = internalLineWidth;
+                        context.strokeStyle = internalStrokeColor;
+                        context.stroke();
+                    }
+
+                    /**
+                     * @desc Events for manage touch
+                     */
+                    let touchId = null;
+
+                    function onTouchStart(event) {
+                        pressed = 1;
+                        touchId = event.targetTouches[0].identifier;
+                    }
+
+                    function onTouchMove(event) {
+                        if (pressed === 1 && event.targetTouches[0].target === canvas) {
+                            movedX = event.targetTouches[0].pageX;
+                            movedY = event.targetTouches[0].pageY;
+                            // Manage offset
+                            if (canvas.offsetParent.tagName.toUpperCase() === "BODY") {
+                                movedX -= canvas.offsetLeft;
+                                movedY -= canvas.offsetTop;
+                            } else {
+                                movedX -= canvas.offsetParent.offsetLeft;
+                                movedY -= canvas.offsetParent.offsetTop;
+                            }
+                            // Delete canvas
+                            context.clearRect(0, 0, canvas.width, canvas.height);
+                            // Redraw object
+                            drawExternal();
+                            drawInternal();
+
+                            // Set attribute of callback
+                            StickStatus.xPosition = movedX;
+                            StickStatus.yPosition = movedY;
+                            StickStatus.x = (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
+                            StickStatus.y = ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
+                            StickStatus.cardinalDirection = getCardinalDirection();
+                            callback(StickStatus);
+                        }
+                    }
+
+                    function onTouchEnd(event) {
+                        if (event.changedTouches[0].identifier !== touchId) return;
+
+                        pressed = 0;
+                        // If required reset position store variable
+                        if (autoReturnToCenter) {
+                            movedX = centerX;
+                            movedY = centerY;
+                        }
+                        // Delete canvas
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        // Redraw object
+                        drawExternal();
+                        drawInternal();
+
+                        // Set attribute of callback
+                        StickStatus.xPosition = movedX;
+                        StickStatus.yPosition = movedY;
+                        StickStatus.x = (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
+                        StickStatus.y = ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
+                        StickStatus.cardinalDirection = getCardinalDirection();
+                        callback(StickStatus);
+                    }
+
+                    /**
+                     * @desc Events for manage mouse
+                     */
+                    function onMouseDown(event) {
+                        pressed = 1;
+                    }
+
+                    /* To simplify this code there was a new experimental feature here: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/offsetX , but it present only in Mouse case not metod presents in Touch case :-( */
+                    function onMouseMove(event) {
+                        if (pressed === 1) {
+                            movedX = event.pageX;
+                            movedY = event.pageY;
+                            // Manage offset
+                            if (canvas.offsetParent.tagName.toUpperCase() === "BODY") {
+                                movedX -= canvas.offsetLeft;
+                                movedY -= canvas.offsetTop;
+                            } else {
+                                movedX -= canvas.offsetParent.offsetLeft;
+                                movedY -= canvas.offsetParent.offsetTop;
+                            }
+                            // Delete canvas
+                            context.clearRect(0, 0, canvas.width, canvas.height);
+                            // Redraw object
+                            drawExternal();
+                            drawInternal();
+
+                            // Set attribute of callback
+                            StickStatus.xPosition = movedX;
+                            StickStatus.yPosition = movedY;
+                            StickStatus.x = (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
+                            StickStatus.y = ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
+                            StickStatus.cardinalDirection = getCardinalDirection();
+                            callback(StickStatus);
+                        }
+                    }
+
+                    function onMouseUp(event) {
+                        pressed = 0;
+                        // If required reset position store variable
+                        if (autoReturnToCenter) {
+                            movedX = centerX;
+                            movedY = centerY;
+                        }
+                        // Delete canvas
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        // Redraw object
+                        drawExternal();
+                        drawInternal();
+
+                        // Set attribute of callback
+                        StickStatus.xPosition = movedX;
+                        StickStatus.yPosition = movedY;
+                        StickStatus.x = (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
+                        StickStatus.y = ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
+                        StickStatus.cardinalDirection = getCardinalDirection();
+                        callback(StickStatus);
+                    }
+
+                    function getCardinalDirection() {
+                        let result = "";
+                        let orizontal = movedX - centerX;
+                        let vertical = movedY - centerY;
+
+                        if (vertical >= directionVerticalLimitNeg && vertical <= directionVerticalLimitPos) {
+                            result = "C";
+                        }
+                        if (vertical < directionVerticalLimitNeg) {
+                            result = "N";
+                        }
+                        if (vertical > directionVerticalLimitPos) {
+                            result = "S";
+                        }
+
+                        if (orizontal < directionHorizontalLimitNeg) {
+                            if (result === "C") {
+                                result = "W";
+                            } else {
+                                result += "W";
+                            }
+                        }
+                        if (orizontal > directionHorizontalLimitPos) {
+                            if (result === "C") {
+                                result = "E";
+                            } else {
+                                result += "E";
+                            }
+                        }
+
+                        return result;
+                    }
+
+                    /******************************************************
+                     * Public methods
+                     *****************************************************/
+
+                    /**
+                     * @desc The width of canvas
+                     * @return Number of pixel width
+                     */
+                    this.GetWidth = function () {
+                        return canvas.width;
+                    };
+
+                    /**
+                     * @desc The height of canvas
+                     * @return Number of pixel height
+                     */
+                    this.GetHeight = function () {
+                        return canvas.height;
+                    };
+
+                    /**
+                     * @desc The X position of the cursor relative to the canvas that contains it and to its dimensions
+                     * @return Number that indicate relative position
+                     */
+                    this.GetPosX = function () {
+                        return movedX;
+                    };
+
+                    /**
+                     * @desc The Y position of the cursor relative to the canvas that contains it and to its dimensions
+                     * @return Number that indicate relative position
+                     */
+                    this.GetPosY = function () {
+                        return movedY;
+                    };
+
+                    /**
+                     * @desc Normalizzed value of X move of stick
+                     * @return Integer from -100 to +100
+                     */
+                    this.GetX = function () {
+                        return (100 * ((movedX - centerX) / maxMoveStick)).toFixed();
+                    };
+
+                    /**
+                     * @desc Normalizzed value of Y move of stick
+                     * @return Integer from -100 to +100
+                     */
+                    this.GetY = function () {
+                        return ((100 * ((movedY - centerY) / maxMoveStick)) * -1).toFixed();
+                    };
+
+                    /**
+                     * @desc Get the direction of the cursor as a string that indicates the cardinal points where this is oriented
+                     * @return String of cardinal point N, NE, E, SE, S, SW, W, NW and C when it is placed in the center
+                     */
+                    this.GetDir = function () {
+                        return getCardinalDirection();
+                    };
+                });
+
+                var joy = new JoyStick('joyDiv', {
+                    // The ID of canvas element
+                    title: 'joystick',
+                    // width/height
+                    width: undefined,
+                    height: undefined,
+                    // Internal color of Stick
+                    internalFillColor: '#00AA00',
+                    // Border width of Stick
+                    internalLineWidth: 2,
+                    // Border color of Stick
+                    internalStrokeColor: '#003300',
+                    // External reference circonference width
+                    externalLineWidth: 2,
+                    //External reference circonference color
+                    externalStrokeColor: '#008000',
+                    // Sets the behavior of the stick
+                    autoReturnToCenter: true
+                });
+
+                // Get the joystick element
+                var joyStickElement = document.getElementById("joyDiv");
+
+                // Variable to track whether the joystick is being dragged
+                var isDragging = false;
+
+                // Add mousedown event listener to start tracking drag
+                joyStickElement.addEventListener("mousedown", function (event) {
+                    isDragging = true;
+                    <!---add async while loop here-->
+                });
+
+                // Add mousemove event listener to update motor values while dragging
+                document.addEventListener("mousemove", function (event) {
+                    if (isDragging) {
+                        // Extract the joystick values based on mouse position
+                        var joyStickRect = joyStickElement.getBoundingClientRect();
+                        var xValue = event.clientX - joyStickRect.left;
+                        var yValue = event.clientY - joyStickRect.top;
+
+                        // Update the "L_Motors" and "R_Motors" values based on joystick position
+                        var {L_Motors, R_Motors} = mapJoystickToMotors(xValue, yValue);
+
+                        // Update the input fields with the new values
+                        document.getElementById("L_Motors").value = L_Motors;
+                        document.getElementById("R_Motors").value = R_Motors;
+                        updateDashboard();
+                    }
+                });
+
+                // Add mouseup event listener to stop tracking drag
+                document.addEventListener("mouseup", function (event) {
+                    isDragging = false;
+                    document.getElementById("L_Motors").value = 6000;
+                    document.getElementById("R_Motors").value = 6000;
+                    updateDashboard();
+                });
+
+                function RsmoothStep(angle) {
+                    // Normalize angle to be between 0 and 2*pi
+                    angle = ((angle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+
+                    // Check which range the angle falls into
+                    if (angle >= -Math.PI / 4 && angle <= Math.PI / 4) {
+                        return 0;
+                    } else if (angle > Math.PI / 4 && angle < 3 * Math.PI / 4) {
+                        return (angle - Math.PI / 4) / (Math.PI / 2);
+                    } else if (angle >= 3 * Math.PI / 4 && angle <= 5 * Math.PI / 4) {
+                        return 1;
+                    } else if (angle > 5 * Math.PI / 4 && angle < 7 * Math.PI / 4) {
+                        return 1 - ((angle - 5 * Math.PI / 4) / (Math.PI / 2));
+                    } else {
+                        return 0;
+                    }
+                }
+
+                function LsmoothStep(angle) {
+                    // Normalize angle to be between 0 and 2*pi
+                    angle = ((angle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+
+                    // Check which range the angle falls into
+                    if (angle >= -Math.PI / 4 && angle <= Math.PI / 4) {
+                        return 1;
+                    } else if (angle > Math.PI / 4 && angle < 3 * Math.PI / 4) {
+                        return 1 - (angle - Math.PI / 4) / (Math.PI / 2);
+                    } else if (angle >= 3 * Math.PI / 4 && angle <= 5 * Math.PI / 4) {
+                        return 0;
+                    } else if (angle > 5 * Math.PI / 4 && angle < 7 * Math.PI / 4) {
+                        return (angle - 5 * Math.PI / 4) / (Math.PI / 2);
+                    } else {
+                        return 1;
+                    }
+                }
+
+
+                function signFunction(angle) {
+                    // Normalize angle to be between 0 and 2*pi
+                    angle = ((angle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+
+                    // Check if angle is between 0 and pi or between pi and 2*pi
+                    if (angle >= 0 && angle <= Math.PI) {
+                        return -1 * Math.sin(angle);
+                    } else {
+                        return 1 * Math.abs(Math.sin(angle));
+                    }
+                }
+
+
+                // Define your logic to map joystick position to motor values
+                function mapJoystickToMotors(x, y) {
+                    // Example logic:
+                    // Map x and y values to motor speeds
+
+                    // Calculate the maximum distance from the center (radius) of the joystick
+                    var radius = joyStickElement.offsetWidth / 2;
+
+                    // Calculate the distance of the joystick from the center
+                    var distance = Math.sqrt(Math.pow(x - radius, 2) + Math.pow(y - radius, 2));
+
+                    // Normalize the distance to be within the range of 0 to 1
+                    var normalizedDistance = distance / radius;
+                    // console.log("Norm.Distance: " + normalizedDistance)
+                    // Calculate the angle of the joystick (in radians)
+                    var angle = Math.atan2(y - radius, x - radius);
+                    // console.log("Angle(rad): " + angle)
+
+                    // Map x and y values to motor speeds
+                    // For simplicity, let's assume full power is 8000
+                    var L_Motors = 6000 + 2000 * normalizedDistance * LsmoothStep(angle) * signFunction(angle);
+                    var R_Motors = 6000 + 2000 * normalizedDistance * RsmoothStep(angle) * signFunction(angle);
+
+                    // Adjust motor values if they go beyond the range of 3000 to 9000
+                    updateDashboard();
+                    return {L_Motors: L_Motors, R_Motors: R_Motors};
+                }
+
+                function sendVoice() {
+                    var textInput = document.getElementById("textInput").value;
+
+                    // Create a new XMLHttpRequest object
+                    var xhr = new XMLHttpRequest();
+
+                    // Specify the POST method and the URL
+                    xhr.open("POST", "http://" + voice_send, true);
+
+                    // Set the Content-Type header for the request
+                    xhr.setRequestHeader("Content-Type", "application/json");
+
+                    // Define what happens on successful data submission
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            console.log("Data sent successfully!");
+                        }
+                    };
+
+                    // Define what happens in case of error
+                    xhr.onerror = function () {
+                        console.error("Error occurred while sending data.");
+                    };
+
+                    // Convert the data to JSON format
+                    var data = JSON.stringify({text: textInput});
+
+                    // Send the request
+                    xhr.send(data);
+                }
+
+            </script>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>
