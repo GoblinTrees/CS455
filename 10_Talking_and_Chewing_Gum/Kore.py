@@ -7,7 +7,7 @@ from maestro import Controller
 from sys import version_info
 import threadQ
 import Pose_Lib as Pl
-import  random
+import random
 
 
 
@@ -17,6 +17,11 @@ app = Flask(__name__)
 engine = pyttsx3.init()
 
 text = "It is not the critic who counts; not the man who points out how the strong man stumbles, or where the doer of deeds could have done them better. The credit belongs to the man who is actually in the arena, whose face is marred by dust and sweat and blood; who strives valiantly; who errs, who comes short again and again, because there is no effort without error and shortcoming; but who does actually strive to do the deeds; who knows great enthusiasms, the great devotions; who spends himself in a worthy cause; who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly, so that his place shall never be with those cold and timid souls who neither know victory nor defeat."
+
+def speak_text(text):
+    print(text)
+    engine.say(text)
+    engine.runAndWait()
 
 
 @app.route('/')
@@ -50,9 +55,8 @@ def testing():
 
     speechThread.join()
     # engine.runAndWait()     #after ending the speech, reset the funtions
-    kore.update(kore.tango_default)
     print("\n\n---End of program---\n\n")
-    return testing()
+    return
 @app.route('/control', methods=['POST'])
 def control_robot():
     print("control input recieved...")
@@ -139,8 +143,7 @@ def gui():
 def setup():
     pass
 
-def speak_text(text):
-    engine.say(text)
+
 
 
 # End of FlaskIO---------------------------------------------------------
@@ -284,7 +287,7 @@ class Kore():
         app.run(host="0.0.0.0", port=5245, debug=True)
 
 def pose():
-    stop_flag = False
+
     random_pose_key = Pl.get_random_pose_key(Pl.all_poses)
     print("Random starter pose from 'all_poses': ", random_pose_key)
     startpose = Pl.all_poses.get(random_pose_key)
