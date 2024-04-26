@@ -123,24 +123,20 @@ def testing(text):
     # kore.update(Pl.all_poses.get(Pl.get_random_pose_key(Pl.all_poses)))
     # time.sleep(3)
     # kore.update(kore.tango_default)
-    engine = pyttsx3.init()
     print("speechthread start-->\n")
 
     speechThread = threading.Thread(target=speak_text, args=(text,))
     print("posethread start-->\n")
 
     poseThread = threading.Thread(target=pose, args=())
-    print("both threads running -->\n")
 
     # run both threads, but finish and exit when speech is done
     speechThread.start()
-
-    # dramatic pause
-    time.sleep(1800)
-
     poseThread.start()
+    print("both threads running -->\n")
 
-    engine.runAndWait()     #after ending the speech, reset the funtions
+    speechThread.join()
+    # engine.runAndWait()     #after ending the speech, reset the funtions
     print("\n\n---End of program---\n\n")
 
 # End of FlaskIO---------------------------------------------------------
