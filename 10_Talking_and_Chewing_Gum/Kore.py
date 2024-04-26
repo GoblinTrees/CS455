@@ -301,6 +301,8 @@ if __name__ == "__main__":
     kore = Kore()
     kore.update(kore.tango_default)
     kore.boot()
+    kore.update(kore.tango_default)
+
 
 
 
