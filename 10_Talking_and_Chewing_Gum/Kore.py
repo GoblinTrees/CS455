@@ -113,7 +113,7 @@ def gui():
 
 @app.before_first_request
 def setup():
-    testing()
+    testing(text)
     return
 
 def speak_text(text):
