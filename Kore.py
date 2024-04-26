@@ -252,7 +252,7 @@ class Kore():
 
 # main executable funtion
 if __name__ == "__main__":
-    kore = Kore()
+    kore = Kore.__init__()
 
 
 
