@@ -314,7 +314,7 @@ def pose():
             continue
         elif random_number == 3:  # Go back after a random amount of time
             kore.update(endpose)
-            time.sleep(random.randint(10000, 50000))
+            time.sleep(random.randint(10, 30))
             kore.update(startpose)
             continue
         else:
