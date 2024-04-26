@@ -31,7 +31,7 @@ def home():
 
 
 @app.route('/testing')
-def testing(text):
+def testing():
     print("Testing-->\n")
     # kore.update(Pl.all_poses.get(Pl.get_random_pose_key(Pl.all_poses)))
     # time.sleep(3)
@@ -52,7 +52,7 @@ def testing(text):
     # engine.runAndWait()     #after ending the speech, reset the funtions
     kore.update(kore.tango_default)
     print("\n\n---End of program---\n\n")
-    return testing(text)
+    return testing()
 @app.route('/control', methods=['POST'])
 def control_robot():
     print("control input recieved...")
