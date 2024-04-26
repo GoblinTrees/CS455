@@ -52,7 +52,7 @@ def testing(text):
     # engine.runAndWait()     #after ending the speech, reset the funtions
     kore.update(kore.tango_default)
     print("\n\n---End of program---\n\n")
-    return
+    return testing(text)
 @app.route('/control', methods=['POST'])
 def control_robot():
     print("control input recieved...")
