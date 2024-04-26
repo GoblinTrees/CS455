@@ -59,24 +59,25 @@ def pose():
 if __name__ == "__main__":
     kore = Kore()
     kore.update(kore.tango_default)
-
-    ## threads: speaking thread and posing thread
-
-    speechThread = threading.Thread(target=speak_text, args=(text,))
-
-    poseThread = threading.Thread(target=pose, args=())
-
-    # run both threads, but finish and exit when speech is done
-    speechThread.start()
-
-    # dramatic pause
-    time.sleep(3000)
-
-    poseThread.start()
-
-    engine.runAndWait()     #after ending the speech, reset the funtions
-    print("\n\n---End of program---\n\n")
-    kore.update(kore.tango_default)
+    #
+    # ## threads: speaking thread and posing thread
+    #
+    # speechThread = threading.Thread(target=speak_text, args=(text,))
+    #
+    # poseThread = threading.Thread(target=pose, args=())
+    #
+    # # run both threads, but finish and exit when speech is done
+    # speechThread.start()
+    #
+    # # dramatic pause
+    # time.sleep(3000)
+    #
+    # poseThread.start()
+    #
+    # engine.runAndWait()     #after ending the speech, reset the funtions
+    # print("\n\n---End of program---\n\n")
+    # kore.update(kore.tango_default)
 
     # testing code
-    # kore.update(Pl.all_poses.get(Pl(Pl.all_poses)))
+    print("Testing\n")
+    kore.update(Pl.all_poses.get(Pl.get_random_pose_key(Pl.all_poses)))
