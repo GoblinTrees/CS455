@@ -29,6 +29,30 @@ def home():
 
     return render_template('index.html', ip_address=ip_add)
 
+
+@app.route('/test')
+def testing(text):
+    print("Testing-->\n")
+    # kore.update(Pl.all_poses.get(Pl.get_random_pose_key(Pl.all_poses)))
+    # time.sleep(3)
+    # kore.update(kore.tango_default)
+    print("speechthread start-->\n")
+
+    speechThread = threading.Thread(target=speak_text, args=(text,))
+    print("posethread start-->\n")
+
+    poseThread = threading.Thread(target=pose, args=())
+
+    # run both threads, but finish and exit when speech is done
+    speechThread.start()
+    poseThread.start()
+    print("both threads running -->\n")
+
+    speechThread.join()
+    # engine.runAndWait()     #after ending the speech, reset the funtions
+    kore.update(kore.tango_default)
+    print("\n\n---End of program---\n\n")
+    return
 @app.route('/control', methods=['POST'])
 def control_robot():
     print("control input recieved...")
@@ -113,31 +137,12 @@ def gui():
 
 @app.before_first_request
 def setup():
-    testing(text)
+    # testing(text)
     return
 
 def speak_text(text):
     engine.say(text)
-def testing(text):
-    print("Testing-->\n")
-    # kore.update(Pl.all_poses.get(Pl.get_random_pose_key(Pl.all_poses)))
-    # time.sleep(3)
-    # kore.update(kore.tango_default)
-    print("speechthread start-->\n")
 
-    speechThread = threading.Thread(target=speak_text, args=(text,))
-    print("posethread start-->\n")
-
-    poseThread = threading.Thread(target=pose, args=())
-
-    # run both threads, but finish and exit when speech is done
-    speechThread.start()
-    poseThread.start()
-    print("both threads running -->\n")
-
-    speechThread.join()
-    # engine.runAndWait()     #after ending the speech, reset the funtions
-    print("\n\n---End of program---\n\n")
 
 # End of FlaskIO---------------------------------------------------------
 
