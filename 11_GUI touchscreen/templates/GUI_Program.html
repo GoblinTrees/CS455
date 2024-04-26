@@ -117,8 +117,8 @@
         <div class="button-container1">
             <button onclick="window.close()">Exit Interface</button>
             <button onclick="window.location.href='url2';">Human Input</button>
-            <button onclick="window.location.href='url3';">Set Preset</button>
-            <button onclick="window.location.href='url4';">Preset Toggle</button>
+            <button onclick="savePreset()">Set Preset</button>
+            <button onclick="loadPreset()">Preset Toggle</button>
             <button onclick="window.location.href='url5';">Toggle Phrase</button>
             <button onclick="window.location.href='url6';">Speak Line</button>
             <button onclick="">Chain Function</button>
@@ -184,7 +184,24 @@
 
         // Define a global array to act as the queue
         var queue = [];
+        var preset = [];
 
+        function savePreset(){
+            preset = [];
+            for (var i = 0; i < queue.length; i++){
+                preset.push(queue[i]);
+            }
+        }
+
+        function loadPreset(){
+            queue = [];
+            updateQueueDisplay();
+
+            for (var i = 0; i < preset.length; i++){
+                queue.push(preset[i]);
+            }
+            updateQueueDisplay();
+        }
         // Function to add items to the queue
         function addToQueue() {
             var form = document.getElementById("robotControlForm");
