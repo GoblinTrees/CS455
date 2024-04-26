@@ -14,6 +14,10 @@ import  random
 
 app = Flask(__name__)
 
+engine = pyttsx3.init()
+
+text = "It is not the critic who counts; not the man who points out how the strong man stumbles, or where the doer of deeds could have done them better. The credit belongs to the man who is actually in the arena, whose face is marred by dust and sweat and blood; who strives valiantly; who errs, who comes short again and again, because there is no effort without error and shortcoming; but who does actually strive to do the deeds; who knows great enthusiasms, the great devotions; who spends himself in a worthy cause; who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly, so that his place shall never be with those cold and timid souls who neither know victory nor defeat."
+
 
 @app.route('/')
 def home():
@@ -112,11 +116,29 @@ def setup():
     testing()
     return
 
-def testing():
+def speak_text(text):
+    engine.say(text)
+def testing(text):
     print("Testing-->\n")
-    kore.update(Pl.all_poses.get(Pl.get_random_pose_key(Pl.all_poses)))
-    time.sleep(3)
-    kore.update(kore.tango_default)
+    # kore.update(Pl.all_poses.get(Pl.get_random_pose_key(Pl.all_poses)))
+    # time.sleep(3)
+    # kore.update(kore.tango_default)
+    engine = pyttsx3.init()
+
+    speechThread = threading.Thread(target=speak_text, args=(text,))
+
+    poseThread = threading.Thread(target=pose, args=())
+
+    # run both threads, but finish and exit when speech is done
+    speechThread.start()
+
+    # dramatic pause
+    time.sleep(1800)
+
+    poseThread.start()
+
+    engine.runAndWait()     #after ending the speech, reset the funtions
+    print("\n\n---End of program---\n\n")
 
 # End of FlaskIO---------------------------------------------------------
 
