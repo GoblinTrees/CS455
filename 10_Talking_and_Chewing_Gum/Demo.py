@@ -57,7 +57,9 @@ def pose():
 
 
 if __name__ == "__main__":
-    kore = Kore()
+    kore = Kore.Kore()
+    kore.boot()
+
     kore.update(kore.tango_default)
     #
     # ## threads: speaking thread and posing thread
