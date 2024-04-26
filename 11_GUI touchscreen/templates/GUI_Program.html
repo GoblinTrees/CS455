@@ -95,7 +95,7 @@
                         <input id="R_Motors" max="9000" min="3000" name="R_Motors" step="200" type="range" value="6000"><br>
                     </div>
                     <div class="input-container">
-                        <textarea class="input-field" placeholder="Speak friend and enter" rows="1"></textarea>
+                        <textarea class="input-field" id="UserSpeech" placeholder="Speak friend and enter" rows="1"></textarea>
                     </div>
                     <!--                    <input onclick="sendData()" type="button" value="Send">-->
 
@@ -120,9 +120,9 @@
             <button onclick="savePreset()">Set Preset</button>
             <button onclick="loadPreset()">Preset Toggle</button>
             <button onclick="window.location.href='url5';">Toggle Phrase</button>
-            <button onclick="window.location.href='url6';">Speak Line</button>
+            <button onclick="speakLine()">Speak Line</button>
             <button onclick="">Chain Function</button>
-            <button onclick="">Add To Queue</button>
+            <button onclick="addToQueue()">Add To Queue</button>
         </div>
     </div>
 
@@ -181,7 +181,18 @@
             }
         }
 
-
+        var sampleSpeech = ["Hello new friend", "How are you", "How can I help you today", "I don't get paid enough oil for this"];
+        function speakLine(){
+            var input = document.getElementById("UserSpeech").value;
+            var msg = new SpeechSynthesisUtterance();
+            if (input == ""){
+                msg.text = sampleSpeech[Math.floor(Math.random() * sampleSpeech.length)];
+            } else {
+                msg.text = input;
+            }
+            //if text box empty, randomly select from sampleSPeech, otherwise set msg.text to input
+            window.speechSynthesis.speak(msg);
+        }
         // Define a global array to act as the queue
         var queue = [];
         var preset = [];
