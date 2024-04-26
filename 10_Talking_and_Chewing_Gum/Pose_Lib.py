@@ -3,6 +3,14 @@ import random
 
 
 def fiveStep(startDict: dict, endDict: dict) -> list:
+    # for key in list(startDict.keys()):
+    #     if key in list(endDict.key()):
+    #         continue
+    #     else:
+    #         print("ERR: MISMATCHED KEYS IN FIVESTEP")
+    #         return [].append(endDict)
+
+
     steps = []
     # add the first step
     steps.append(startDict)
@@ -13,76 +21,66 @@ def fiveStep(startDict: dict, endDict: dict) -> list:
         intermediate_step = {}
         for key in startDict:
             # Calculate the difference between start and end values
-            diff = endDict[key] - startDict[key]
+            print("key: "+str(key))
+            print("Start/Endict.get(key)s:")
+            print(startDict.get(key))
+            print(endDict.get(key))
+            diff = int(endDict.get(key)) - int(startDict.get(key))
             # Divide the difference by 5 to get the increment
             increment = diff / 5
             # Calculate the value for the intermediate step
             intermediate_value = startDict[key] + (increment * i)
             # Round to the nearest integer (assuming motor values are integers)
-            intermediate_step[key] = round(intermediate_value)
+            intermediate_step[key] = str(round(intermediate_value))
+
         # Append the intermediate step to the steps list
         steps.append(intermediate_step)
 
-    # finally, iterate through the list and append each entry into the steps list
 
     # add the final step
     steps.append(endDict)
+
+    if len(steps) == 0:
+        steps.append(all_poses.get('neutral'))
     return steps
 
 
-def tenStep(startDict: dict, endDict: dict) -> list:
-    steps = []
-    # add the first step
-    steps.append(startDict)
-
-    # for each value in dict, take the difference between the two values, divide it by 5, and assign the dict to iteration
-
-    for i in range(1, 10):  # 5 steps in between
-        intermediate_step = {}
-        for key in startDict:
-            # Calculate the difference between start and end values
-            diff = endDict[key] - startDict[key]
-            # Divide the difference by 5 to get the increment
-            increment = diff / 10
-            # Calculate the value for the intermediate step
-            intermediate_value = startDict[key] + (increment * i)
-            # Round to the nearest integer (assuming motor values are integers)
-            intermediate_step[key] = round(intermediate_value)
-        # Append the intermediate step to the steps list
-        steps.append(intermediate_step)
-
-    # finally, iterate through the list and append each entry into the steps list
-
-    # add the final step
-    steps.append(endDict)
-    return steps
 
 
 def nStep(startDict: dict, endDict: dict, numStep: int) -> list:
+    # for key in list(startDict.keys()):
+    #     if key in list(endDict.key()):
+    #         continue
+    #     else:
+    #         print("ERR: MISMATCHED KEYS IN FIVESTEP")
+    #         return [].append(endDict)
+
     steps = []
     # add the first step
     steps.append(startDict)
 
     # for each value in dict, take the difference between the two values, divide it by 5, and assign the dict to iteration
 
-    for i in range(1, numStep):  # 5 steps in between
+    for i in range(numStep):  # 5 steps in between
         intermediate_step = {}
         for key in startDict:
             # Calculate the difference between start and end values
-            diff = endDict[key] - startDict[key]
-            # Divide the difference by numStep to get the increment
-            increment = diff / numStep
+            diff = int(endDict.get(key)) - int(startDict.get(key))
+            # Divide the difference by 5 to get the increment
+            increment = diff / 5
             # Calculate the value for the intermediate step
             intermediate_value = startDict[key] + (increment * i)
             # Round to the nearest integer (assuming motor values are integers)
-            intermediate_step[key] = round(intermediate_value)
+            intermediate_step[key] = str(round(intermediate_value))
+
         # Append the intermediate step to the steps list
         steps.append(intermediate_step)
 
-    # finally, iterate through the list and append each entry into the steps list
-
     # add the final step
     steps.append(endDict)
+
+    if len(steps) == 0:
+        steps.append(all_poses.get('neutral'))
     return steps
 
 
@@ -93,6 +91,18 @@ def get_random_pose_key(dictionary):
         raise ValueError("Dictionary is empty")
 
     return random.choice(list(dictionary.keys()))
+
+
+def showKey(dic: dict, key: str):
+    print(dic.get(key))
+
+
+def showList(dictList: list):
+    count = 0
+    for dict in dictList:
+        print("# " + str(count) + "  ---------")
+        print(dict)
+        count +=1
 
 
 poses = {
@@ -426,15 +436,42 @@ all_poses = {}
 all_poses.update(standard)
 all_poses.update(poses)
 
+# if __name__ == "__main__":
+#     # # Test with 'all_poses' dictionary
+#     random_pose = get_random_pose_key(all_poses)
+#     random_pose2 = get_random_pose_key(all_poses)
+#     print("Random pose from 'all_poses': ", random_pose)
+#     print("Random pose2 from 'all_poses': ", random_pose2+"\n")
+#
+#     # show their values
+#     print(random_pose + "->")
+#     print(all_poses.get(random_pose))
+#     print("\n")
+#     print(random_pose2 + "->")
+#     print(all_poses.get(random_pose2))
+
 if __name__ == "__main__":
-    # Test with 'standard' dictionary
-    random_pose = get_random_pose_key(standard)
-    print("Random pose from 'standard':", random_pose)
-
-    # Test with 'poses' dictionary
-    random_pose = get_random_pose_key(poses)
-    print("Random pose from 'poses':", random_pose)
-
     # Test with 'all_poses' dictionary
-    random_pose = get_random_pose_key(all_poses)
-    print("Random pose from 'all_poses':", random_pose)
+    random_pose_key = get_random_pose_key(all_poses)
+    random_pose_key2 = get_random_pose_key(all_poses)
+    print("Random pose from 'all_poses': ", random_pose_key)
+    # print("Random pose2 from 'all_poses': ", random_pose_key2+"\n")
+
+    # Fetch the dictionaries using the keys
+    random_pose = all_poses.get(random_pose_key)
+    # random_pose2 = all_poses.get(random_pose_key2)
+
+    # show their values
+    print(random_pose_key + "::Key->")
+    print(random_pose)
+    print(type(random_pose))
+
+    # print("\n")
+    # print(random_pose_key2 + "->")
+    # print(random_pose2)
+
+    # cut the steps
+    # steps: list = fiveStep(random_pose, random_pose2)
+
+    # print("List of steps->\n")
+    # showList(steps)

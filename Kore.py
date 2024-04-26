@@ -39,8 +39,8 @@ def control_robot():
     Rwrist = int(request.form['Rwrist'])
     Rclaw = int(request.form['Rclaw'])
     Waist = int(request.form['Waist'])
-    L_motors = int(request.form['L_Motors'])
-    R_motors = int(request.form['R_Motors'])
+    L_Motors = int(request.form['L_Motors'])
+    R_Motors = int(request.form['R_Motors'])
     Duration = int(request.form['duration'])
     Delay = int(request.form['delay'])
 
@@ -48,7 +48,7 @@ def control_robot():
     #TODO finish using duration/delay
 
     # Motor Mapping
-    R_motors = int(12000) - R_motors
+    R_Motors = int(12000) - R_Motors
 
     body_dict = {
         "Headtilt": HeadTilt,
@@ -64,8 +64,8 @@ def control_robot():
         "Rwrist": Rwrist,
         "Rclaw": Rclaw,
         "Waist": Waist,
-        "L_Motors": L_motors,
-        "R_Motors": R_motors,
+        "L_Motors": L_Motors,
+        "R_Motors": R_Motors,
     }
     # print(body_dict)
     # Process the data (you can add your robot control logic here)
