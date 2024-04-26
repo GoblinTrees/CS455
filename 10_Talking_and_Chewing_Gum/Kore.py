@@ -57,7 +57,7 @@ def testing():
     speechThread.join()
     # engine.runAndWait()     #after ending the speech, reset the funtions
     print("\n\n---End of program---\n\n")
-    return
+    return ""
 @app.route('/control', methods=['POST'])
 def control_robot():
     print("control input recieved...")
@@ -296,7 +296,7 @@ def pose():
 
     while not stop_flag:
         random_number = random.randint(1, 3)
-
+        print("RandNum: "+str(random_number)+"\n")
         time.sleep(random_number)
         random_pose_key2 = Pl.get_random_pose_key(Pl.all_poses)
         print("Random starter pose from 'all_poses': ", random_pose_key2)
