@@ -6,7 +6,7 @@ html, body {
     align-items: center;
     width: 100%; /* Set to 100% to take the full width of the viewport */
     max-width: 1200px; /* Set a maximum width to limit the width of the content */
-    margin: 0 auto; /* Center the container horizontally */
+    margin: auto; /* Center the container horizontally */
 }
 
 body {
@@ -14,7 +14,8 @@ body {
     font-family: Arial, sans-serif; /* You can change the font-family if needed */
     background-color: dimgrey; /* Set a background color for the body */
     flex-direction: row;
-    height: 600px; /* Set body height */
+    height: 100%; /* Set body height */
+    width: 100%;
 }
 
 #display {
@@ -287,8 +288,8 @@ button:hover {
 }
 
 
-@media only screen and (min-device-width: 800px) and (max-device-width: 800px) and (min-device-height: 480px) and (max-device-height: 480px) {
-    /* Your CSS styles specific to the Raspberry Pi 7-inch display */
-    /* For example, you can adjust the layout or dimensions */
-}
+/*@media only screen and (min-device-width: 800px) and (max-device-width: 800px) and (min-device-height: 480px) and (max-device-height: 480px) {*/
+/*    !* Your CSS styles specific to the Raspberry Pi 7-inch display *!*/
+/*    !* For example, you can adjust the layout or dimensions *!*/
+/*}*/
 
