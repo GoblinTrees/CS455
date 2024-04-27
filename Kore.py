@@ -108,11 +108,9 @@ def initialize():
     print("Initializing the application...")
     print("Running tests::\n")
     testcode()
-    # Passed forbidden zone: show gui interface
 
 
-def testcode(code: function):
-    code()
+def testcode():
     pass
 # End of FlaskIO---------------------------------------------------------
 
