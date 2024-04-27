@@ -9,7 +9,6 @@ import threadQ
 import Pose_Lib as Pl
 import random
 
-
 app = Flask(__name__)
 
 
@@ -45,6 +44,7 @@ def control_robot():
     R_Motors = int(request.form['R_Motors'])
     Duration = int(request.form['duration'])
     Delay = int(request.form['delay'])
+    Words = str(request.form['UserSpeech'])
 
     # finish duro/delay
 
@@ -67,6 +67,8 @@ def control_robot():
         "Waist": Waist,
         "L_Motors": L_Motors,
         "R_Motors": R_Motors,
+        "Words": Words,
+
     }
     # print(body_dict)
     # Process the data (you can add your robot control logic here)
@@ -74,45 +76,46 @@ def control_robot():
     kore.update(body_dict)
 
     # You can send a response if needed
-    return "Received the control data successfully!"
+    # return "Received the control data successfully!"
 
 
-@app.route("/voice", methods=['GET', 'POST'])
-def voice():
-    # send the data by form request in the dashboard
-    if request.method == 'POST':
-        # Retrieve the data from the request
-        data = request.get_json()
 
-        # Extract the text from the received data
-        text = data.get('text')
+@app.route('/setQue')
+def setQue():
+    print("Setting Que...")
+    print(request.host)
 
-        # send the data to the vocals OPTION 1
-        kore.speak(text)
+    # set default positions
+    kore.update(kore.tango_default)
 
-    return "Hello from Flask"
 
 
 @app.route("/gui", methods=['GET', 'POST'])
 def gui():
     host_ip = request.host
-    client_ip = request.remote_addrclient_ip = request.remote_addr
+    client_ip = request.remote_addrclient_ip
     print("Host ip: " + str(host_ip))
     print("Client ip: " + str(client_ip))
 
     if (str(host_ip) != str(client_ip)):
         print("::ERR, GUI RESPONSE NOT VALID -> CANNOT CALL FROM OUTSIDE TANGO")
 
+    return render_template('GUI_Program.html', host_ip=host_ip)
+
+
+
 @app.before_first_request
 def initialize():
     # Perform initialization tasks here, for example:
     print("Initializing the application...")
-    print("Running tests::\n")
+    # print("Running tests::\n")
     testcode()
 
 
 def testcode():
     pass
+
+
 # End of FlaskIO---------------------------------------------------------
 
 
@@ -133,7 +136,6 @@ class Kore():
 
         # vocals
         self.vocal_engine = pyttsx3.init()
-        self.words = "Speak friend and enter."
 
         # the actual values to be manipulated for the system
         self.tango_values = {
@@ -152,6 +154,10 @@ class Kore():
             "Waist": 6000,
             "L_Motors": 6000,
             "R_Motors": 6000,
+            "Duration": 1,
+            "Delay": 0,
+            "Words": "~~~",
+
         }
 
         # default values reference
@@ -171,6 +177,10 @@ class Kore():
             "Waist": 6000,
             "L_Motors": 6000,
             "R_Motors": 6000,
+            "Duration": 1,
+            "Delay": 0,
+            "Words": "~~~",
+
         }
 
         # mapping for the channels of the maestro->copied from keyboard controls
@@ -190,17 +200,30 @@ class Kore():
             "Waist": 2,
             "L_Motors": 1,
             "R_Motors": 0,
+            "Duration": 22,
+            "Delay": 23,
+            "Words": 21,
+
         }
 
         # the threading Queue-> uses Queue methods to add, then use procQ to go through all functions
         self.ComQue = threadQ.ThreadedQueue()
+
     def getChan(self, key):
         return self.tango_channels.get(key)
 
     def getVal(self, key):
         return self.tango_values.get(key)
 
+    def updateList(self, actions: list):
+        for newVals in actions:
+            self.update(newVals)
+            time.sleep(.3)
+
     def update(self, newVals):
+        if self.tango_values.get("Delay") != 0:  # Delay for whatever time was preset
+            time.sleep(self.tango_values.get("Delay"))
+
         # Arg type catch to ensure arg is a dict
         if (type(newVals) != dict):
             print("Err: update()-> function arg passed to update() is not a dictionary")
@@ -231,8 +254,20 @@ class Kore():
                 # print("Updating " + str(key) + " from " + str(self.tango_values.get(key)) + " to " + str(
                 #     newVals.get(key)))
                 self.tango_values[key] = newVals.get(key)
-                self.tango.setTarget(self.getChan(key), self.getVal(key))
-                print("Updated Key-Value:" + str(key) + "-" + str(self.getVal(key)))
+                if self.getChan(key) == 21:  # skip for words update based on channel
+                    print("New Words-> " + str(self.tango_values[key]))  # print the updated words
+                    continue
+                elif self.getChan(key) == 22:  # Set Duration
+                    print("Duration-> " + str(self.tango_values[key]))  # print the updated words
+                    continue
+                elif self.getChan(key) == 23:  # Set Delay
+                    print("Delay-> " + str(self.tango_values[key]))  # print the updated words
+                    continue
+                else:
+                    self.tango.setTarget(self.getChan(key), self.getVal(key))
+                    print("New Motor Key-Value:" + str(key) + "-" + str(self.getVal(key)))
+
+        time.sleep(self.tango_values.get("Duration"))  # Apply the changes for however long duration lasts
 
     def ping(self):
         return print("Pinged Kore")
@@ -241,7 +276,7 @@ class Kore():
         if gram is not None:
             self.words = gram
         # Pass the text into the vocals (engine)
-        self.vocal_engine.say(self.words)
+        self.vocal_engine.say(self.tango_values.get("Words"))
         # self.vocal_engine.runAndWait()
 
     def send_values(self):
@@ -282,7 +317,7 @@ class Kore():
                 time.sleep(random.randint(1000, 5000))
                 self.update(startpose)
                 continue
-            elif random_number == 4:  #stop moving and move on
+            elif random_number == 4:  # stop moving and move on
                 break;
             else:
                 continue
@@ -300,10 +335,7 @@ if __name__ == "__main__":
 
     kore.boot()
 
-
-    #safety crash into default position
+    # safety crash into default position
     kore.update(kore.tango_default)
     time.sleep(1)
     kore.update(kore.tango_default)
-
-

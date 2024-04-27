@@ -109,7 +109,7 @@ class Controller:
         self.sendCmd(cmd)
 
     # Set acceleration of channel
-    # This provide soft starts and finishes when servo moves to target position.
+    # This provides soft starts and finishes when servo moves to target position.
     # Valid values are from 0 to 255. 0=unrestricted, 1 is slowest start.
     # A value of 1 will take the servo about 3s to move between 1ms to 2ms range.
     def setAccel(self, chan, accel):

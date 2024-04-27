@@ -19,89 +19,117 @@
 
 
     <div>
-        <iframe id="dummyframe" name="dummyframe" style="display: none;"></iframe>
-        <form action="http://192.168.88.58:3245/gui" id="robotControlForm" method="post" target="dummyframe">
-            <div id="outer">
-                <div id="head_sliders">
-                    <label for="slider1">HeadTilt:</label>
-                    <input id="slider1" max="9000" min="3000" name="HeadTilt" step="200" type="range"
-                           value="6000"><br>
-
-                    <label for="slider2">HeadTurn:</label>
-                    <input id="slider2" max="9000" min="3000" name="HeadTurn" step="200" type="range"
-                           value="6000"><br>
-                </div>
-                <div id="upper">
-                    <div id="L_arm_sliders">
-                        <label for="slider3">LShoulder:</label>
-                        <input id="slider3" max="9000" min="3000" name="LShoulder" step="200" type="range"
+        <div id="forandqueue">
+            <iframe id="dummyframe" name="dummyframe" style="display: none;"></iframe>
+            <form action="http://192.168.88.58:3245/gui" id="robotControlForm" method="post" target="dummyframe">
+                <div id="outer">
+                    <div id="head_sliders">
+                        <label for="slider1">HeadTilt:</label>
+                        <input id="slider1" max="9000" min="3000" name="HeadTilt" step="200" type="range"
                                value="6000"><br>
 
-                        <label for="slider4">LBicep</label>
-                        <input id="slider4" max="9000" min="3000" name="LBicep" step="200" type="range"
-                               value="6000"><br>
-
-                        <label for="slider5">Lelbow</label>
-                        <input id="slider5" max="9000" min="3000" name="Lelbow" step="200" type="range"
-                               value="6000"><br>
-
-                        <label for="slider6">Lwrist</label>
-                        <input id="slider6" max="9000" min="3000" name="Lwrist" step="200" type="range"
-                               value="6000"><br>
-
-                        <label for="slider7">Lclaw</label>
-                        <input id="slider7" max="9000" min="3000" name="Lclaw" step="200" type="range" value="6000"><br>
-                    </div>
-
-                    <div id="R_arm_sliders">
-                        <label for="slider8">RShoulder</label>
-                        <input id="slider8" max="9000" min="3000" name="Rshoulder" step="200" type="range"
-                               value="6000"><br>
-
-                        <label for="slider9">RBicep</label>
-                        <input id="slider9" max="9000" min="3000" name="RBicep" step="200" type="range"
-                               value="6600"><br>
-
-                        <label for="slider10">Relbow</label>
-                        <input id="slider10" max="9000" min="3000" name="Relbow" step="200" type="range"
-                               value="6000"><br>
-
-                        <label for="slider11">Rwrist</label>
-                        <input id="slider11" max="9000" min="3000" name="Rwrist" step="200" type="range"
-                               value="6000"><br>
-
-                        <label for="slider12">Rclaw</label>
-                        <input id="slider12" max="9000" min="3000" name="Rclaw" step="200" type="range"
+                        <label for="slider2">HeadTurn:</label>
+                        <input id="slider2" max="9000" min="3000" name="HeadTurn" step="200" type="range"
                                value="6000"><br>
                     </div>
+                    <div id="upper">
+                        <div id="L_arm_sliders">
+                            <label for="slider3">LShoulder:</label>
+                            <input id="slider3" max="9000" min="3000" name="LShoulder" step="200" type="range"
+                                   value="6000"><br>
 
-                </div>
-                <div id="lastrow">
-                    <div id="Wheel_Sliders">
-                        <div id="timers">
-                            <label for="slider20">Duration</label>
-                            <input id="slider20" max="180" min="0" name="duration" step="1" type="range" value="0"><br>
-                            <label for="slider21">Delay</label>
-                            <input id="slider21" max="180" min="0" name="delay" step="1" type="range" value="0"><br>
+                            <label for="slider4">LBicep</label>
+                            <input id="slider4" max="9000" min="3000" name="LBicep" step="200" type="range"
+                                   value="6000"><br>
+
+                            <label for="slider5">Lelbow</label>
+                            <input id="slider5" max="9000" min="3000" name="Lelbow" step="200" type="range"
+                                   value="6000"><br>
+
+                            <label for="slider6">Lwrist</label>
+                            <input id="slider6" max="9000" min="3000" name="Lwrist" step="200" type="range"
+                                   value="6000"><br>
+
+                            <label for="slider7">Lclaw</label>
+                            <input id="slider7" max="9000" min="3000" name="Lclaw" step="200" type="range" value="6000"><br>
                         </div>
-                        <div id="body_sliders">
-                            <label for="slider13">Waist:</label>
-                            <input id="slider13" max="9000" min="3000" name="Waist" step="200" type="range"
+
+                        <div id="R_arm_sliders">
+                            <label for="slider8">RShoulder</label>
+                            <input id="slider8" max="9000" min="3000" name="Rshoulder" step="200" type="range"
+                                   value="6000"><br>
+
+                            <label for="slider9">RBicep</label>
+                            <input id="slider9" max="9000" min="3000" name="RBicep" step="200" type="range"
+                                   value="6600"><br>
+
+                            <label for="slider10">Relbow</label>
+                            <input id="slider10" max="9000" min="3000" name="Relbow" step="200" type="range"
+                                   value="6000"><br>
+
+                            <label for="slider11">Rwrist</label>
+                            <input id="slider11" max="9000" min="3000" name="Rwrist" step="200" type="range"
+                                   value="6000"><br>
+
+                            <label for="slider12">Rclaw</label>
+                            <input id="slider12" max="9000" min="3000" name="Rclaw" step="200" type="range"
                                    value="6000"><br>
                         </div>
-                        <label for="L_Motors">L_Motor</label>
-                        <input id="L_Motors" max="9000" min="3000" name="L_Motors" step="200" type="range" value="6000"><br>
-                        <label for="R_Motors">R_Motor</label>
-                        <input id="R_Motors" max="9000" min="3000" name="R_Motors" step="200" type="range" value="6000"><br>
-                    </div>
-                    <div class="input-container">
-                        <textarea class="input-field" id="UserSpeech" placeholder="Speak friend and enter" rows="1"></textarea>
-                    </div>
-                    <!--                    <input onclick="sendData()" type="button" value="Send">-->
 
+                    </div>
+                    <div id="lastrow">
+                        <div id="Wheel_Sliders">
+
+                            <div id="body_sliders">
+                                <label for="slider13">Waist:</label>
+                                <input id="slider13" max="9000" min="3000" name="Waist" step="200" type="range"
+                                       value="6000"><br>
+                            </div>
+                            <label for="L_Motors">L_Motor</label>
+                            <input id="L_Motors" max="9000" min="3000" name="L_Motors" step="200" type="range"
+                                   value="6000"><br>
+                            <label for="R_Motors">R_Motor</label>
+                            <input id="R_Motors" max="9000" min="3000" name="R_Motors" step="200" type="range"
+                                   value="6000"><br>
+                        </div>
+                        <div id="lastR">
+                            <div class="input-container">
+                                <textarea class="input-field" id="UserSpeech" placeholder="Speak friend and enter"
+                                          rows="1"></textarea>
+                            </div>
+                            <div id="timers">
+                                <label for="slider20">Duration</label>
+                                <input id="slider20" max="180" min="0" name="duration" step="1" type="range"
+                                       value="0"><br>
+                                <label for="slider21">Delay</label>
+                                <input id="slider21" max="180" min="0" name="delay" step="1" type="range" value="0"><br>
+                            </div>
+                            <!--                    <input onclick="sendDatatype="button"value="Send">-->
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+            <div id="queueOuter">
+                <h5>Queue</h5>
+                <div id="queueContainer">
+
+                    <div class="input-container" id="queue">
+                        <!-- Queue items will be displayed here dynamically -->
+                    </div>
+                </div>
+                <div class="button-container2">
+                    <!-- Add a button to remove items from the queue -->
+                    <button class="qbutton" id="Qremove" onclick="removeFromQueue()">-</button>
+                    <!-- Add a button to add items to the queue -->
+                    <button class="qbutton" id="Qadd" onclick="addToQueue()">+</button>
+                    <!-- Add a button to add items to the queue -->
+                    <button class="qbutton" id="Set" onclick="setQueue()">Set</button>
                 </div>
             </div>
-        </form>
+        </div>
+
         <div class="quickset">
             <button class="qbutton" id="button1" onclick="_">Left 45</button>
             <button class="qbutton" id="button2" onclick="_">Forward</button>
@@ -115,33 +143,18 @@
 
         </div>
         <div class="button-container1">
-            <button onclick="window.close()">Exit Interface</button>
-            <button onclick="window.location.href='url2';">Human Input</button>
-            <button onclick="savePreset()">Set Preset</button>
-            <button onclick="loadPreset()">Preset Toggle</button>
-            <button onclick="window.location.href='url5';">Toggle Phrase</button>
-            <button onclick="speakLine()">Speak Line</button>
-            <button onclick="">Chain Function</button>
-            <button onclick="addToQueue()">Add To Queue</button>
+            <button class="actbutton" onclick="window.close()">Exit Interface</button>
+            <button class="actbutton" onclick="window.location.href='url2';">Human Input</button>
+            <button class="actbutton" onclick="savePreset()">Save Preset</button>
+            <button class="actbutton" onclick="loadPreset()">Load Preset</button>
+            <button class="actbutton" onclick="window.location.href='url5';">Toggle Phrase</button>
+            <button class="actbutton" onclick="speakLine()">Speak Line</button>
+            <button class="actbutton" onclick="">Chain Function</button>
+            <button class="actbutton" onclick="addToQueue()">Add To Queue</button>
         </div>
     </div>
 
 
-    <div id="queueOuter">
-        <h3>Queue</h3>
-        <div id="queueContainer">
-
-            <div class="input-container" id="queue">
-                <!-- Queue items will be displayed here dynamically -->
-            </div>
-        </div>
-        <div class="button-container2">
-            <!-- Add a button to remove items from the queue -->
-            <button class="qbutton" id="Qremove" onclick="removeFromQueue()">-</button>
-            <!-- Add a button to add items to the queue -->
-            <button class="qbutton" id="Qadd" onclick="addToQueue()">+</button>
-        </div>
-    </div>
     <script>
 
         function updateDashboard() {
@@ -181,11 +194,13 @@
             }
         }
 
+
         var sampleSpeech = ["Hello new friend", "How are you", "How can I help you today", "I don't get paid enough oil for this"];
-        function speakLine(){
+
+        function speakLine() {
             var input = document.getElementById("UserSpeech").value;
             var msg = new SpeechSynthesisUtterance();
-            if (input == ""){
+            if (input == "") {
                 msg.text = sampleSpeech[Math.floor(Math.random() * sampleSpeech.length)];
             } else {
                 msg.text = input;
@@ -193,26 +208,28 @@
             //if text box empty, randomly select from sampleSPeech, otherwise set msg.text to input
             window.speechSynthesis.speak(msg);
         }
+
         // Define a global array to act as the queue
         var queue = [];
         var preset = [];
 
-        function savePreset(){
+        function savePreset() {
             preset = [];
-            for (var i = 0; i < queue.length; i++){
+            for (var i = 0; i < queue.length; i++) {
                 preset.push(queue[i]);
             }
         }
 
-        function loadPreset(){
+        function loadPreset() {
             queue = [];
             updateQueueDisplay();
 
-            for (var i = 0; i < preset.length; i++){
+            for (var i = 0; i < preset.length; i++) {
                 queue.push(preset[i]);
             }
             updateQueueDisplay();
         }
+
         // Function to add items to the queue
         function addToQueue() {
             var form = document.getElementById("robotControlForm");
@@ -247,7 +264,7 @@
 
             // Loop through the queue items and display them
             for (var i = 0; i < queue.length; i++) {
-                queueContent += "<p>Item " + (i + 1) + ": " + JSON.stringify(queue[i]) + "</p>";
+                queueContent += "<p>Action " + (i + 1) + ": " + JSON.stringify(queue[i]) + "</p>";
             }
 
             // Update the content of the queue div

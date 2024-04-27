@@ -14,52 +14,33 @@ body {
     font-family: Arial, sans-serif; /* You can change the font-family if needed */
     background-color: dimgrey; /* Set a background color for the body */
     flex-direction: row;
+    height: 600px; /* Set body height */
 }
 
 #display {
     display: flex;
     flex-direction: row;
-    width: 120px;
-    height: 800px;
     background-color: goldenrod;
-    overflow: scroll; /* or auto or scroll, depending on your preference */
     /*justify-content: center;*/
     align-items: center;
-    width: 1200px; /* Set to 100% to take the full width of the viewport */
-    max-width: 1200px; /* Set a maximum width to limit the width of the content */
-    margin: 0 auto; /* Center the container horizontally */
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    /*width: 800px; !* Set width to 800px *!*/
+    /*height: 600px; !* Set height to 600px *!*/
+    background-color: goldenrod; /* Set background color */
+    overflow: scroll; /* Add overflow for scrolling if needed */
+    overflow: auto;
 }
 
 #outer {
     background-color: darkgray;
-    width: 840px;
+    width: 430px;
+    height: 330px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-#dashboard {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
-    width: 150px;
-    height: auto;
-}
-
-#dashboard h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.input-field {
-    width: 200px;
-    height: 300px;
-    border: none;
-    outline: none;
-    resize: inline;
-    font-size: 16px;
 }
 
 #queueOuter {
@@ -71,19 +52,70 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 300px;
-    height: 516px;
+    width: 230px;
+    height: 290px;
 }
 
 #queueContainer {
     background-color: #f0f0f0; /* Light theme background color */
     color: #333; /* Light theme text color */
-    padding: 20px; /* Add padding for spacing */
     text-align: center; /* Center-align text */
     width: 100%; /* Take up full width of the parent container */
-    max-width: 260px; /* Limit the width to leave space for buttons */
-    height: auto;
+    height: 100%;
+    max-width: 290px; /* Limit the width to leave space for buttons */
 }
+
+#forandqueue {
+    display: flex;
+    flex-direction: row;
+}
+
+#dashboard {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 2px;
+    margin-bottom: 20px;
+    width: 63px;
+    height: 600px;
+}
+
+#dashboard h3 {
+    margin-top: 0;
+    margin-bottom: 2px;
+}
+
+#head_sliders {
+    background-color: chocolate;
+    width: 250px;
+    margin-bottom: 2px;
+}
+
+#upper {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2px;
+}
+
+#lastrow {
+    display: flex;
+    flex-direction: row;
+}
+
+#lastR {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field {
+    width: 150px;
+    height: 200px;
+    border: none;
+    outline: none;
+    resize: inline;
+    font-size: 16px;
+}
+
 
 #Qremove,
 #Qadd {
@@ -101,11 +133,13 @@ body {
 #Qadd:hover {
     background-color: #45a049; /* Darker shade of green on hover */
 }
-#Qremove{
+
+#Qremove {
     background: darkred;
 }
-#Qremove:hover{
-        background-color: maroon; /* Darker shade of red on hover */
+
+#Qremove:hover {
+    background-color: maroon; /* Darker shade of red on hover */
 
 }
 
@@ -117,7 +151,7 @@ body {
     align-content: center;
     align-items: center;
     justify-content: center; /* Horizontally center the content */
-    width: 840px;
+    width: 700px;
 }
 
 /* Stylized button */
@@ -141,43 +175,34 @@ button:hover {
 }
 
 /* Styles for head sliders */
-#head_sliders {
-    background-color: chocolate;
-    width: 250px;
-    margin-bottom: 20px;
-}
+
 
 /* Styles for left arm sliders */
 #L_arm_sliders {
     background-color: salmon;
-    width: 250px;
+    width: 200px;
     margin-right: 20px;
 }
 
 /* Styles for right arm sliders */
 #R_arm_sliders {
     background-color: salmon;
-    width: 250px;
+    width: 200px;
 }
 
 /* Styles for body sliders */
 #body_sliders {
     background-color: dodgerblue;
-    width: 250px;
+    width: 100%;
     margin-bottom: 20px;
 }
 
 /* Styles for wheel sliders */
 #Wheel_Sliders {
     background-color: darkgreen;
-    width: 250px;
+    width: 220px;
 }
 
-#upper {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
-}
 
 #base {
     display: flex;
@@ -222,14 +247,14 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 800px;
+    width: 660px;
 
 }
 
 .button-container2 {
     background-color: #333; /* Dark theme background color */
     color: #fff; /* Dark theme text color */
-    padding: 20px; /* Add padding for spacing */
+    padding: 2px; /* Add padding for spacing */
     text-align: center; /* Center-align text */
     display: flex;
     flex-direction: row;
@@ -246,10 +271,17 @@ button:hover {
     justify-content: center; /* Horizontally center the content */
 }
 
-#lastrow {
-    display: flex;
-    flex-direction: row;
+.actbutton {
+    width: 85px;
+    height: auto;
+    background: darkgreen;
+    color: darkgoldenrod;
 }
+
+#sliderValues {
+    font-size: 12px; /* Set the desired font size */
+}
+
 
 @media only screen and (min-device-width: 800px) and (max-device-width: 800px) and (min-device-height: 480px) and (max-device-height: 480px) {
     /* Your CSS styles specific to the Raspberry Pi 7-inch display */
