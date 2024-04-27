@@ -1,13 +1,15 @@
+import json
 import threading
 import time
 
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, jsonify
 import pyttsx3
 from maestro import Controller
 from sys import version_info
 import threadQ
 import Pose_Lib as Pl
 import random
+import webbrowser
 
 app = Flask(__name__)
 
@@ -80,14 +82,39 @@ def control_robot():
 
 
 
-@app.route('/setQue')
+@app.route('/setQue', methods=['POST'])
 def setQue():
     print("Setting Que...")
     print(request.host)
 
-    # set default positions
-    kore.update(kore.tango_default)
+    # Parse the HTML data from the request
+    html_data = request.data.decode('utf-8')
 
+    # Initialize a list to store dictionaries
+    queue_list = []
+
+    # Split the HTML data into individual queue items
+    queue_items = html_data.split('<p>Action ')[1:]
+
+    for item in queue_items:
+        # Extract the index of the queue item
+        index_end = item.index(':')
+        index = int(item[:index_end])
+
+        # Extract the JSON string representing the queue item
+        json_str = item[index_end + 2:-4]
+
+        # Convert the JSON string to a dictionary
+        queue_item_dict = json.loads(json_str)
+
+        # Add the queue item dictionary to the list
+        queue_list.append(queue_item_dict)
+
+    # Now you have a list of dictionaries representing the queue items
+    # Do whatever processing you need to do with the queue data here
+
+    # Optionally, return a response indicating success
+    return jsonify({"message": "Queue data received successfully."})
 
 
 @app.route("/gui", methods=['GET', 'POST'])
@@ -100,7 +127,7 @@ def gui():
     if (str(host_ip) != str(client_ip)):
         print("::ERR, GUI RESPONSE NOT VALID -> CANNOT CALL FROM OUTSIDE TANGO")
 
-    return render_template('GUI_Program.html', host_ip=host_ip)
+    return render_template('GUI_Program.html', host_ip=host_ip) #could return GUI execution to the window
 
 
 

@@ -258,6 +258,41 @@
             }
         }
 
+        function setQueue() {
+            // Get the content of the queue element
+            var queueContent = document.getElementById("queue").innerHTML;
+
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+
+            // Specify the URL to send the data to
+            var url = "http://192.168.88.58:3245/setQue"; // send to setQue
+
+            // Open a POST request to the specified URL
+            xhr.open("POST", url, true);
+
+            // Set the Content-Type header to indicate that we're sending HTML content
+            xhr.setRequestHeader("Content-Type", "text/html");
+
+            // Define a callback function to handle the response from the server
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    // Check if the request was successful (status code 200)
+                    if (xhr.status === 200) {
+                        // Request was successful, do something with the response if needed
+                        console.log("Queue content sent successfully!");
+                    } else {
+                        // Request failed, handle the error
+                        console.error("Error sending queue content. Status code: " + xhr.status);
+                    }
+                }
+            };
+
+            // Send the queue content in the request body
+            xhr.send(queueContent);
+
+        }
+
         // Function to update the displayed queue
         function updateQueueDisplay() {
             var queueContent = "";
