@@ -2,6 +2,7 @@ import json
 import threading
 import time
 
+from bs4 import BeautifulSoup
 from flask import Flask, render_template, request, jsonify
 import pyttsx3
 from maestro import Controller
