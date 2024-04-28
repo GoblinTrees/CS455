@@ -211,6 +211,8 @@ def gui():
 def execute():
     kore.tango.setTarget(4, 6000)  # Set the screen to look ahead
 
+
+    time.sleep(5)
     executionThread = threading.Thread(target=kore.updateList, args=(kore.orders,))
     executionThread.start()
     # executionThread.join()
