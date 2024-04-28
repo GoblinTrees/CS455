@@ -2,6 +2,7 @@ import json
 import threading
 import time
 
+from bs4 import BeautifulSoup
 from flask import Flask, render_template, request, jsonify
 import pyttsx3
 from maestro import Controller
@@ -10,7 +11,6 @@ import Pose_Lib as Pl
 import random
 import webbrowser
 import RPi.GPIO as GPIO
-
 
 app = Flask(__name__)
 ip_add = ""
@@ -88,8 +88,8 @@ def control_robot():
     # return "Received the control data successfully!"
 
 
-
 from flask import request, jsonify
+
 
 @app.route('/setQue', methods=['POST'])
 def setQue():
@@ -105,27 +105,61 @@ def setQue():
         print("No JSON data in setQue")
         return render_template('GUI_Program.html', host_ip=request.host)  # could return GUI execution to the window
 
-    print(queue_content)
+        # Parse the HTML content using BeautifulSoup
+    soup = BeautifulSoup(queue_content, 'html.parser')
 
-    queue_dict = json.loads(queue_content)
-
+    # Extract text content of each <p> element
+    parsed_queue_list = [p.get_text() for p in soup.find_all('p')]
 
     # Now you can process the queue content as needed
-    kore.orders = dict(queue_dict)
+    # print("Queue content\n:")
+    # print(queue_content)
+
+    print("Parsed_Queue list:\n")
+    print(parsed_queue_list)
+
+    actualQueue = []
+    for item in parsed_queue_list:
+        # print("\nItem:")
+        # print(item)
+        # print("\nItem type:")
+        # print(type(item))
+        list_of_dicts_str = item.strip()[1:-1]  # Remove square brackets
+        list_of_dicts = list_of_dicts_str.split(', ')  # Split by comma and space
+        # print("List of dicts:")
+        # print(list_of_dicts)
+        # print(type(list_of_dicts))
+        for dict in list_of_dicts:
+            print("Dict:\n")
+            print(dict)
+            #converted dict
+
+
+    # print("\nActual Queue:\n")
+    # print(actualQueue)
+
+
+    # print("Que content type:\n")
+    #
+    # print(type(queue_content))
+    # print("Que content:\n")
+
+
+    # transform queue content here and assign to queue_dict
+
+    # Now you can process the queue content as needed
+    # kore.orders = dict(queue_dict)
     # Example response
     response = {'message': 'Queue content received successfully'}
     # return jsonify(response)
 
-
     # Now you have a list of dictionaries representing the queue items
     # Do whatever processing you need to do with the queue data here
 
-    #data validaton
+    # data validaton
 
-
-
-    #data validation passed, move reassign the queue
-    kore.orders = queue_dict
+    # data validation passed, move reassign the queue
+    # kore.orders = queue_dict
 
     # Optionally, return a response indicating success
     return jsonify({"message": "Queue data received successfully."})
@@ -143,17 +177,18 @@ def gui():
         return "Nothing"
 
     kore.update(kore.tango_default)
-    kore.tango.setTarget(4, 7000) #Set the screen to look up
+    kore.tango.setTarget(4, 7000)  # Set the screen to look up
 
+    return render_template('GUI_Program.html', host_ip=request.host)  # could return GUI execution to the window
 
-    return render_template('GUI_Program.html', host_ip=request.host) #could return GUI execution to the window
 
 @app.route("/exec", methods=['GET', 'POST'])
 def execute():
     executionThread = threading.Thread(target=kore.updateList(kore.orders))
     executionThread.start()
     # executionThread.join()
-    return render_template('animation.html', host_ip=request.host) #could return GUI execution to the window
+    return render_template('animation.html', host_ip=request.host)  # could return GUI execution to the window
+
 
 @app.before_first_request
 def initialize():
@@ -188,7 +223,7 @@ class Kore():
         # vocals
         self.vocal_engine = pyttsx3.init()
 
-        #the list of Queue Commands
+        # the list of Queue Commands
         self.orders = []
 
         # the actual values to be manipulated for the system
@@ -274,7 +309,7 @@ class Kore():
             time.sleep(.3)
 
     def update(self, newVals):
-        #Wait for input if we have to
+        # Wait for input if we have to
         self.waitforProximity()
 
         # Arg type catch to ensure arg is a dict
@@ -325,7 +360,6 @@ class Kore():
 
     def ping(self):
         return print("Pinged Kore")
-
 
     def speak(self, phrase):
         # Pass the text into the vocal engine
@@ -386,6 +420,7 @@ def runGUI():
     time.sleep(10)
     webbrowser.open("0.0.0.0:5245/gui")
 
+
 # End of Kore function
 
 def getObject():
@@ -418,6 +453,22 @@ def getObject():
     distance = float(round(distance, 2))
     return distance
 
+
+def string_to_dict(string):
+    # Remove leading and trailing whitespaces
+    string = string.strip()
+
+    # Split by comma and space
+    key_value_pairs = string.split(', ')
+    # Create a dictionary
+    result = {}
+    for pair in key_value_pairs:
+        key, value = pair.split(':')
+        key = key.strip()[1:-1]  # Remove quotes from key
+        value = value.strip()[1:-1]  # Remove quotes from value
+        result[key] = value
+    return result
+
 def interrupt():
     disSet = 50
 
@@ -430,7 +481,6 @@ def interrupt():
             break
         else:
             continue
-
 
 
 # main executable funtion
