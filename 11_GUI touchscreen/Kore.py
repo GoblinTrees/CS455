@@ -11,7 +11,6 @@ import random
 import webbrowser
 import RPi.GPIO as GPIO
 
-
 app = Flask(__name__)
 ip_add = ""
 
@@ -88,8 +87,8 @@ def control_robot():
     # return "Received the control data successfully!"
 
 
-
 from flask import request, jsonify
+
 
 @app.route('/setQue', methods=['POST'])
 def setQue():
@@ -105,16 +104,23 @@ def setQue():
         print("No JSON data in setQue")
         return render_template('GUI_Program.html', host_ip=request.host)  # could return GUI execution to the window
 
-    print("Que content type:\n")
+        # Parse the HTML content using BeautifulSoup
+    soup = BeautifulSoup(queue_content, 'html.parser')
 
-    print(type(queue_content))
-    print("Que content:\n")
+    # Extract text content of each <p> element
+    queue_list = [p.get_text() for p in soup.find_all('p')]
+
+    # Now you can process the queue content as needed
+    print("Queue list:")
+    print(queue_list)
+    # print("Que content type:\n")
+    #
+    # print(type(queue_content))
+    # print("Que content:\n")
 
     print(queue_content)
 
-    #transform queue content here and assign to queue_dict
-
-
+    # transform queue content here and assign to queue_dict
 
     # Now you can process the queue content as needed
     kore.orders = dict(queue_dict)
@@ -122,15 +128,12 @@ def setQue():
     response = {'message': 'Queue content received successfully'}
     # return jsonify(response)
 
-
     # Now you have a list of dictionaries representing the queue items
     # Do whatever processing you need to do with the queue data here
 
-    #data validaton
+    # data validaton
 
-
-
-    #data validation passed, move reassign the queue
+    # data validation passed, move reassign the queue
     kore.orders = queue_dict
 
     # Optionally, return a response indicating success
@@ -149,17 +152,18 @@ def gui():
         return "Nothing"
 
     kore.update(kore.tango_default)
-    kore.tango.setTarget(4, 7000) #Set the screen to look up
+    kore.tango.setTarget(4, 7000)  # Set the screen to look up
 
+    return render_template('GUI_Program.html', host_ip=request.host)  # could return GUI execution to the window
 
-    return render_template('GUI_Program.html', host_ip=request.host) #could return GUI execution to the window
 
 @app.route("/exec", methods=['GET', 'POST'])
 def execute():
     executionThread = threading.Thread(target=kore.updateList(kore.orders))
     executionThread.start()
     # executionThread.join()
-    return render_template('animation.html', host_ip=request.host) #could return GUI execution to the window
+    return render_template('animation.html', host_ip=request.host)  # could return GUI execution to the window
+
 
 @app.before_first_request
 def initialize():
@@ -194,7 +198,7 @@ class Kore():
         # vocals
         self.vocal_engine = pyttsx3.init()
 
-        #the list of Queue Commands
+        # the list of Queue Commands
         self.orders = []
 
         # the actual values to be manipulated for the system
@@ -280,7 +284,7 @@ class Kore():
             time.sleep(.3)
 
     def update(self, newVals):
-        #Wait for input if we have to
+        # Wait for input if we have to
         self.waitforProximity()
 
         # Arg type catch to ensure arg is a dict
@@ -331,7 +335,6 @@ class Kore():
 
     def ping(self):
         return print("Pinged Kore")
-
 
     def speak(self, phrase):
         # Pass the text into the vocal engine
@@ -392,6 +395,7 @@ def runGUI():
     time.sleep(10)
     webbrowser.open("0.0.0.0:5245/gui")
 
+
 # End of Kore function
 
 def getObject():
@@ -424,6 +428,7 @@ def getObject():
     distance = float(round(distance, 2))
     return distance
 
+
 def interrupt():
     disSet = 50
 
@@ -436,7 +441,6 @@ def interrupt():
             break
         else:
             continue
-
 
 
 # main executable funtion
