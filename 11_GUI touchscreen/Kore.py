@@ -132,6 +132,10 @@ def setQue():
         for dict in list_of_dicts:
             print("Dict:\n")
             print(dict)
+            #converted dict
+            conv_dict = json.loads(dict)
+            print("Convert Dict:\n")
+            print(conv_dict)
 
     # print("\nActual Queue:\n")
     # print(actualQueue)
