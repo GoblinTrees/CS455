@@ -156,6 +156,7 @@ def setQue():
     kore.orders = actualQueue
 
     print("...Que Set")
+    print(f"Kore order length: {len(kore.orders)}")
 
 
 
