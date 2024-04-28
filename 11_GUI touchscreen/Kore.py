@@ -94,7 +94,7 @@ from flask import request, jsonify
 @app.route('/setQue', methods=['POST'])
 def setQue():
     print("Setting Que...")
-    print(request.host)
+    # print(request.host)
 
     # Parse JSON data from the request
     json_data = request.get_json()
@@ -155,6 +155,7 @@ def setQue():
     # print(actualQueue)
     kore.orders = actualQueue
 
+    print("...Que Set")
 
 
 
