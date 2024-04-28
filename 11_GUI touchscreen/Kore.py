@@ -362,8 +362,8 @@ class Kore():
             return
         if (newVals.keys() != self.tango_values.keys()):
             print("Err: update()-> KEYS of tango values and update values don't match")
-            for key in newVals.keys()
-                if key not in self.tango_values.keys()
+            for key in newVals.keys():
+                if key not in self.tango_values.keys():
                     print(f"Missing {key}")
             return
 
