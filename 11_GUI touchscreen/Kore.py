@@ -149,6 +149,7 @@ def gui():
 def execute():
     executionThread = threading.Thread(target=kore.updateList(kore.orders))
     executionThread.start()
+    # executionThread.join()
     return render_template('animation.html', host_ip=request.host) #could return GUI execution to the window
 
 @app.before_first_request
