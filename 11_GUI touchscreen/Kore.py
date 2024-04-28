@@ -316,7 +316,6 @@ class Kore():
         self.tango.setTarget(0,6000)
         self.tango.setTarget(1,6000)
 
-        self.update()
         self.waitforProximity()
 
         # Arg type catch to ensure arg is a dict
