@@ -135,6 +135,8 @@ def setQue():
             key_value_pairs = dict.split(', ')
 
             for pair in key_value_pairs:
+                print("Pair:\n")
+                print(pair)
                 key, value = pair.split(':')
                 print("Key:"+ key+ "\n")
                 print("Val:"+ value+ "\n")
