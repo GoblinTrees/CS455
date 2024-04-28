@@ -115,8 +115,8 @@ def setQue():
     # print("Queue content\n:")
     # print(queue_content)
 
-    print("Parsed_Queue list:\n")
-    print(parsed_queue_list)
+    # print("Parsed_Queue list:\n")
+    # print(parsed_queue_list)
 
     actualQueue = []
     for item in parsed_queue_list:
@@ -129,10 +129,18 @@ def setQue():
         # print("List of dicts:")
         # print(list_of_dicts)
         # print(type(list_of_dicts))
-        for dict in list_of_dicts:
-            print("Dict:\n")
-            print(dict)
-            #converted dict
+        for line in list_of_dicts:
+           #This
+            splitline = line.split(",")
+            for item in splitline:
+                print("\nItem: " + str(item))
+                #here, each item is a string of "key":"value" pairs
+                #need to do string parsing on "Words"
+                key, value = item.split(':')
+                key = key.strip()[1:-1]  # Remove quotes from key
+                value = value.strip()[1:-1]  # Remove quotes from value
+                print(f"Key: {key} - Val:{value}")
+
 
 
     # print("\nActual Queue:\n")
@@ -184,7 +192,9 @@ def gui():
 
 @app.route("/exec", methods=['GET', 'POST'])
 def execute():
-    executionThread = threading.Thread(target=kore.updateList(kore.orders))
+    kore.tango.setTarget(4, 6000)  # Set the screen to look ahead
+
+    executionThread = threading.Thread(target=kore.updateList, args=(kore.orders,))
     executionThread.start()
     # executionThread.join()
     return render_template('animation.html', host_ip=request.host)  # could return GUI execution to the window
@@ -309,7 +319,9 @@ class Kore():
             time.sleep(.3)
 
     def update(self, newVals):
-        # Wait for input if we have to
+        self.tango.setTarget(0,6000)
+        self.tango.setTarget(1,6000)
+
         self.waitforProximity()
 
         # Arg type catch to ensure arg is a dict
@@ -454,20 +466,7 @@ def getObject():
     return distance
 
 
-def string_to_dict(string):
-    # Remove leading and trailing whitespaces
-    string = string.strip()
 
-    # Split by comma and space
-    key_value_pairs = string.split(', ')
-    # Create a dictionary
-    result = {}
-    for pair in key_value_pairs:
-        key, value = pair.split(':')
-        key = key.strip()[1:-1]  # Remove quotes from key
-        value = value.strip()[1:-1]  # Remove quotes from value
-        result[key] = value
-    return result
 
 def interrupt():
     disSet = 50
