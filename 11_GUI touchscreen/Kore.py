@@ -130,8 +130,8 @@ def setQue():
         # print(list_of_dicts)
         # print(type(list_of_dicts))
         for dict in list_of_dicts:
-            print("Dict:\n")
-            print(dict)
+            # print("Dict:\n")
+            # print(dict)
             key_value_pairs = dict.split(', ')
             print("Kv pair:\n")
             print(key_value_pairs)
@@ -314,6 +314,7 @@ class Kore():
 
     def update(self, newVals):
         # Wait for input if we have to
+        self.update(self.)
         self.waitforProximity()
 
         # Arg type catch to ensure arg is a dict
