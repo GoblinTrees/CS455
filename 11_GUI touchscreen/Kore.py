@@ -120,19 +120,10 @@ def setQue():
 
     actualQueue = []
     for item in parsed_queue_list:
-        # Split the item at the first colon (':')
-        index = item.find(':')
-        if index != -1:  # Check if colon exists in the item
-            key = item[:index].strip()  # Get the text before colon and remove leading/trailing spaces
-            value = item[index + 1:].strip()  # Get the text after colon and remove leading/trailing spaces
-            # Create a dictionary with key and value
-            queue_item_dict = {key: value}
-            print("Queue-item dict:\n")
-            print(queue_item_dict)
+        print("Item:\n")
+        print(item)
 
-            actualQueue.append(queue_item_dict)
-
-    print("Actual Queue:\n")
+    print("\nActual Queue:\n")
     print(actualQueue)
 
 
