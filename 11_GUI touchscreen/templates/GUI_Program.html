@@ -432,10 +432,10 @@
 
         <div class="quickset">
             <button class="qbutton" id="button1" onclick="_">Left 45</button>
-            <button class="qbutton" id="button2" onclick="_">Forward</button>
+            <button class="qbutton" id="button2" onclick="forward()">Forward</button>
             <button class="qbutton" id="button3" onclick="_">Right 45</button>
             <button class="qbutton" id="button4" onclick="_">Left 90</button>
-            <button class="qbutton" id="button5" onclick="_">Reverse</button>
+            <button class="qbutton" id="button5" onclick="reverse()">Reverse</button>
             <button class="qbutton" id="button6" onclick="_">Right 90</button>
             <button class="qbutton" id="button7" onclick="_">Set 1 Time unit</button>
             <button class="qbutton" id="button8" onclick="_">Neutral</button>
@@ -457,7 +457,19 @@
 
 
     <script>
+        function forward(){
+            document.getElementById("L_Motors").value = 5400
+            document.getElementById("R_Motors").value = 7000
+        }
 
+        function reverse(){
+            document.getElementById("L_Motors").value = 6600
+            document.getElementById("R_Motors").value = 5000
+        }
+
+        function left90(){
+            
+        }
         function updateDashboard() {
             var sliders = document.querySelectorAll('input[type="range"]');
 
