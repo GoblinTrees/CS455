@@ -133,6 +133,9 @@ def setQue():
             print("Dict:\n")
             print(dict)
             #converted dict
+            print("Conv.Dict:\n")
+            convDict = string_to_dict(dict)
+            print(convDict)
 
 
     # print("\nActual Queue:\n")
