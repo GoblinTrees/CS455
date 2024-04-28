@@ -115,8 +115,8 @@ def setQue():
     # print("Queue content\n:")
     # print(queue_content)
 
-    print("Parsed_Queue list:\n")
-    print(parsed_queue_list)
+    # print("Parsed_Queue list:\n")
+    # print(parsed_queue_list)
 
     actualQueue = []
     for item in parsed_queue_list:
@@ -132,7 +132,7 @@ def setQue():
         for line in list_of_dicts:
             # print("\nLine:")
             # print(line)
-            splitline = line.split(", ")
+            splitline = line.split(",")
             for item in splitline:
                 print("\nItem: " + str(item))
 
