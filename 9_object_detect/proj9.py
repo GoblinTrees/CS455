@@ -29,7 +29,6 @@ class Robot:
 robot = Robot()
 count = 0
 quadNum = 5
-disSet = 50
 
 allStop = False
 global notExited
@@ -44,6 +43,9 @@ def interrupt():
     global allStop
     global notExited
     global runcount
+    global disSet
+    disSet = 50
+
     while True:
         dist = getObject()
         if dist < disSet:

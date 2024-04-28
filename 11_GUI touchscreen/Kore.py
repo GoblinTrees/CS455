@@ -6,18 +6,20 @@ from flask import Flask, render_template, request, jsonify
 import pyttsx3
 from maestro import Controller
 from sys import version_info
-import threadQ
 import Pose_Lib as Pl
 import random
 import webbrowser
+import RPi.GPIO as GPIO
+
 
 app = Flask(__name__)
+ip_add = ""
 
 
 @app.route('/')
 def home():
     print(request.host)
-    ip_add = request.host
+    # ip_add = request.host
 
     # set default positions
     kore.update(kore.tango_default)
@@ -67,6 +69,8 @@ def control_robot():
         "Rwrist": Rwrist,
         "Rclaw": Rclaw,
         "Waist": Waist,
+        "Duration": Duration,
+        "Delay": Delay,
         "L_Motors": L_Motors,
         "R_Motors": R_Motors,
         "Words": Words,
@@ -113,6 +117,13 @@ def setQue():
     # Now you have a list of dictionaries representing the queue items
     # Do whatever processing you need to do with the queue data here
 
+    #data validaton
+
+
+
+    #data validation passed, move reassign the queue
+    kore.orders = queue_list
+
     # Optionally, return a response indicating success
     return jsonify({"message": "Queue data received successfully."})
 
@@ -126,6 +137,8 @@ def gui():
 
     if (str(host_ip) != str(client_ip)):
         print("::ERR, GUI RESPONSE NOT VALID -> CANNOT CALL FROM OUTSIDE TANGO")
+        return "Nothing"
+
 
     return render_template('GUI_Program.html', host_ip=host_ip) #could return GUI execution to the window
 
@@ -163,6 +176,9 @@ class Kore():
 
         # vocals
         self.vocal_engine = pyttsx3.init()
+
+        #the list of Queue Commands
+        self.orders = []
 
         # the actual values to be manipulated for the system
         self.tango_values = {
@@ -234,7 +250,6 @@ class Kore():
         }
 
         # the threading Queue-> uses Queue methods to add, then use procQ to go through all functions
-        self.ComQue = threadQ.ThreadedQueue()
 
     def getChan(self, key):
         return self.tango_channels.get(key)
@@ -248,8 +263,8 @@ class Kore():
             time.sleep(.3)
 
     def update(self, newVals):
-        if self.tango_values.get("Delay") != 0:  # Delay for whatever time was preset
-            time.sleep(self.tango_values.get("Delay"))
+        #Wait for input if we have to
+        self.waitforProximity()
 
         # Arg type catch to ensure arg is a dict
         if (type(newVals) != dict):
@@ -283,6 +298,7 @@ class Kore():
                 self.tango_values[key] = newVals.get(key)
                 if self.getChan(key) == 21:  # skip for words update based on channel
                     print("New Words-> " + str(self.tango_values[key]))  # print the updated words
+                    self.speak(str(self.tango_values[key]))
                     continue
                 elif self.getChan(key) == 22:  # Set Duration
                     print("Duration-> " + str(self.tango_values[key]))  # print the updated words
@@ -299,11 +315,12 @@ class Kore():
     def ping(self):
         return print("Pinged Kore")
 
-    def speak(self, gram=None):
-        if gram is not None:
-            self.words = gram
-        # Pass the text into the vocals (engine)
-        self.vocal_engine.say(self.tango_values.get("Words"))
+
+    def speak(self, phrase):
+        # Pass the text into the vocal engine
+        spkThread = threading.Thread(target=self.vocal_engine.say, args=(phrase,))
+        spkThread.start()
+
         # self.vocal_engine.runAndWait()
 
     def send_values(self):
@@ -349,8 +366,60 @@ class Kore():
             else:
                 continue
 
+    def waitforProximity(self):
+        if self.tango_values["Delay"] == 1:
+            interrupt()
 
-# End of Bootup function
+
+def runGUI():
+    time.sleep(10)
+    webbrowser.open("0.0.0.0:5245/gui")
+
+# End of Kore function
+
+def getObject():
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+
+    trigPin = 24
+    echoPin = 23
+    GPIO.setup(trigPin, GPIO.OUT)
+    GPIO.setup(echoPin, GPIO.IN)
+    GPIO.output(trigPin, False)
+    time.sleep(.1)
+    GPIO.output(trigPin, True)
+    time.sleep(.00001)
+    GPIO.output(trigPin, False)
+    timeout = time.time()
+    while GPIO.input(echoPin) == 0:
+        if (time.time() - timeout) > 3:
+            print("timeout during echo")
+            return None
+    pulseStart = time.time()
+    timeout = time.time()
+    while (GPIO.input(echoPin) == 1):
+        if (time.time() - timeout > 3):
+            print("timeout while receiving echo")
+            return None
+    pulseEnd = time.time()
+    pulseDuration = pulseEnd - pulseStart
+    distance = pulseDuration * 17150
+    distance = float(round(distance, 2))
+    return distance
+
+def interrupt():
+    disSet = 50
+
+    while True:
+        dist = getObject()
+        if dist == None:
+            continue
+        if dist < disSet:
+            print(">> PROXIMITY TRIGGER <<")
+            break
+        else:
+            continue
+
 
 
 # main executable funtion
