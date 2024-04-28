@@ -154,7 +154,7 @@ def setQue():
     # kore.orders = queue_dict
 
     # Optionally, return a response indicating success
-    return jsonify({"message": "Queue data received successfully."})
+    return jsonify(actualQueue)
 
 
 @app.route("/gui", methods=['GET', 'POST'])
