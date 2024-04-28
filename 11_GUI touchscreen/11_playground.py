@@ -1,4 +1,4 @@
-#
+import time
 # YOUR EXPECTED DUTIES:
 # Each team will need to create your own GUI to program the robot with the touch screen. You will need
 # to be able to implement a timeline that holds 8 instructions for full credit. The instructions (icons you
@@ -6,9 +6,87 @@
 #TODO
 # 1. Motors with speed, distance and direction. (practice with time instead of distance until you get
 # UWB radar working, or if you are out in the hallway).
+def motorSpeed(speed, self):
+    self.r_motors = speed + 600
+    temp = speed - 6000
+    self.l_motors = temp
+    time.sleep(1)
+    # Not sure if this belongs, should we be stopping them here or is there something else that takes care of duration? 
+    self.tango.setTarget(self.L_MOTORS, self.l_motors)
+    self.tango.setTarget(self.R_MOTORS, self.r_motors)
+
+# TODO: 
+def motorDirection(direction, self):
+    # turn right
+    if direction == "right":
+        l_motors = 5000
+        self.tango.setTarget(getChan(L_Motors), l_motors)
+        time.sleep(.87)
+        l_motors = 6000
+        self.tango.setTarget(getChan(L_Motors), l_motors)
+    # turn left
+    elif direction == "left":
+        l_motors = 7000
+        self.tango.setTarget(getChan(L_Motors), l_motors)
+        time.sleep(.87)
+        l_motors = 6000
+        self.tango.setTarget(getChan(L_Motors), l_motors)
+    # drive forward
+    elif direction == "forward":
+        l_motors = 5400
+        r_motors = 7000
+        self.tango.setTarget(getChan(L_Motors), l_motors)
+        self.tango.setTarget(self.R_MOTORS, r_motors)
+        time.sleep(.5)
+        motors = 6000
+        self.tango.setTarget(getChan(L_Motors), motors)
+        self.tango.setTarget(self.R_MOTORS, motors)
+    # drive backwards
+    elif direction == "backward":
+        l_motors = 6600
+        r_motors = 5000
+        self.tango.setTarget(getChan(L_Motors), l_motors)
+        self.tango.setTarget(self.R_MOTORS, r_motors)
+        time.sleep(.5)
+        motors = 6000
+        self.tango.setTarget(self.L_MOTORS, motors)
+        self.tango.setTarget(self.R_MOTORS, motors)
+    else:
+        print(direction, " is not a recognized direction.")
+
+def motorDistance(self, distance):
+    print("TODO")
+
+
 # 2. Motors turn robot left, or right for x amount of seconds.
+def turnLeft(self, time):
+    l_motors = 7000
+    self.tango.setTarget(self.L_MOTORS, l_motors)
+    time.sleep(time)
+    l_motors = 6000
+    self.tango.setTarget(self.L_MOTORS, l_motors)
+
+def turnLeft(self, time):
+    l_motors = 5000
+    self.tango.setTarget(self.L_MOTORS, l_motors)
+    time.sleep(time)
+    l_motors = 6000
+    self.tango.setTarget(self.L_MOTORS, l_motors)
 # 3. Head tilt both directions
+
+def tiltHeadUp():
+    print("TODO")
+
+def tiltHeadDown():
+    print("TODO")
+
 # 4. Head pan both directions
+def panHeadLeft():
+    print("TODO")
+
+def panHeadRight():
+    print("TODO")
+
 # 5. Waist turn both directions
 # 6. A wait for human speech input
 # 7. Talking, be able to type in what sentence you want to say and the robot says it. Have about four
