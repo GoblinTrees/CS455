@@ -151,9 +151,9 @@ def setQue():
         # print(thisdict)
         actualQueue.append(thisdict)
 
-    print("\nActualQueue:")
-    print(actualQueue)
-
+    # print("\nActualQueue:")
+    # print(actualQueue)
+    kore.orders = actualQueue
 
 
 
