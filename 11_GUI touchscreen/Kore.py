@@ -119,11 +119,26 @@ def setQue():
     print(parsed_queue_list)
 
     actualQueue = []
+    combined_dict = {}
+
     for item in parsed_queue_list:
         print("\nItem:")
         print(item)
         print("\nItem type:")
         print(type(item))
+
+        # Parse the string containing the list of dictionaries
+        list_of_dicts_str = item.strip()[1:-1]  # Remove square brackets
+        list_of_dicts = list_of_dicts_str.split(', ')  # Split by comma and space
+        # Combine all dictionaries into a single dictionary
+        for d_str in list_of_dicts:
+            key, value = d_str.split(':')  # Split by colon
+            key = key.strip()[1:-1]  # Remove quotes
+            value = value.strip()[1:-1]  # Remove quotes
+            combined_dict[key] = value
+        print("Combined Dictionary:")
+        print(combined_dict)
+        actualQueue.append(combined_dict)
 
 
     # print("\nActual Queue:\n")
