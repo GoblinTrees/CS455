@@ -495,6 +495,13 @@
             }
         }
 
+        // Human input - speech to text, send to chat gpt
+
+        // add touch keyboard event for touching text area, pop up virtual keyboard
+
+        // toggle phrase?
+
+        // chain function?
 
         var sampleSpeech = ["Hello new friend", "How are you", "How can I help you today", "I don't get paid enough oil for this"];
 
@@ -506,7 +513,6 @@
             } else {
                 msg.text = input;
             }
-            //if text box empty, randomly select from sampleSPeech, otherwise set msg.text to input
             window.speechSynthesis.speak(msg);
         }
 
@@ -521,11 +527,8 @@
             }
         }
 
-        function loadPreset() {
-            queue = [];
-            updateQueueDisplay();
-
-            for (var i = 0; i < preset.length; i++) {
+        function loadPreset(){
+            for (var i = 0; i < preset.length; i++){
                 queue.push(preset[i]);
             }
             updateQueueDisplay();
