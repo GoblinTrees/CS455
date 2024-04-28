@@ -127,7 +127,7 @@ def setQue():
             value = item[index + 1:].strip()  # Get the text after colon and remove leading/trailing spaces
             # Create a dictionary with key and value
             queue_item_dict = {key: value}
-            print("Queue-item dict:'n")
+            print("Queue-item dict:\n")
             print(queue_item_dict)
 
             actualQueue.append(queue_item_dict)
