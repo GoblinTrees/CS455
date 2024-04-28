@@ -134,7 +134,7 @@ def setQue():
            #This
             splitline = line.split(",")
             for item in splitline:
-                print("\nItem: " + str(item))
+                # print("\nItem: " + str(item))
                 #here, each item is a string of "key":"value" pairs
                 #need to do string parsing on "Words"
                 key, value = item.split(':')
