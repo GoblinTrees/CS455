@@ -101,6 +101,11 @@ def setQue():
 
     # Assuming the JSON data contains the queue content
     queue_content = json_data.get('queueContent')
+    if queue_content is None:
+        print("No JSON data in setQue")
+        return render_template('GUI_Program.html', host_ip=request.host)  # could return GUI execution to the window
+
+    print(queue_content)
 
     queue_dict = json.loads(queue_content)
 
@@ -120,7 +125,7 @@ def setQue():
 
 
     #data validation passed, move reassign the queue
-    kore.orders = queue_list
+    kore.orders = queue_dict
 
     # Optionally, return a response indicating success
     return jsonify({"message": "Queue data received successfully."})
