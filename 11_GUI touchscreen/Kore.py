@@ -24,7 +24,7 @@ def home():
     # set default positions
     kore.update(kore.tango_default)
 
-    return render_template('index.html', ip_address=ip_add)
+    return render_template('GUI_Program.html', ip_address=ip_add)
 
 
 @app.route('/control', methods=['POST'])
