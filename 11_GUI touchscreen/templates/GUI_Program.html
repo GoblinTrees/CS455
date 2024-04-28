@@ -295,6 +295,9 @@
             width: 100%;
             height: auto;
         }
+        #header {
+            height: 200px
+        }
 
 
         /*@media only screen and (min-device-width: 800px) and (max-device-width: 800px) and (min-device-height: 480px) and (max-device-height: 480px) {*/
@@ -308,6 +311,8 @@
 
 </head>
 <body>
+<div id="header">
+</div>
 <div id="display">
 
     <div id="dashboard">
@@ -431,15 +436,15 @@
         </div>
 
         <div class="quickset">
-            <button class="qbutton" id="button1" onclick="_">Left 45</button>
+            <button class="qbutton" id="button1" onclick="left45()">Left 45</button>
             <button class="qbutton" id="button2" onclick="forward()">Forward</button>
-            <button class="qbutton" id="button3" onclick="_">Right 45</button>
-            <button class="qbutton" id="button4" onclick="_">Left 90</button>
+            <button class="qbutton" id="button3" onclick="right45()">Right 45</button>
+            <button class="qbutton" id="button4" onclick="left90()">Left 90</button>
             <button class="qbutton" id="button5" onclick="reverse()">Reverse</button>
-            <button class="qbutton" id="button6" onclick="_">Right 90</button>
-            <button class="qbutton" id="button7" onclick="_">Set 1 Time unit</button>
-            <button class="qbutton" id="button8" onclick="_">Neutral</button>
-            <button class="qbutton" id="button9" onclick="_">+1 Time unit</button>
+            <button class="qbutton" id="button6" onclick="right90()">Right 90</button>
+            <button class="qbutton" id="button7" onclick="set1TimeUnit()">Set 1 Time unit</button>
+            <button class="qbutton" id="button8" onclick="neutral()">Neutral</button>
+            <button class="qbutton" id="button9" onclick="add1TimeUnit()">+1 Time unit</button>
 
         </div>
         <div class="button-container1">
@@ -460,15 +465,49 @@
         function forward() {
             document.getElementById("L_Motors").value = 5400
             document.getElementById("R_Motors").value = 7000
+            updateDashboard()
         }
 
         function reverse() {
             document.getElementById("L_Motors").value = 6600
             document.getElementById("R_Motors").value = 5000
+            updateDashboard()
         }
 
         function left90() {
+            document.getElementById("L_Motors").value = 7000
+            document.getElementById("slider20").value = .87
+            updateDashboard()
+        }
+        function left45(){
+            document.getElementById("L_Motors").value = 7000
+            document.getElementById("slider20").value = .45
+            updateDashboard()
+        }
+        
+        function right90() {
+            document.getElementById("R_Motors").value = 5400
+            document.getElementById("slider20").value = .87
+            updateDashboard()
+        }
+        function right45(){
+            document.getElementById("R_Motors").value = 5400
+            document.getElementById("slider20").value = .45
+            updateDashboard()
+        }
 
+        function neutral(){
+            location.reload()
+        }
+
+        function set1TimeUnit(){
+            document.getElementById("slider20").value = 1
+            updateDashboard()
+        }
+
+        function add1TimeUnit(){
+            document.getElementById("slider20").value += 1
+            updateDashboard()
         }
 
         function updateDashboard() {
