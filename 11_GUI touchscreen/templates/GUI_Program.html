@@ -444,12 +444,12 @@
         </div>
         <div class="button-container1">
             <button class="actbutton" onclick="window.close()">Exit Interface</button>
-            <button class="actbutton" onclick="window.location.href='url2';">Human Input</button>
+            <button class="actbutton" onclick="humanInput()">Human Input</button>
             <button class="actbutton" onclick="savePreset()">Save Preset</button>
             <button class="actbutton" onclick="loadPreset()">Load Preset</button>
-            <button class="actbutton" onclick="window.location.href='url5';">Toggle Phrase</button>
+            <!--<button class="actbutton" onclick="window.location.href='url5';">Toggle Phrase</button>-->
             <button class="actbutton" onclick="speakLine()">Speak Line</button>
-            <button class="actbutton" onclick="">Chain Function</button>
+            <!--<button class="actbutton" onclick="">Chain Function</button>-->
             <button class="actbutton" onclick=""><a href="http://192.168.137.188:5245/exec">Run Program</a>
             </button>
         </div>
@@ -508,25 +508,58 @@
             }
         }
 
-        // Human input - speech to text, send to chat gpt
+        function humanInput(){
+            var delayValue = document.getElementById("slider21").value;
+            if (delayValue == 1){
+                document.getElementById("slider21").value = 0;
+            } else {
+                document.getElementById("slider21").value = 1;
+            }
+        }
+        /*
+        var speechRecognition = window.webkitSpeechRecognition
+        var recognition = new speechRecognition()
+        var instructions = document.getElementById("speechInputButton")
+        var content = ''
+        var textbox = document.getElementById("UserSpeech")
 
-        // add touch keyboard event for touching text area, pop up virtual keyboard
+        recognition.continuous = true
 
-        // toggle phrase?
+        // recognition is started
 
-        // chain function?
+        recognition.onstart = function() {
+            instructions.value("Voice Recognition is On")
+        }
+
+        recognition.onspeechend = function() {
+            instructions.value("Human Input")
+            var msg = new SpeechSynthesisUtterance();
+            msg.text = "Thank you for your request. We will process it when resources become available"
+            window.speechSynthesis.speak(msg);
+        }
+
+        recognition.onerror = function() {
+            instruction.value("Try Again")
+        }
+
+        recognition.onresult = function(event) {
+            var current = event.resultIndex;
+            var transcript = event.results[current][0].transcript
+            content += transcript
+            textbox.val = content
+        }
+
+        function speechToText() {
+            recognition.start()
+        }*/
 
         var sampleSpeech = ["Hello new friend", "How are you", "How can I help you today", "I don't get paid enough oil for this"];
 
         function speakLine() {
             var input = document.getElementById("UserSpeech").value;
-            var msg = new SpeechSynthesisUtterance();
             if (input == "") {
-                msg.text = sampleSpeech[Math.floor(Math.random() * sampleSpeech.length)];
-            } else {
-                msg.text = input;
-            }
-            window.speechSynthesis.speak(msg);
+                document.getElementById("UserSpeech").value = sampleSpeech[Math.floor(Math.random() * sampleSpeech.length)];
+            } 
         }
 
         // Define a global array to act as the queue
@@ -564,9 +597,10 @@
             queue.push(queueItem);
 
             // Add the value of the text field "UserSpeech" to the queue item
-            var userSpeechValue = document.getElementById("UserSpeech").value;
+            var userSpeechValue = document.getElementById("UserSpeech").value; 
             queueItem["Words"] = userSpeechValue;
 
+            document.getElementById("UserSpeech").value = "";
             // Update the displayed queue
             updateQueueDisplay();
         }
