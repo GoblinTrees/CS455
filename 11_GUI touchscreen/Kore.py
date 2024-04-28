@@ -120,10 +120,10 @@ def setQue():
 
     actualQueue = []
     for item in parsed_queue_list:
-        print("\nItem:")
-        print(item)
-        print("\nItem type:")
-        print(type(item))
+        # print("\nItem:")
+        # print(item)
+        # print("\nItem type:")
+        # print(type(item))
         list_of_dicts_str = item.strip()[1:-1]  # Remove square brackets
         list_of_dicts = list_of_dicts_str.split(', ')  # Split by comma and space
         # print("List of dicts:")
@@ -453,6 +453,21 @@ def getObject():
     distance = float(round(distance, 2))
     return distance
 
+
+def string_to_dict(string):
+    # Remove leading and trailing whitespaces
+    string = string.strip()
+
+    # Split by comma and space
+    key_value_pairs = string.split(', ')
+    # Create a dictionary
+    result = {}
+    for pair in key_value_pairs:
+        key, value = pair.split(':')
+        key = key.strip()[1:-1]  # Remove quotes from key
+        value = value.strip()[1:-1]  # Remove quotes from value
+        result[key] = value
+    return result
 
 def interrupt():
     disSet = 50
