@@ -130,12 +130,16 @@ def setQue():
         # print(list_of_dicts)
         # print(type(list_of_dicts))
         for line in list_of_dicts:
-            # print("\nLine:")
-            # print(line)
+           #This
             splitline = line.split(",")
             for item in splitline:
                 print("\nItem: " + str(item))
-
+                #here, each item is a string of "key":"value" pairs
+                #need to do string parsing on "Words"
+                key, value = item.split(':')
+                key = key.strip()[1:-1]  # Remove quotes from key
+                value = value.strip()[1:-1]  # Remove quotes from value
+                print(f"Key: {key} - Val:{value}")
 
 
 
