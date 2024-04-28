@@ -120,11 +120,14 @@ def setQue():
 
     actualQueue = []
     for item in parsed_queue_list:
-        print("Item:\n")
+        print("\nItem:")
         print(item)
+        print("\nItem type:")
+        print(type(item))
 
-    print("\nActual Queue:\n")
-    print(actualQueue)
+
+    # print("\nActual Queue:\n")
+    # print(actualQueue)
 
 
     # print("Que content type:\n")
