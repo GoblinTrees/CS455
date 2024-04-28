@@ -132,10 +132,14 @@ def setQue():
         for dict in list_of_dicts:
             print("Dict:\n")
             print(dict)
+            key_value_pairs = dict.split(', ')
+
+            for pair in key_value_pairs:
+                key, value = pair.split(':')
+                print("Key:"+ key+ "\n")
+                print("Val:"+ value+ "\n")
+
             #converted dict
-            print("Conv.Dict:\n")
-            convDict = string_to_dict(dict)
-            print(convDict)
 
 
     # print("\nActual Queue:\n")
@@ -457,20 +461,7 @@ def getObject():
     return distance
 
 
-def string_to_dict(string):
-    # Remove leading and trailing whitespaces
-    string = string.strip()
 
-    # Split by comma and space
-    key_value_pairs = string.split(', ')
-    # Create a dictionary
-    result = {}
-    for pair in key_value_pairs:
-        key, value = pair.split(':')
-        key = key.strip()[1:-1]  # Remove quotes from key
-        value = value.strip()[1:-1]  # Remove quotes from value
-        result[key] = value
-    return result
 
 def interrupt():
     disSet = 50
