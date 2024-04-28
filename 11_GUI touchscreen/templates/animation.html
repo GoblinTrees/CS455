@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Moving Eyes Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .eyes {
+            width: 100px;
+            height: 50px;
+            position: relative;
+            animation: moveEyes 2s infinite; /* Apply animation to .eyes container */
+
+        }
+
+        .eye {
+            width: 50px;
+            height: 50px;
+            background-color: black; /* Change background color to black */
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            transition: transform 0.5s ease;
+            border: 2px solid white; /* Add a white border */
+        }
+
+
+        .eye.left {
+            left: 0;
+        }
+
+        .eye.right {
+            right: 0;
+        }
+
+        @keyframes moveEyes {
+            0% {
+                transform: translateX(0px) translateY(0px);
+            }
+            25% {
+                transform: translateX(200px) translateY(30px);
+            }
+            50% {
+                transform: translateX(-200px) translateY(-25px);
+            }
+            75% {
+                transform: translateX(0px) translateY(0px);
+            }
+            100% {
+                transform: translateX(0px) translateY(0px);
+            }
+        }
+
+
+        .eyes:hover .eye {
+            animation: moveEyes 2s infinite;
+        }
+    </style>
+</head>
+<body>
+<div class="eyes">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+</div>
+</body>
+</html>

@@ -139,10 +139,17 @@ def gui():
         print("::ERR, GUI RESPONSE NOT VALID -> CANNOT CALL FROM OUTSIDE TANGO")
         return "Nothing"
 
+    kore.update(kore.tango_default)
+    kore.tango.setTarget(4, 7400) #Set the screen to look up
 
-    return render_template('GUI_Program.html', host_ip=host_ip) #could return GUI execution to the window
 
+    return render_template('GUI_Program.html', host_ip=request.host) #could return GUI execution to the window
 
+@app.route("/exec", methods=['GET', 'POST'])
+def execute():
+    executionThread = threading.Thread(target=kore.updateList(kore.orders))
+    executionThread.start()
+    return render_template('animation.html', host_ip=request.host) #could return GUI execution to the window
 
 @app.before_first_request
 def initialize():
