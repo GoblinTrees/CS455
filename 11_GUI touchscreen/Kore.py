@@ -129,14 +129,15 @@ def setQue():
         # print("List of dicts:")
         # print(list_of_dicts)
         # print(type(list_of_dicts))
-        for dict in list_of_dicts:
-            print("Dict:\n")
-            print(dict)
-            # key_value_pairs = dict.split(', ')
-            # print("Kv pair:\n")
-            # print(key_value_pairs)
+        for line in list_of_dicts:
+            print("\nLine:")
+            print(line)
 
-            #converted dict
+            splitline = line.split(", ")
+            for item in splitline:
+                print("Item: " + str(item))
+
+
 
 
     # print("\nActual Queue:\n")
@@ -188,7 +189,9 @@ def gui():
 
 @app.route("/exec", methods=['GET', 'POST'])
 def execute():
-    executionThread = threading.Thread(target=kore.updateList(kore.orders))
+    kore.tango.setTarget(4, 6000)  # Set the screen to look ahead
+
+    executionThread = threading.Thread(target=kore.updateList, args=(kore.orders,))
     executionThread.start()
     # executionThread.join()
     return render_template('animation.html', host_ip=request.host)  # could return GUI execution to the window
