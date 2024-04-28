@@ -129,6 +129,7 @@ def setQue():
         # print("List of dicts:")
         # print(list_of_dicts)
         # print(type(list_of_dicts))
+        thisdict = {}
         for line in list_of_dicts:
            #This
             splitline = line.split(",")
@@ -139,7 +140,16 @@ def setQue():
                 key, value = item.split(':')
                 key = key.strip()[1:-1]  # Remove quotes from key
                 value = value.strip()[1:-1]  # Remove quotes from value
-                print(f"Key: {key} - Val:{value}")
+                # print(f"Key: {key} - Val:{value}")
+                if key == 'Words':
+                    thisdict.update({key: str(value)})
+                    continue
+                else:
+                    thisdict.update({key: int(value)})
+                    continue
+        print("\nThisDict:")
+        print(thisdict)
+
 
 
 
