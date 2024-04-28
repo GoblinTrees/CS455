@@ -129,8 +129,10 @@ def setQue():
             queue_item_dict = {key: value}
             actualQueue.append(queue_item_dict)
 
-    print("Actual Queue:")
+    print("Actual Queue:\n")
     print(actualQueue)
+
+
     # print("Que content type:\n")
     #
     # print(type(queue_content))
@@ -154,7 +156,7 @@ def setQue():
     # kore.orders = queue_dict
 
     # Optionally, return a response indicating success
-    return jsonify(actualQueue)
+    return jsonify({"message": "Queue data received successfully."})
 
 
 @app.route("/gui", methods=['GET', 'POST'])
