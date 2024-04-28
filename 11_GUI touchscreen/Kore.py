@@ -147,8 +147,13 @@ def setQue():
                 else:
                     thisdict.update({key: int(value)})
                     continue
-        print("\nThisDict:")
-        print(thisdict)
+        # print("\nThisDict:")
+        # print(thisdict)
+        actualQueue.append(thisdict)
+
+    print("\nActualQueue:")
+    print(actualQueue)
+
 
 
 
