@@ -89,33 +89,28 @@ def control_robot():
 
 
 
+from flask import request, jsonify
+
 @app.route('/setQue', methods=['POST'])
 def setQue():
     print("Setting Que...")
     print(request.host)
 
-    # Parse the HTML data from the request
-    html_data = request.data.decode('utf-8')
+    # Parse JSON data from the request
+    json_data = request.get_json()
 
-    # Initialize a list to store dictionaries
-    queue_list = []
+    # Assuming the JSON data contains the queue content
+    queue_content = json_data.get('queueContent')
 
-    # Split the HTML data into individual queue items
-    queue_items = html_data.split('<p>Action ')[1:]
+    queue_dict = json.loads(queue_content)
 
-    for item in queue_items:
-        # Extract the index of the queue item
-        index_end = item.index(':')
-        index = int(item[:index_end])
 
-        # Extract the JSON string representing the queue item
-        json_str = item[index_end + 2:-4]
+    # Now you can process the queue content as needed
+    kore.orders = dict(queue_dict)
+    # Example response
+    response = {'message': 'Queue content received successfully'}
+    # return jsonify(response)
 
-        # Convert the JSON string to a dictionary
-        queue_item_dict = json.loads(json_str)
-
-        # Add the queue item dictionary to the list
-        queue_list.append(queue_item_dict)
 
     # Now you have a list of dictionaries representing the queue items
     # Do whatever processing you need to do with the queue data here
