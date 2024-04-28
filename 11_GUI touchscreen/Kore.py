@@ -49,7 +49,7 @@ def control_robot():
     Waist = int(request.form['Waist'])
     L_Motors = int(request.form['L_Motors'])
     R_Motors = int(request.form['R_Motors'])
-    Duration = int(request.form['duration'])
+    Duration = float(request.form['duration'])
     Delay = int(request.form['delay'])
     Words = str(request.form['UserSpeech'])
 
@@ -143,6 +143,9 @@ def setQue():
                 # print(f"Key: {key} - Val:{value}")
                 if key == 'Words':
                     thisdict.update({key: str(value)})
+                    continue
+                if key == 'Duration':
+                    thisdict.update({key: float(value)})
                     continue
                 else:
                     thisdict.update({key: int(value)})
