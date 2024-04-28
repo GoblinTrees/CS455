@@ -112,7 +112,10 @@ def setQue():
     queue_list = [p.get_text() for p in soup.find_all('p')]
 
     # Now you can process the queue content as needed
-    print("Queue list:")
+    print("Queue content\n:")
+    print(queue_content)
+
+    print("Queue list:\n")
     print(queue_list)
     # print("Que content type:\n")
     #
@@ -124,7 +127,7 @@ def setQue():
     # transform queue content here and assign to queue_dict
 
     # Now you can process the queue content as needed
-    kore.orders = dict(queue_dict)
+    # kore.orders = dict(queue_dict)
     # Example response
     response = {'message': 'Queue content received successfully'}
     # return jsonify(response)
@@ -135,7 +138,7 @@ def setQue():
     # data validaton
 
     # data validation passed, move reassign the queue
-    kore.orders = queue_dict
+    # kore.orders = queue_dict
 
     # Optionally, return a response indicating success
     return jsonify({"message": "Queue data received successfully."})
