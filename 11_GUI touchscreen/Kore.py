@@ -314,7 +314,6 @@ class Kore():
 
     def update(self, newVals):
         # Wait for input if we have to
-        self.update(self.)
         self.waitforProximity()
 
         # Arg type catch to ensure arg is a dict
@@ -417,6 +416,7 @@ class Kore():
                 continue
 
     def waitforProximity(self):
+        self.update(self.tango_default)
         if self.tango_values["Delay"] == 1:
             interrupt()
 
