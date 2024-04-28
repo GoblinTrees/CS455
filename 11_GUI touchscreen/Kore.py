@@ -130,9 +130,8 @@ def setQue():
         # print(list_of_dicts)
         # print(type(list_of_dicts))
         for line in list_of_dicts:
-            print("\nLine:")
-            print(type(line))
-
+            # print("\nLine:")
+            # print(line)
             splitline = line.split(", ")
             for item in splitline:
                 print("\nItem: " + str(item))
