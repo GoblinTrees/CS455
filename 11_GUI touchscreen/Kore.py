@@ -130,11 +130,11 @@ def setQue():
         # print(list_of_dicts)
         # print(type(list_of_dicts))
         for dict in list_of_dicts:
-            # print("Dict:\n")
-            # print(dict)
-            key_value_pairs = dict.split(', ')
-            print("Kv pair:\n")
-            print(key_value_pairs)
+            print("Dict:\n")
+            print(dict)
+            # key_value_pairs = dict.split(', ')
+            # print("Kv pair:\n")
+            # print(key_value_pairs)
 
             #converted dict
 
