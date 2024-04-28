@@ -143,7 +143,7 @@ def gui():
         return "Nothing"
 
     kore.update(kore.tango_default)
-    kore.tango.setTarget(4, 7400) #Set the screen to look up
+    kore.tango.setTarget(4, 7000) #Set the screen to look up
 
 
     return render_template('GUI_Program.html', host_ip=request.host) #could return GUI execution to the window
