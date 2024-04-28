@@ -109,20 +109,33 @@ def setQue():
     soup = BeautifulSoup(queue_content, 'html.parser')
 
     # Extract text content of each <p> element
-    queue_list = [p.get_text() for p in soup.find_all('p')]
+    parsed_queue_list = [p.get_text() for p in soup.find_all('p')]
 
     # Now you can process the queue content as needed
-    print("Queue content\n:")
-    print(queue_content)
+    # print("Queue content\n:")
+    # print(queue_content)
 
-    print("Queue list:\n")
-    print(queue_list)
+    print("Parsed_Queue list:\n")
+    print(parsed_queue_list)
+
+    actualQueue = []
+    for item in parsed_queue_list:
+        # Split the item at the first colon (':')
+        index = item.find(':')
+        if index != -1:  # Check if colon exists in the item
+            key = item[:index].strip()  # Get the text before colon and remove leading/trailing spaces
+            value = item[index + 1:].strip()  # Get the text after colon and remove leading/trailing spaces
+            # Create a dictionary with key and value
+            queue_item_dict = {key: value}
+            actualQueue.append(queue_item_dict)
+
+    print("Actual Queue:")
+    print(actualQueue)
     # print("Que content type:\n")
     #
     # print(type(queue_content))
     # print("Que content:\n")
 
-    print(queue_content)
 
     # transform queue content here and assign to queue_dict
 
