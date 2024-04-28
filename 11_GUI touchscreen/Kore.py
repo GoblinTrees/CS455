@@ -24,6 +24,9 @@ def home():
     # set default positions
     kore.update(kore.tango_default)
 
+    kore.update(kore.tango_default)
+    kore.tango.setTarget(4, 7400)  # Set the screen to look up
+
     return render_template('GUI_Program.html', ip_address=ip_add)
 
 
