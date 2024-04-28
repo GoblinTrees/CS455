@@ -126,9 +126,12 @@ def setQue():
         print(type(item))
         list_of_dicts_str = item.strip()[1:-1]  # Remove square brackets
         list_of_dicts = list_of_dicts_str.split(', ')  # Split by comma and space
-        print("List of dicts:")
-        print(list_of_dicts)
-        print(type(list_of_dicts))
+        # print("List of dicts:")
+        # print(list_of_dicts)
+        # print(type(list_of_dicts))
+        for dict in list_of_dicts:
+            print("Dict:\n")
+            print(dict)
 
     # print("\nActual Queue:\n")
     # print(actualQueue)
