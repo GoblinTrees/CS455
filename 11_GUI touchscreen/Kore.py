@@ -105,9 +105,15 @@ def setQue():
         print("No JSON data in setQue")
         return render_template('GUI_Program.html', host_ip=request.host)  # could return GUI execution to the window
 
+    print("Que content type:\n")
+
+    print(type(queue_content))
+    print("Que content:\n")
+
     print(queue_content)
 
-    queue_dict = json.loads(queue_content)
+    #transform queue content here and assign to queue_dict
+
 
 
     # Now you can process the queue content as needed
