@@ -292,7 +292,4 @@ class Kore():
 if __name__ == "__main__":
     kore = Kore
     print("")
-
-    kore.update(kore.tango_default)
-
     kore.boot()
