@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Robot Control</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"> <!-- Added viewport meta tag -->
+    <title>GUI Program</title>
     <!--    <link href="styles.css" rel="stylesheet">-->
     <style>
         html, body {
@@ -312,17 +312,30 @@
             height: 200px
         }
 
-        @media only screen and (max-width: 568px) {
+        @media only screen and (max-width: 320px) {
+            /* Adjusted for a 5" screen */
+            body {
+                flex-direction: column; /* Adjust flex-direction for smaller screens */
+            }
+
             #display {
-                height: calc(100vh - 200px); /* Adjust the height for smaller screens if needed */
+                padding: 10px; /* Added padding for better spacing */
+            }
+
+            .quickset {
+                width: 100%; /* Adjusted width for smaller screens */
+                overflow-x: auto; /* Allow horizontal scrolling if needed */
+            }
+
+            .actbutton, .qbutton {
+                width: 100%; /* Adjust button width for smaller screens */
+                margin-bottom: 5px; /* Added margin between buttons */
+            }
+
+            .button-container1, .button-container2 {
+                width: 100%; /* Adjust button container width for smaller screens */
             }
         }
-
-        /*@media only screen and (min-device-width: 800px) and (max-device-width: 800px) and (min-device-height: 480px) and (max-device-height: 480px) {*/
-        /*    !* Your CSS styles specific to the Raspberry Pi 7-inch display *!*/
-        /*    !* For example, you can adjust the layout or dimensions *!*/
-        /*}*/
-
 
     </style>
 
