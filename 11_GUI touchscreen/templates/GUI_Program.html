@@ -8,7 +8,6 @@
     <style>
         html, body {
             height: 100%;
-            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,7 +20,6 @@
             margin: 0;
             font-family: Arial, sans-serif; /* You can change the font-family if needed */
             background-color: dimgrey; /* Set a background color for the body */
-            flex-direction: row;
             height: 100%; /* Set body height */
             width: 100%;
             flex-direction: column;
@@ -47,6 +45,8 @@
             /*width: 800px; !* Set width to 800px *!*/
             /*height: 600px; !* Set height to 600px *!*/
             overflow-y: auto; /* Add this line */
+            flex-grow: 1; /* Allow the display div to grow to fill available space */
+
         }
 
         #outer {
