@@ -46,7 +46,7 @@
             height: auto;
             /*width: 800px; !* Set width to 800px *!*/
             /*height: 600px; !* Set height to 600px *!*/
-            overflow: auto;
+            overflow-y: auto; /* Add this line */
         }
 
         #outer {
@@ -307,6 +307,11 @@
             height: 200px
         }
 
+        @media only screen and (max-width: 768px) {
+            #display {
+                height: calc(100vh - 200px); /* Adjust the height for smaller screens if needed */
+            }
+        }
 
         /*@media only screen and (min-device-width: 800px) and (max-device-width: 800px) and (min-device-height: 480px) and (max-device-height: 480px) {*/
         /*    !* Your CSS styles specific to the Raspberry Pi 7-inch display *!*/
