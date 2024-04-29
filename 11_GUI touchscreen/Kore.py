@@ -404,7 +404,7 @@ class Kore():
         spkThread = threading.Thread(target=self.vocal_engine.say, args=(phrase,))
         spkThread.start()
 
-        self.vocal_engine.runAndWait()
+        # self.vocal_engine.runAndWait()
 
     def send_values(self):
         return self.tango_values
