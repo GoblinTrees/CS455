@@ -400,6 +400,7 @@ class Kore():
 
     def speak(self, phrase):
         # Pass the text into the vocal engine
+        print(f"Phrase: {phrase}")
         spkThread = threading.Thread(target=self.vocal_engine.say, args=(phrase,))
         spkThread.start()
 
