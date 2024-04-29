@@ -26,6 +26,11 @@
             width: 100%;
         }
 
+        #header{
+            width: 100%;
+            height: 200px;
+        }
+
         #display {
             display: flex;
             flex-direction: row;
@@ -295,6 +300,7 @@
             width: 100%;
             height: auto;
         }
+
         #header {
             height: 200px
         }
@@ -443,7 +449,7 @@
             <button class="qbutton" id="button5" onclick="reverse()">Reverse</button>
             <button class="qbutton" id="button6" onclick="right90()">Right 90</button>
             <button class="qbutton" id="button7" onclick="set1TimeUnit()">Set 1 Time unit</button>
-            <button class="qbutton" id="button8" onclick="neutral()">Restart</button>
+            <button class="qbutton" id="button8" onclick="neutral()">Neutral Motor</button>
             <button class="qbutton" id="button9" onclick="add1TimeUnit()">+1 Time unit</button>
 
         </div>
@@ -479,33 +485,37 @@
             document.getElementById("slider20").value = .87
             updateDashboard()
         }
-        function left45(){
+
+        function left45() {
             document.getElementById("L_Motors").value = 7000
             document.getElementById("slider20").value = .45
             updateDashboard()
         }
-        
+
         function right90() {
             document.getElementById("R_Motors").value = 5400
             document.getElementById("slider20").value = .87
             updateDashboard()
         }
-        function right45(){
+
+        function right45() {
             document.getElementById("R_Motors").value = 5400
             document.getElementById("slider20").value = .45
             updateDashboard()
         }
 
-        function neutral(){
-            location.reload()
+        function neutral() {
+            document.getElementById("L_Motors").value = 6000
+            document.getElementById("R_Motors").value = 6000
+            updateDashboard()
         }
 
-        function set1TimeUnit(){
+        function set1TimeUnit() {
             document.getElementById("slider20").value = 1
             updateDashboard()
         }
 
-        function add1TimeUnit(){
+        function add1TimeUnit() {
             document.getElementById("slider20").value += 1
             updateDashboard()
         }
@@ -547,14 +557,15 @@
             }
         }
 
-        function humanInput(){
+        function humanInput() {
             var delayValue = document.getElementById("slider21").value;
-            if (delayValue == 1){
+            if (delayValue == 1) {
                 document.getElementById("slider21").value = 0;
             } else {
                 document.getElementById("slider21").value = 1;
             }
         }
+
         /*
         var speechRecognition = window.webkitSpeechRecognition
         var recognition = new speechRecognition()
@@ -597,7 +608,7 @@
         function speakLine() {
             var input = document.getElementById("UserSpeech").value;
             // if (input == "") {
-                document.getElementById("UserSpeech").value = sampleSpeech[Math.floor(Math.random() * sampleSpeech.length)];
+            document.getElementById("UserSpeech").value = sampleSpeech[Math.floor(Math.random() * sampleSpeech.length)];
             // }
         }
 
@@ -636,7 +647,7 @@
             queue.push(queueItem);
 
             // Add the value of the text field "UserSpeech" to the queue item
-            var userSpeechValue = document.getElementById("UserSpeech").value; 
+            var userSpeechValue = document.getElementById("UserSpeech").value;
             queueItem["Words"] = userSpeechValue;
 
             document.getElementById("UserSpeech").value = "";
