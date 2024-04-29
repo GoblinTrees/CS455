@@ -486,7 +486,7 @@
             <button class="actbutton" onclick="loadPreset()">Load Preset</button>
             <!--<button class="actbutton" onclick="window.location.href='url5';">Toggle Phrase</button>-->
             <button class="actbutton" onclick="speakLine()">Speak Line</button>
-            <!--<button class="actbutton" onclick="">Chain Function</button>-->
+            <button class="actbutton" onclick="toggleFullscreen()">Toggle Fullscreen</button>
             <button class="actbutton" onclick=""><a href="http://192.168.137.188:5245/exec">Run Program</a>
             </button>
         </div>
@@ -739,6 +739,20 @@
 
             // Update the content of the queue div
             document.getElementById("queue").innerHTML = queueContent;
+        }
+
+        function toggleFullscreen() {
+            var doc = window.document;
+            var docEl = doc.documentElement;
+
+            var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+            if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                requestFullScreen.call(docEl);
+            } else {
+                cancelFullScreen.call(doc);
+            }
         }
     </script>
 </div>
