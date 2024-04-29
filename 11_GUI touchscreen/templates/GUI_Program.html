@@ -443,7 +443,7 @@
             <button class="qbutton" id="button5" onclick="reverse()">Reverse</button>
             <button class="qbutton" id="button6" onclick="right90()">Right 90</button>
             <button class="qbutton" id="button7" onclick="set1TimeUnit()">Set 1 Time unit</button>
-            <button class="qbutton" id="button8" onclick="neutral()">Neutral</button>
+            <button class="qbutton" id="button8" onclick="neutral()">Restart</button>
             <button class="qbutton" id="button9" onclick="add1TimeUnit()">+1 Time unit</button>
 
         </div>
@@ -596,9 +596,9 @@
 
         function speakLine() {
             var input = document.getElementById("UserSpeech").value;
-            if (input == "") {
+            // if (input == "") {
                 document.getElementById("UserSpeech").value = sampleSpeech[Math.floor(Math.random() * sampleSpeech.length)];
-            } 
+            // }
         }
 
         // Define a global array to act as the queue
