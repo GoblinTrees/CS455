@@ -23,7 +23,12 @@
             height: 100%; /* Set body height */
             width: 100%;
             flex-direction: column;
-margin-bottom: 20px        }
+            margin-bottom: 20px;
+            overflow-y: auto; /* Add this line */
+            flex-grow: 1; /* Allow the display div to grow to fill available space */
+
+
+        }
 
         #header {
             width: 100%;
