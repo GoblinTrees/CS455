@@ -392,7 +392,7 @@ class Kore():
                 else:
                     self.tango.setTarget(self.getChan(key), self.getVal(key))
                     print("New Motor Key-Value:" + str(key) + "-" + str(self.getVal(key)))
-
+        print("Duration: "+{self.tango_values.get("Duration")})
         time.sleep(self.tango_values.get("Duration"))  # Apply the changes for however long duration lasts
 
     def ping(self):
