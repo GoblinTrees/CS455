@@ -6,8 +6,8 @@ import pyttsx3
 from maestro import Controller
 from sys import version_info
 import threadQ
-import
 import Pose_Lib as Pl
+import random
 
 
 app = Flask(__name__)
@@ -250,7 +250,7 @@ class Kore():
         # This line boots the FlaskIO
         app.run(host="0.0.0.0", port=5245, debug=True)
 
-    def pose():
+    def pose(self):
         stop_flag = False
         random_pose_key = Pl.get_random_pose_key(Pl.all_poses)
         print("Random starter pose from 'all_poses': ", random_pose_key)
