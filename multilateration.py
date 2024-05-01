@@ -82,7 +82,7 @@ def multilatNPlat(Refs, alt=np.nan):
             minError = meanError
     return position
     
-def main:
+def main():
     temp = findDistances()
     anchor0 = [182, 182, temp[0]]
     anchor1 = [182, 0, temp[1]]
