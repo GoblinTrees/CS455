@@ -29,6 +29,7 @@ def findDistances():
             print("ConInt: ", confidenceInt)
             temp = ser.readline()
             dataentry = str(ser.readline()).split(",")
+            print(dataentry)
             data = [dataentry[1], dataentry[2], dataentry[3], dataentry[4]]
 
             print("Dataentry: ", dataentry)
@@ -52,10 +53,10 @@ def findDistances():
                 # print(data[2])
                 # print(data[3])
 
-        num1 = num1 / 1000
-        num2 = num2 / 1000
-        num3 = num3 / 1000
-        num4 = num4 / 1000
+        num1 = num1 / 10
+        num2 = num2 / 10
+        num3 = num3 / 10
+        num4 = num4 / 10
 
 
         print("got data")
