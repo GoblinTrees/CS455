@@ -84,6 +84,7 @@ def multilatNPlat(Refs, alt=np.nan):
     return position
     
 def main():
+    # find position
     temp = findDistances()
     anchor0 = [182, 182, temp[0]]
     anchor1 = [182, 0, temp[1]]
@@ -94,6 +95,10 @@ def main():
     print("anchor 2: ", anchor2)
     print("anchor 3: ", anchor3)
     
+    #find angle
+    # drive forward 1 second
+    # find position
+    # cos((pos1-pos0/2)/dist to closest pylon) = heading from (0, 0)
 main()
     
     
