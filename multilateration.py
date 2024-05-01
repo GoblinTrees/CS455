@@ -93,4 +93,6 @@ def main():
     print("anchor 2: ", anchor2)
     print("anchor 3: ", anchor3)
     
+main()
+    
     
