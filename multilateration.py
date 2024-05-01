@@ -4,9 +4,11 @@ import time as t
 import numpy as np
 import pyttsx3
 from maestro import Controller
-import math
 
-try:
+
+def findDistances():
+    #print("in function")
+    try:
         #print("in try")
         ser = serial.Serial()
         ser.port = '/dev/ttyUSB0'
@@ -55,10 +57,12 @@ try:
         num3 = num3 / 1000
         num4 = num4 / 1000
 
+
         print("got data")
         ser.close()
         return [num1, num2, num3, num4]
     finally:
+        print("finally")
         ser.close()
 
 # 2D Multilateration with N platforms.
@@ -79,9 +83,14 @@ def multilatNPlat(Refs, alt=np.nan):
     return position
     
 def main:
-    anchor0 = [182, 182, 0]
-    anchor1 = [182, 0, 0]
-    anchor2 = [0, 0, 0]
-    anchor3 = [0, 182, 0]
+    temp = findDistances()
+    anchor0 = [182, 182, temp[0]]
+    anchor1 = [182, 0, temp[1]]
+    anchor2 = [0, 0, temp[2]]
+    anchor3 = [0, 182, temp[3]]
+    print("anchor 0: ", anchor0)
+    print("anchor 1: ", anchor1)
+    print("anchor 2: ", anchor2)
+    print("anchor 3: ", anchor3)
     
-    getDistances()
+    
