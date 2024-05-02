@@ -149,7 +149,7 @@ class map():
                     pass
 
                 self.distances = [num1, num2, num3, num4]
-                print("Dist: ", self.distances)
+                print("\nDist: ", self.distances)
 
                 self.locate()
                 return [num1, num2, num3, num4]
