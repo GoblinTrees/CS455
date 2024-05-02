@@ -56,11 +56,12 @@ class map():
 
         #Using self.distances as radial distance of each circle, solve for X,Y
         solutions = solve(equations)
-        print("Distances:")
-        print(self.distances)
-        print("Solutions:")
+        print(f"D0: "+{str(self.distances[0])})
+        # print("Distances:")
+        # print(self.distances)
+        # print("Solutions:")
         if solutions == []:
-            print("No Solutions!")
+            # print("No Solutions!")
             return [-10,-10]
         #Converstion back to floats
         float_solutions = []
