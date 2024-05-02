@@ -13,27 +13,35 @@ from sympy import symbols, Eq, solve
 
 ldist: float;       #Placeholder for the length of the squares, need to update it with value
 ldist2 = 2*ldist
-pylon0 = [0,0]
-pylon1 = [0,2l]
-pylon2 = [2l,2l]
-pylon3 = [2l,0]
 
-r1 =[]
-r2 =[]
-r3 =[]
-r4 =[]
+pylonDict = {
+"0" : [0,0],
+"1" : [0,2l],
+"2" : [2l,2l],
+"3" : [2l,0],
+}
 
+
+#This works by making an instance of the map class, then starting the startloop to get things going
+#The distances constantly updates, TODO add update() to figure out heading and directions to pylons
+# #This will work for straight lines, but not curves
 
 class map():
     def __init__(self):
-        self.distances = [-1.0,-1.0,-1.0,-1.0] #This holds most current data
+        self.distances = [-1.0,-1.0,-1.0,-1.0] #This holds most current location data
         self.previous = [-999.1,-999.1,-999.1,-999.1]      #This holds previous location
-        self.location = [-10,-10]
-        self.prior = [-10,-10]
+        self.location = [-10,-10]           #This holds vectorized location in XY
+        self.prior = [-10,-10]              #this holds vectorized prior in XY
+        self.heading = [0,0]                #This is to get XY direction
 
 
 
-    def locate(self)->list:
+
+    def getVector(self,startList:list, endList:list):
+        return [x - y for x, y in zip(endList, startList)]
+
+
+    def locate(self):
         #declare x,y as variables
         X, Y = symbols('X Y')
 
@@ -44,7 +52,6 @@ class map():
             Eq(sympy.sqrt((X-ldist2)**2 + (Y-ldist2)**2), self.distances[2]),
             Eq(sympy.sqrt((X-ldist2)**2 + (Y)**2), self.distances[3])
         ]
-
 
         #Using self.distances as radial distance of each circle, solve for X,Y
         solutions = solve(equations)
@@ -60,6 +67,8 @@ class map():
             float_solutions.append(float(sol[1]))
         print(f"{float_solutions[0]}:{float_solutions[1]}")
 
+        #update location
+        self.location = [float_solutions[0],float_solutions[1]]
         #return the distance
         return [float_solutions[0],float_solutions[1]]
 
@@ -136,6 +145,7 @@ class map():
             except:
                 pass
             self.distances = [num1, num2, num3, num4]
+            self.locate()
             return [num1, num2, num3, num4]
         finally:
             print("findDist() finally")
