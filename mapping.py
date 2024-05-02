@@ -149,6 +149,7 @@ class map():
                     pass
 
                 self.distances = [num1, num2, num3, num4]
+                self.distances = [round(num, 2) for num in self.distances]
                 print("\nDist: ", self.distances)
 
                 self.locate()
