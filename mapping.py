@@ -85,7 +85,7 @@ class map():
     def findDistances(self):
 
         while True:
-            print("In findDist\n")
+            print(">> In findDist <<\n")
             try:
                 #print("in try")
                 ser = serial.Serial()
@@ -113,7 +113,6 @@ class map():
                         # print("Dataentry: ",dataentry)
 
                         data = [dataentry[1],dataentry[2],dataentry[3],dataentry[4]]
-                        print("Data: ",data)
 
 
                         if str(data[0]) == 'null' or str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null':
@@ -126,6 +125,7 @@ class map():
                             print("bad data3, zeros, trying again ")
                             continue    #added by forrest, but unknown if needed
                         else:
+                            print("Data: ", data)
                             confidenceInt += 1
                             num1 += float(data[0])
                             num2 += float(data[1])
