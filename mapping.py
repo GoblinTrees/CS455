@@ -125,7 +125,6 @@ class map():
                             print("bad data3, zeros, trying again ")
                             continue    #added by forrest, but unknown if needed
                         else:
-                            print("Data: ", data)
                             confidenceInt += 1
                             num1 += float(data[0])
                             num2 += float(data[1])
@@ -147,7 +146,11 @@ class map():
                     ser.close()
                 except:
                     pass
+                print("Data: ", data)
+
                 self.distances = [num1, num2, num3, num4]
+                print("Dist: ", self.distances)
+
                 self.locate()
                 return [num1, num2, num3, num4]
             finally:
