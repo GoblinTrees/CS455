@@ -86,7 +86,7 @@ class map():
     def findDistances(self):
 
         while True:
-            print(">> findDist <<\n")
+            # print(">> findDist <<\n")
             try:
                 #print("in try")
                 ser = serial.Serial()
@@ -155,7 +155,7 @@ class map():
                 self.locate()
                 return [num1, num2, num3, num4]
             finally:
-                print("findDist() finally")
+                # print("findDist() finally")
                 ser.close()
 
 
