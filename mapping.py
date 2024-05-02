@@ -11,7 +11,7 @@ import math
 import threading
 from sympy import symbols, Eq, solve
 
-ldist: float = 1.524       #Placeholder for the length of the squares, calling it 5 ft to the length
+ldist: float = 1.6       #Placeholder for the length of the squares, calling it 5 ft to the length
 ldist2 = 2*ldist
 
 pylonDict = {
@@ -56,9 +56,9 @@ class map():
 
         #Using self.distances as radial distance of each circle, solve for X,Y
         solutions = solve(equations)
-        print(self.distances[0])
-        # print("Distances:")
-        # print(self.distances)
+        # print(self.distances[0]) #For getting only one post data
+        print("Distances:")
+        print(self.distances)
         # print("Solutions:")
         if solutions == []:
             # print("No Solutions!")
