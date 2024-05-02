@@ -42,6 +42,7 @@ class map():
 
 
     def locate(self):
+        print(">> Locate <<")
         #declare x,y as variables
         X, Y = symbols('X Y')
 
@@ -113,7 +114,7 @@ class map():
                         # print("Dataentry: ",dataentry)
 
                         data = [dataentry[1],dataentry[2],dataentry[3],dataentry[4]]
-
+                        print("\nData: ", data)
 
                         if str(data[0]) == 'null' or str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null':
                             # print("bad data1, trying again")
@@ -148,7 +149,6 @@ class map():
                     pass
 
                 self.distances = [num1, num2, num3, num4]
-                print("\nData: ", data)
                 print("Dist: ", self.distances)
 
                 self.locate()
