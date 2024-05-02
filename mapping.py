@@ -48,7 +48,7 @@ class map():
 
         #make a set of 4 equations of circles with XY variables,
         equations = [
-            Eq(sympy.sqrt((X)**2 + (Y)**2), self.distances[0]),
+            # Eq(sympy.sqrt((X)**2 + (Y)**2), self.distances[0]),
             Eq(sympy.sqrt((X)**2 + (Y-ldist2)**2), self.distances[1]),
             Eq(sympy.sqrt((X-ldist2)**2 + (Y-ldist2)**2), self.distances[2]),
             Eq(sympy.sqrt((X-ldist2)**2 + (Y)**2), self.distances[3])
