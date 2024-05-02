@@ -137,10 +137,10 @@ class map():
                             # print(data[2])
                             # print(data[3])
 
-                    num1 = num1 / 10
-                    num2 = num2 / 10
-                    num3 = num3 / 10
-                    num4 = num4 / 10
+                    # num1 = num1 / 10
+                    # num2 = num2 / 10
+                    # num3 = num3 / 10
+                    # num4 = num4 / 10
 
 
                     # print("got data")
