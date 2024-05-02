@@ -75,8 +75,8 @@ class map():
 
 
     def startmapping(self):
-        mapThread = threading.Thread(target=self.findDistances())
-        mapThread.start()
+        while True:
+            self.findDistances()
 
     def getDistanceMoveVector(self):
         return [x - y for x, y in zip(self.distances, self.previous)]
