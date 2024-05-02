@@ -84,7 +84,7 @@ class map():
     def findDistances(self):
 
         while True:
-            #print("in function")
+            print("in findDist\n")
             try:
                 #print("in try")
                 ser = serial.Serial()
