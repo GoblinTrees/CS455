@@ -114,7 +114,7 @@ class map():
                         # print("Dataentry: ",dataentry)
 
                         data = [dataentry[1],dataentry[2],dataentry[3],dataentry[4]]
-                        print("Data: ", data)
+                        # print("Data: ", data)
 
                         if str(data[0]) == 'null' or str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null':
                             # print("bad data1, trying again")
