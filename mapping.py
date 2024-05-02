@@ -74,7 +74,7 @@ class map():
 
 
     def startmapping(self):
-        mapThread = threading.Thread(target=self.findDistances(), args=(self,))
+        mapThread = threading.Thread(target=self.findDistances())
         mapThread.start()
 
     def getDistanceMoveVector(self):
