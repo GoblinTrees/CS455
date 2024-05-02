@@ -146,11 +146,12 @@ class map():
                     ser.close()
                 except:
                     pass
-                print("Data: ", data)
+
+                p
 
                 self.distances = [num1, num2, num3, num4]
                 print("Dist: ", self.distances)
-
+                print("Data: ", data)
                 self.locate()
                 return [num1, num2, num3, num4]
             finally:
