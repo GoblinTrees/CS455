@@ -55,7 +55,7 @@ class map():
 
         #Using self.distances as radial distance of each circle, solve for X,Y
         solutions = solve(equations)
-        print("Distances:\n")
+        print("Distances:")
         print(self.distances)
         print("\nSolutions:")
         if solutions == []:
