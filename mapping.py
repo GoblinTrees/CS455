@@ -11,7 +11,7 @@ import math
 import threading
 from sympy import symbols, Eq, solve
 
-ldist: float = 1.6       #Placeholder for the length of the squares, calling it 5 ft to the length
+ldist: float = 1.55       #Placeholder for the length of the squares, calling it 5 ft to the length
 ldist2 = 2*ldist
 
 pylonDict = {
