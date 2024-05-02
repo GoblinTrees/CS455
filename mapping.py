@@ -27,7 +27,10 @@ r4 =[]
 class map():
     def __init__(self):
         self.distances = [-1.0,-1.0,-1.0,-1.0] #This holds most current data
-        self.prior = [-999.1,-999.1,-999.1,-999.1]      #This holds previous location
+        self.previous = [-999.1,-999.1,-999.1,-999.1]      #This holds previous location
+        self.location = [-10,-10]
+        self.prior = [-10,-10]
+
 
 
     def locate(self)->list:
@@ -66,7 +69,7 @@ class map():
         mapThread.start()
 
     def getDistanceMoveVector(self):
-        return [x - y for x, y in zip(self.distances, self.prior)]
+        return [x - y for x, y in zip(self.distances, self.previous)]
 
     #findDistances modified to run on parrallel thread soas to constanstly update position of system
     def findDistances(self):
