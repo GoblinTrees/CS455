@@ -42,7 +42,7 @@ class map():
 
 
     def locate(self):
-        print(">> Locate <<")
+        # print(">> Locate <<")
         #declare x,y as variables
         X, Y = symbols('X Y')
 
@@ -58,7 +58,7 @@ class map():
         solutions = solve(equations)
         print("Distances:")
         print(self.distances)
-        print("\nSolutions:")
+        print("Solutions:")
         if solutions == []:
             print("No Solutions!")
             return [-10,-10]
