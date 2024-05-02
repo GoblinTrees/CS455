@@ -158,5 +158,5 @@ class map():
 
 if __name__ == "__main__":
     Map = map()
-    mapThread = threading.Thread(Map.startmapping)
+    mapThread = threading.Thread(target=Map.startmapping)
     mapThread.start()
