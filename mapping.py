@@ -147,8 +147,6 @@ class map():
                 except:
                     pass
 
-                p
-
                 self.distances = [num1, num2, num3, num4]
                 print("Dist: ", self.distances)
                 print("Data: ", data)
