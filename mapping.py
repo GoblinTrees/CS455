@@ -55,8 +55,9 @@ class map():
 
         #Using self.distances as radial distance of each circle, solve for X,Y
         solutions = solve(equations)
-
-        print("Solutions:")
+        print("Distances:\n")
+        print(self.distances)
+        print("\nSolutions:")
         if solutions == []:
             print("No Solutions!")
             return [-10,-10]
@@ -84,7 +85,7 @@ class map():
     def findDistances(self):
 
         while True:
-            print("in findDist\n")
+            print("In findDist\n")
             try:
                 #print("in try")
                 ser = serial.Serial()
