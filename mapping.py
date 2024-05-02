@@ -7,18 +7,18 @@ import sympy
 
 from maestro import Controller
 import math
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 import threading
 from sympy import symbols, Eq, solve
 
-ldist: float;       #Placeholder for the length of the squares, need to update it with value
+ldist: float = 152.4       #Placeholder for the length of the squares, calling it 5 ft to the length
 ldist2 = 2*ldist
 
 pylonDict = {
 "0" : [0,0],
-"1" : [0,2l],
-"2" : [2l,2l],
-"3" : [2l,0],
+"1" : [0,ldist2],
+"2" : [ldist2,ldist2],
+"3" : [ldist2,0],
 }
 
 
@@ -82,71 +82,80 @@ class map():
 
     #findDistances modified to run on parrallel thread soas to constanstly update position of system
     def findDistances(self):
-        #print("in function")
-        try:
-            #print("in try")
-            ser = serial.Serial()
-            ser.port = '/dev/ttyUSB0'
-            ser.baudrate = 115200
-            ser.bytesize = serial.EIGHTBITS
-            ser.parity = serial.PARITY_NONE
-            ser.stopbits = serial.STOPBITS_ONE
-            ser.timeout = 1
-            ser.open()
 
-            num1 = 0
-            num2 = 0
-            num3 = 0
-            num4 = 0
-
-            confidenceInt = 0
+        while True:
+            #print("in function")
             try:
-                while confidenceInt < 5:
+                #print("in try")
+                ser = serial.Serial()
+                ser.port = '/dev/ttyUSB0'
+                ser.baudrate = 115200
+                ser.bytesize = serial.EIGHTBITS
+                ser.parity = serial.PARITY_NONE
+                ser.stopbits = serial.STOPBITS_ONE
+                ser.timeout = 1
+                ser.open()
 
-                    # print("ConInt: ", confidenceInt)
-                    temp = ser.readline()
+                num1 = 0
+                num2 = 0
+                num3 = 0
+                num4 = 0
 
-                    dataentry = str(ser.readline()).split(",")
-                    # print("Dataentry: ",dataentry)
+                confidenceInt = 0
+                try:
+                    while confidenceInt < 5:
 
-                    data = [dataentry[1],dataentry[2],dataentry[3],dataentry[4]]
-                    # print("Data: ",data)
+                        # print("ConInt: ", confidenceInt)
+                        temp = ser.readline()
 
+                        dataentry = str(ser.readline()).split(",")
+                        # print("Dataentry: ",dataentry)
 
-                    if str(data[0]) == 'null' or str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null':
-                        print("bad data1, trying again")
-                        continue    #added by forrest, but unknown if needed
-                    elif str(data[0]) == 'nan' or str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(data[3]) == 'nan':
-                        print("bad data2, trying again")
-                        continue    #added by forrest, but unknown if needed
-                    elif (data[0] == 0 or data[1] == 0 or data[2] == 0 or data[3] == 0):
-                        print("bad data3, zeros, trying again ")
-                        continue    #added by forrest, but unknown if needed
-                    else:
-                        confidenceInt += 1
-                        num1 += float(data[0])
-                        num2 += float(data[1])
-                        num3 += float(data[2])
-                        num4 += float(data[3])
-                        #2nd data validation
-                        # print(data[0])
-                        # print(data[1])
-                        # print(data[2])
-                        # print(data[3])
-
-                num1 = num1 / 10
-                num2 = num2 / 10
-                num3 = num3 / 10
-                num4 = num4 / 10
+                        data = [dataentry[1],dataentry[2],dataentry[3],dataentry[4]]
+                        # print("Data: ",data)
 
 
-                # print("got data")
+                        if str(data[0]) == 'null' or str(data[1]) == 'null' or str(data[2]) == 'null' or str(data[3]) == 'null':
+                            print("bad data1, trying again")
+                            continue    #added by forrest, but unknown if needed
+                        elif str(data[0]) == 'nan' or str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(data[3]) == 'nan':
+                            print("bad data2, trying again")
+                            continue    #added by forrest, but unknown if needed
+                        elif (data[0] == 0 or data[1] == 0 or data[2] == 0 or data[3] == 0):
+                            print("bad data3, zeros, trying again ")
+                            continue    #added by forrest, but unknown if needed
+                        else:
+                            confidenceInt += 1
+                            num1 += float(data[0])
+                            num2 += float(data[1])
+                            num3 += float(data[2])
+                            num4 += float(data[3])
+                            #2nd data validation
+                            # print(data[0])
+                            # print(data[1])
+                            # print(data[2])
+                            # print(data[3])
+
+                    num1 = num1 / 10
+                    num2 = num2 / 10
+                    num3 = num3 / 10
+                    num4 = num4 / 10
+
+
+                    # print("got data")
+                    ser.close()
+                except:
+                    pass
+                self.distances = [num1, num2, num3, num4]
+                self.locate()
+                return [num1, num2, num3, num4]
+            finally:
+                print("findDist() finally")
                 ser.close()
-            except:
-                pass
-            self.distances = [num1, num2, num3, num4]
-            self.locate()
-            return [num1, num2, num3, num4]
-        finally:
-            print("findDist() finally")
-            ser.close()
+
+
+
+if __name__ == "__main__":
+    Map = map()
+    Map.startmapping()
+
