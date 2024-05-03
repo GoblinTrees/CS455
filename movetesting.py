@@ -44,8 +44,10 @@ class Robot:
             self.tango.setTarget(1, self.l_motors)
             self.tango.setTarget(0, self.r_motors)
         elif len(args) == 1:
+
             val = args[0]
             val2 = 12000 -val
+            print(f"motors: {val}-{val2}")
             self.tango.setTarget(1, val)
             self.tango.setTarget(0, val2)
         elif len(args) == 2:
@@ -306,7 +308,7 @@ if __name__ == "__main__":
     robot = Robot()
     # mapThread = threading.Thread(target=robot.startmapping())
     # mapThread.start()
-    robot.setmotor(6500)
+    robot.setmotor(7000)
     time.sleep(1)
     robot.setmotor(6000)
 
