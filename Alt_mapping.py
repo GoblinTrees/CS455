@@ -4,7 +4,6 @@ import time as t
 import numpy as np
 import pyttsx3
 import sympy
-from maestro import Controller
 
 from maestro import Controller
 import math
@@ -31,26 +30,55 @@ class map():
     def __init__(self):
         self.distances = [-1.0,-1.0,-1.0,-1.0] #This holds most current location data
         self.previous = [-999.1,-999.1,-999.1,-999.1]      #This holds previous location
-        self.quad = -1
+        self.location = [-10,-10]           #This holds vectorized location in XY
+        self.prior = [-10,-10]              #this holds vectorized prior in XY
+        self.heading = [0,0]                #This is to get XY direction
+
+
+
+
+    def getVector(self,startList:list, endList:list):
+        return [x - y for x, y in zip(endList, startList)]
+
+
+    def locate(self):
+        # print(">> Locate <<")
+        #declare x,y as variables
+        X, Y = symbols('X Y')
+
+        #make a set of 4 equations of circles with XY variables,
+        equations = [
+            # Eq(sympy.sqrt((X)**2 + (Y)**2), self.distances[0]),
+            Eq(sympy.sqrt((X)**2 + (Y-ldist2)**2), self.distances[1]),
+            Eq(sympy.sqrt((X-ldist2)**2 + (Y-ldist2)**2), self.distances[2]),
+            Eq(sympy.sqrt((X-ldist2)**2 + (Y)**2), self.distances[3])
+        ]
+
+        #Using self.distances as radial distance of each circle, solve for X,Y
+        solutions = solve(equations)
+        # print(self.distances[0]) #For getting only one post data
+        print("Distances:")
+        print(self.distances)
+        # print("Solutions:")
+        if solutions == []:
+            # print("No Solutions!")
+            return [-10,-10]
+        #Converstion back to floats
+        float_solutions = []
+        for sol in solutions:
+            float_solutions.append(float(sol[0]))
+            float_solutions.append(float(sol[1]))
+        print(f"{float_solutions[0]}:{float_solutions[1]}")
+
+        #update location
+        self.location = [float_solutions[0],float_solutions[1]]
+        #return the distance
+        return [float_solutions[0],float_solutions[1]]
 
 
     def startmapping(self):
         while True:
             self.findDistances()
-            self.findQuad()
-            self.reportMap()
-
-    def findQuad(self):
-        for d in self.distances:        #for check to see if the bot is out of bounds
-            if d > 3.1:
-                return -1
-        return np.argmin(self.distances)
-
-    def reportMap(self):
-        print(f"Quad: {self.quad} :: Dist-> [{self.distances[0]},{self.distances[1]},{self.distances[2]},{self.distances[3]}]")
-
-    def getVector(self,startList:list, endList:list):
-        return [x - y for x, y in zip(endList, startList)]
 
     def getDistanceMoveVector(self):
         return [x - y for x, y in zip(self.distances, self.previous)]
@@ -134,7 +162,6 @@ class map():
 
 
 if __name__ == "__main__":
-    pass
-    # Map = map()
-    # mapThread = threading.Thread(target=Map.startmapping)
-    # mapThread.start()
+    Map = map()
+    mapThread = threading.Thread(target=Map.startmapping)
+    mapThread.start()
