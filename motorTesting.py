@@ -188,6 +188,7 @@ class Robot:
                     solutions.remove(sol)
 
         if len(solutions) == 1:                 #only one solution should remain, set the XY coordinates to it
+            print(f"XY: {xy}")
             xy = [solutions[0].get("X"), solutions[0].get("Y")]
             return
         else:
