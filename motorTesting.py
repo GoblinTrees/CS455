@@ -303,7 +303,9 @@ class Robot:
 
 if __name__ == "__main__":
     robot = Robot()
-    mapThread = threading.Thread(target=robot.startmapping())
+    mapThread = threading.Thread(target=robot.startmapping)
     mapThread.start()
+
+    robot.getHeading2()
 
     #TODO test heading2 and map data collection, then figure out motor mappings for rotation, etc
