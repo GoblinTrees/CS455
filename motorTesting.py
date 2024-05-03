@@ -182,6 +182,7 @@ class Robot:
             return
 
         for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
+            print(f"Sol: {sol}")
             for key in sol.keys():
                 if sol[key] < 0:
                     solutions.remove(sol)
