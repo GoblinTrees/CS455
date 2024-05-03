@@ -10,7 +10,6 @@ import math
 import RPi.GPIO as GPIO
 import threading
 import openai
-import pyttsx3
 from sympy import symbols, Eq, solve
 import speech_recognition as sr
 
@@ -293,6 +292,7 @@ def interrupt():
             inquiry()
             break
 
+robot = Robot()
 
 def getObject():
     GPIO.setmode(GPIO.BCM)
@@ -327,53 +327,75 @@ def getObject():
 
 def inquiry():
     user_input = talk_to()
-    # add dialog engine script here
-    inp = {"role": "user", "content": user_input}
-    # response setup for the chat
-    set_personality(personality)
-    response = chat_with_openai(personality, inp)
+    user_input = user_input.strip()
+    parts = user_input.lower().split(" ")
+    desiredQuadrant = None
+    if (parts[0] == "go" & parts[1] == "to"):
+        match parts[2]:
+            case "starting":
+                desiredQuadrant = 0
+            case "charging":
+                desiredQuadrant = 1
+            case "hunters":
+                desiredQuadrant = 2
+            case "restroom":
+                desiredQuadrant = 3
+    if (desiredQuadrant == None):
+        # add dialog engine script here
+        inp = {"role": "user", "content": user_input}
+        # response setup for the chat
+        
+        response = chat_with_openai(inp)
 
-    words = response.split()  # Split the text into words
-    cleaned_words = [word.strip() for word in words]  # Remove extra spaces from each word
-    response_cleaned = ' '.join(cleaned_words)  # Join the cleaned words back together
+        words = response.split()  # Split the text into words
+        cleaned_words = [word.strip() for word in words]  # Remove extra spaces from each word
+        response_cleaned = ' '.join(cleaned_words)  # Join the cleaned words back together
 
-    robot.speak(response_cleaned)
+        robot.speak(response_cleaned)
+        inquiry()
 
-    if ("go to"):
+    if (desiredQuadrant != None):
         # get quadrant
         drive_by(desiredQuadrant)
+        robot.speak("Goodbye")
+        drive_by(0)
+        robot.speak("I need to charge")
+        drive_by(1)
+        robot.speak("Charging activiated")
 
 
 def drive_by(quadrant):
     print("f")
 
-
 def talk_to() -> str:
-    with sr.Microphone() as source:
-        r = sr.Recognizer()
-        # Adjust for backround -> maybe can use speaker for ready ambient?
-        r.adjust_for_ambient_noise(source)
-        # Adjust for basic control
-        r.dyanmic_energythreshhold = 4000
-        try:
-            print("***listening***")
-            # this is the recorded sound
-            audio = r.listen(source)
-            print("***Got audio***")
-            # this is what the robot hears
-            word = r.recognize_google(audio)
-            print(word)
-            return str(word)
-        except sr.UnknownValueError:
-            print("***Don't know that word***")
-            return "*Indecipherable*"
-            # return str(Exception)
-        print(":: ERR- FUNCTION OUT OF BOUNDS IN TALK_TO() ::")
-        return "ERR"
+    # alt solution
+    phrase = input("Human input: ")
+    return phrase
+    
+##    with sr.Microphone() as source:
+##        r = sr.Recognizer()
+##        # Adjust for backround -> maybe can use speaker for ready ambient?
+##        r.adjust_for_ambient_noise(source)
+##        # Adjust for basic control
+##        r.dyanmic_energythreshhold = 4000
+##        try:
+##            print("***listening***")
+##            # this is the recorded sound
+##            audio = r.listen(source)
+##            print("***Got audio***")
+##            # this is what the robot hears
+##            word = r.recognize_google(audio)
+##            print(word)
+##            return str(word)
+##        except sr.UnknownValueError:
+##            print("***Don't know that word***")
+##            return "*Indecipherable*"
+##            # return str(Exception)
+##        print(":: ERR- FUNCTION OUT OF BOUNDS IN TALK_TO() ::")
+##        return "ERR"
 
 
-# change to not require personality?
-def chat_with_openai(personality, input: dict):
+def chat_with_openai(input: dict):
     # getStarter(personality).append(input)
     # print("getstarter\n")
     # print(getStarter(personality))
@@ -402,11 +424,9 @@ def chat_with_openai(personality, input: dict):
         return "No response from AI"  # Handle the case where there's no response
 
 
-def getStarter(personality) -> list:
-    # print("Personality starter:\n")
-    # print(per_starters.get(personality))
-    return per_starters.get(personality)
-
+def main():
+    interrupt()
+    
 ##Get direction
 ##wait for person to be detected by ultrasonic
 ##speak, then wait for human response, reply with chat gpt (detect "go to" with speech recognition, send to function instead of ai)
