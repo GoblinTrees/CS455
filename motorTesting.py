@@ -9,10 +9,8 @@ from maestro import Controller
 import math
 import RPi.GPIO as GPIO
 import threading
-import openai
 import pyttsx3
 from sympy import symbols, Eq, solve
-import speech_recognition as sr
 
 
 
@@ -106,9 +104,9 @@ class Robot:
         if self.quad == -1:
             print("--CANT FIND XY WHEN OUT OF BOUNDS---")
         temp = self.distances.copy()
-        min = np.argmin(self.distances)
-        temp.remove(min)
-        min2 = np.argmin(self.distances)
+        min = np.argmin(temp)
+        temp.remove(temp[min])
+        min2 = np.argmin(temp)
 
         X, Y = symbols('X Y')
         ldist2 = 3.0  # length of two squares in sensor val
@@ -267,7 +265,7 @@ class Robot:
                 self.distances = [round(num, 2) for num in self.distances]
                 # print("\nDist: ", self.distances)
 
-                self.locate()
+                # self.locate()
                 return [num1, num2, num3, num4]
             finally:
                 # print("findDist() finally")
