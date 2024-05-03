@@ -67,7 +67,7 @@ class Robot:
 
             self.findDistances()
             self.findQuad()
-            # self.findxy()
+            self.findxy()
             self.reportMap()
 
 
