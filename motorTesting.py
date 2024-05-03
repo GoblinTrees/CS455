@@ -11,7 +11,6 @@ import RPi.GPIO as GPIO
 import threading
 import pyttsx3
 from sympy import symbols, Eq, solve
-import speech_recognition as sr
 
 
 
