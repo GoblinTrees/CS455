@@ -314,7 +314,7 @@ if __name__ == "__main__":
     robot.setmotor(6600, 5000)#back
 
 
-    time.sleep(.87)
+    time.sleep(3)
     robot.setmotor(6000)
 
 
