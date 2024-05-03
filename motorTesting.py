@@ -194,10 +194,10 @@ class Robot:
             print("---ERR in findxy() return---")
 
     def findQuad(self):
-        for d in self.distances:  # for check to see if the bot is out of bounds
-            if d > 4:
-                self.quad = -1
-                return
+        # for d in self.distances:  # for check to see if the bot is out of bounds
+        #     if d > 4:
+        #         self.quad = -1
+        #         return
         self.quad = np.argmin(self.distances)
 
     def reportMap(self):
