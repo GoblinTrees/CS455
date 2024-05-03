@@ -196,8 +196,9 @@ class Robot:
     def findQuad(self):
         for d in self.distances:  # for check to see if the bot is out of bounds
             if d > 4:
-                return -1
-        return np.argmin(self.distances)
+                self.quad = -1
+                return
+        self.quad = np.argmin(self.distances)
 
     def reportMap(self):
         print(
