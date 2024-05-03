@@ -104,9 +104,9 @@ class Robot:
         if self.quad == -1:
             print("--CANT FIND XY WHEN OUT OF BOUNDS---")
         temp = self.distances.copy()
-        min = np.argmin(self.distances)
+        min = np.argmin(temp)
         temp.remove(min)
-        min2 = np.argmin(self.distances)
+        min2 = np.argmin(temp)
 
         X, Y = symbols('X Y')
         ldist2 = 3.0  # length of two squares in sensor val
