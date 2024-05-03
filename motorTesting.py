@@ -16,7 +16,6 @@ from sympy import symbols, Eq, solve
 
 engine = pyttsx3.init()
 
-global xy
 xy = [-1, -1]
 
 
@@ -105,6 +104,7 @@ class Robot:
 
 
     def findxy(self):
+        global xy
         if self.quad == -1:
             print("--CANT FIND XY WHEN OUT OF BOUNDS---")
         temp = self.distances.copy()
@@ -189,7 +189,9 @@ class Robot:
                     solutions.remove(sol)
 
         if len(solutions) == 1:                 #only one solution should remain, set the XY coordinates to it
-            print(f"XY: {xy}")
+            print(f"XY: ")
+            print(xy[0])
+            print(xy[1])
             xy = [solutions[0].get("X"), solutions[0].get("Y")]
             return
         else:
