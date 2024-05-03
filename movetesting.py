@@ -33,6 +33,23 @@ class Robot:
         # self.startmapping()  # Function call to start the multithreading to update the distances and quad in parrallel
         # self.xy = [-1, -1]
 
+    def setmotor(self, *args):
+        X, Y = symbols('X Y')
+
+        if len(args) == 0:
+            self.tango.setTarget(1, self.l_motors)
+            self.tango.setTarget(0, self.r_motors)
+        elif len(args) == 1:
+            val = args
+            self.tango.setTarget(1, val)
+            self.tango.setTarget(0, 12000 - val)
+        elif len(args) == 2:
+            self.tango.setTarget(1, args[0])
+            self.tango.setTarget(0, args[2])
+        else:
+            print("SETMOTOR() ERROR, TOO MANY ARGS")
+            return
+
     def speak(self, words: str):
         self.engine.say(words)
         self.engine.runAndWait()
@@ -297,31 +314,65 @@ class Robot:
                 # print("findDist() finally")
                 ser.close()
 
+    # robot.setmotor(5400, 7000)#forward
+    # robot.setmotor(6600, 7000)#left rotate
+    # robot.setmotor(5400, 5050)#right rotate
+    # robot.setmotor(6600, 5000)#back
     def stop(self):
         self.l_motors = 6000
         self.r_motors = 6000
         pass
 
+    def rot_right_45(self):
+        self.setmotor(5400, 5050) #right rotate
+        time.sleep(1)
+        self.setmotor(6000)
 
+    def rot_right_90(self):
+        self.rot_right_45()
+        self.rot_right_45()
+
+
+    def rot_left_45(self):
+        robot.setmotor(6600, 7000)  # left
+        time.sleep(1)
+        self.setmotor(6000)
+
+    def rot_left_90(self):
+        self.rot_left_45()
+        self.rot_left_45()
 
 if __name__ == "__main__":
     robot = Robot()
     # mapThread = threading.Thread(target=robot.startmapping())
     # mapThread.start()
-    # robot.setmotor(5400, 7000)#forwardcd Des
-    robot.setmotor(6600, 7000)#left
-    # robot.setmotor(5400, 5000)#right
-    # robot.setmotor(6600, 5000)#back
 
+    #
+    #
+    # time.sleep(1)
+    # robot.setmotor(6000)
+    # time.sleep(1)
+    #
+    # robot.setmotor(5400, 5050)#right
+    # time.sleep(1)
+    #
+    # robot.setmotor(6000)
 
+    robot.rot_right_45()
     time.sleep(1)
-    robot.setmotor(6000)
+    robot.stop()
     time.sleep(1)
-
-    robot.setmotor(5400, 5050)#right
+    robot.rot_left_45()
     time.sleep(1)
+    robot.stop()
 
-    robot.setmotor(6000)
+    robot.rot_right_90()
+    time.sleep(1)
+    robot.stop()
+    time.sleep(1)
+    robot.rot_left_90()
+    time.sleep(1)
+    robot.stop()
 
 
 
