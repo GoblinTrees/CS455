@@ -308,7 +308,7 @@ if __name__ == "__main__":
     robot = Robot()
     # mapThread = threading.Thread(target=robot.startmapping())
     # mapThread.start()
-    # robot.setmotor(5400, 7000)#forward
+    # robot.setmotor(5400, 7000)#forwardcd Des
     robot.setmotor(6600, 7000)#left
     # robot.setmotor(5400, 5000)#right
     # robot.setmotor(6600, 5000)#back
@@ -318,7 +318,7 @@ if __name__ == "__main__":
     robot.setmotor(6000)
     time.sleep(1)
 
-    robot.setmotor(5000, 5000)#right
+    robot.setmotor(5400, 5000)#right
     time.sleep(1)
 
     robot.setmotor(6000)
