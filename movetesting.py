@@ -45,8 +45,9 @@ class Robot:
             self.tango.setTarget(0, self.r_motors)
         elif len(args) == 1:
             val = args
+            val2 = 12000 -val
             self.tango.setTarget(1, val)
-            self.tango.setTarget(0, 12000 - val)
+            self.tango.setTarget(0, val2)
         elif len(args) == 2:
             self.tango.setTarget(1, args[0])
             self.tango.setTarget(0, args[2])
