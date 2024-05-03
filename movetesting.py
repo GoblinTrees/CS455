@@ -52,7 +52,7 @@ class Robot:
             self.tango.setTarget(0, val2)
         elif len(args) == 2:
             self.tango.setTarget(1, args[0])
-            self.tango.setTarget(0, args[2])
+            self.tango.setTarget(0, args[1])
         else:
             print("SETMOTOR() ERROR, TOO MANY ARGS")
             return
@@ -308,8 +308,8 @@ if __name__ == "__main__":
     robot = Robot()
     # mapThread = threading.Thread(target=robot.startmapping())
     # mapThread.start()
-    robot.setmotor(7000)
-    time.sleep(1)
+    robot.setmotor(6600, 5400)
+    time.sleep(.5)
     robot.setmotor(6000)
 
 
