@@ -105,7 +105,7 @@ class Robot:
             print("--CANT FIND XY WHEN OUT OF BOUNDS---")
         temp = self.distances.copy()
         min = np.argmin(temp)
-        temp.remove(min)
+        temp.remove(temp[min])
         min2 = np.argmin(temp)
 
         X, Y = symbols('X Y')
