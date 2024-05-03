@@ -293,7 +293,6 @@ def interrupt():
             inquiry()
             break
 
-robot = Robot()
 
 def getObject():
     GPIO.setmode(GPIO.BCM)
@@ -328,33 +327,19 @@ def getObject():
 
 def inquiry():
     user_input = talk_to()
-    user_input = user_input.strip()
-    parts = user_input.lower().split(" ")
-    desiredQuadrant = None
-    if (parts[0] == "go" & parts[1] == "to"):
-        match parts[2]:
-            case "starting":
-                desiredQuadrant = 0
-            case "charging":
-                desiredQuadrant = 1
-            case "hunters":
-                desiredQuadrant = 2
-            case "restroom":
-                desiredQuadrant = 3
-    if (desiredQuadrant == None):
-        # add dialog engine script here
-        inp = {"role": "user", "content": user_input}
-        # response setup for the chat
-        
-        response = chat_with_openai(inp)
+    # add dialog engine script here
+    inp = {"role": "user", "content": user_input}
+    # response setup for the chat
+    set_personality(personality)
+    response = chat_with_openai(personality, inp)
 
-        words = response.split()  # Split the text into words
-        cleaned_words = [word.strip() for word in words]  # Remove extra spaces from each word
-        response_cleaned = ' '.join(cleaned_words)  # Join the cleaned words back together
+    words = response.split()  # Split the text into words
+    cleaned_words = [word.strip() for word in words]  # Remove extra spaces from each word
+    response_cleaned = ' '.join(cleaned_words)  # Join the cleaned words back together
 
-        robot.speak(response_cleaned)
+    robot.speak(response_cleaned)
 
-    if (desiredQuadrant != None):
+    if ("go to"):
         # get quadrant
         drive_by(desiredQuadrant)
 
@@ -364,10 +349,6 @@ def drive_by(quadrant):
 
 
 def talk_to() -> str:
-    # alt solution
-    #phrase = input("Human input: ")
-    #return phrase
-    
     with sr.Microphone() as source:
         r = sr.Recognizer()
         # Adjust for backround -> maybe can use speaker for ready ambient?
@@ -392,7 +373,7 @@ def talk_to() -> str:
 
 
 # change to not require personality?
-def chat_with_openai(input: dict):
+def chat_with_openai(personality, input: dict):
     # getStarter(personality).append(input)
     # print("getstarter\n")
     # print(getStarter(personality))
@@ -421,8 +402,11 @@ def chat_with_openai(input: dict):
         return "No response from AI"  # Handle the case where there's no response
 
 
-def main():
-    interrupt()
+def getStarter(personality) -> list:
+    # print("Personality starter:\n")
+    # print(per_starters.get(personality))
+    return per_starters.get(personality)
+
 ##Get direction
 ##wait for person to be detected by ultrasonic
 ##speak, then wait for human response, reply with chat gpt (detect "go to" with speech recognition, send to function instead of ai)
