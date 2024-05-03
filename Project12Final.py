@@ -92,9 +92,13 @@ class Robot:
         time.sleep(1)  # Delay to get a better distance val
         moveVector = self.getVector(priorxy,self.xy)
         theata = math.atan(moveVector[1],moveVector[0])
-        print(f"Theata: {theata}")
-        alpha = theata - math.pi
-        print(f"Alpha: {alpha} -> Theata minus Pi")
+        print(f"Theata: {theata}")      #This is angle from "East" between pylons 2,3 with origin at 0
+        alpha = 0
+        if moveVector[0] < 0:
+            alpha = theata - math.pi*.5
+        else:
+            alpha - math.pi*.5 - theata
+        print(f"Alpha: {alpha} ") #This is angle off of "North" from between pylons 1, 2
 
 
 
