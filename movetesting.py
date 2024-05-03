@@ -303,8 +303,8 @@ class Robot:
 
 if __name__ == "__main__":
     robot = Robot()
-    mapThread = threading.Thread(target=robot.startmapping())
-    mapThread.start()
+    # mapThread = threading.Thread(target=robot.startmapping())
+    # mapThread.start()
     robot.setmotor(6500)
     time.sleep(1)
     robot.setmotor(6000)
