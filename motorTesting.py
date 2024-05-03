@@ -16,6 +16,8 @@ from sympy import symbols, Eq, solve
 
 engine = pyttsx3.init()
 
+xy = [-1, -1]
+
 
 class Robot:
     def __init__(self):
@@ -29,7 +31,7 @@ class Robot:
         self.previous = [-999.1, -999.1, -999.1, -999.1]  # This holds previous location
         self.quad = -1  # Holds Quadrant info
         self.startmapping()  # Function call to start the multithreading to update the distances and quad in parrallel
-        xy = [-1, -1]
+        # self.xy = [-1, -1]
 
     def speak(self, words: str):
         self.engine.say(words)
@@ -82,12 +84,12 @@ class Robot:
         #TODO keep working here
 
     def getHeading2(self):
-        priorxy = self.xy.copy()
+        priorxy = xy.copy()
         self.setmotor(6400, 5600)  # Go forward for one second
         time.sleep(1)
         self.setmotor(6000, 6000)
         time.sleep(1)  # Delay to get a better distance val
-        moveVector = self.getVector(priorxy,self.xy)
+        moveVector = self.getVector(priorxy,xy)
         theata = math.atan(moveVector[1],moveVector[0])
         print(f"Theata: {theata}")      #This is angle from "East" between pylons 2,3 with origin at 0
         alpha = 0
@@ -185,7 +187,7 @@ class Robot:
                     solutions.remove(sol)
 
         if len(solutions) == 1:                 #only one solution should remain, set the XY coordinates to it
-            self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
+            xy = [solutions[0].get("X"), solutions[0].get("Y")]
             return
         else:
             print("---ERR in findxy() return---")
@@ -198,7 +200,7 @@ class Robot:
 
     def reportMap(self):
         print(
-            f"Quad: {self.quad} __ Dist:: [{self.distances[0]},{self.distances[1]},{self.distances[2]},{self.distances[3]}] __  XY:: [{self.xy[0]},{self.xy[1]}]")
+            f"Quad: {self.quad} __ Dist:: [{self.distances[0]},{self.distances[1]},{self.distances[2]},{self.distances[3]}] __  XY:: [{xy[0]},{xy[1]}]")
 
     def getVector(self, startList: list, endList: list):
         return [x - y for x, y in zip(endList, startList)]
