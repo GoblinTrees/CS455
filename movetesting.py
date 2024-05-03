@@ -386,7 +386,9 @@ if __name__ == "__main__":
 
     robot.backward()
     time.sleep(1)
+    robot.stop()
+    time.sleep(1)
     robot.forward()
-
+    robot.stop()
 
     #TODO test heading2 and map data collection, then figure out motor mappings for rotation, etc
