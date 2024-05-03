@@ -64,9 +64,10 @@ class Robot:
 
     def startmapping(self):
         while True:
+
             self.findDistances()
             self.findQuad()
-            self.findxy()
+            # self.findxy()
             self.reportMap()
 
 
