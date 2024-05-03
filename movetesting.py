@@ -314,12 +314,12 @@ if __name__ == "__main__":
     # robot.setmotor(6600, 5000)#back
 
 
-    time.sleep(2)
+    time.sleep(1)
     robot.setmotor(6000)
     time.sleep(1)
 
     robot.setmotor(5400, 5050)#right
-    time.sleep(2)
+    time.sleep(1)
 
     robot.setmotor(6000)
 
