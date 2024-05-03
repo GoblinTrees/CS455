@@ -16,6 +16,7 @@ from sympy import symbols, Eq, solve
 
 engine = pyttsx3.init()
 
+global xy
 xy = [-1, -1]
 
 
