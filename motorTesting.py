@@ -29,7 +29,7 @@ class Robot:
         self.previous = [-999.1, -999.1, -999.1, -999.1]  # This holds previous location
         self.quad = -1  # Holds Quadrant info
         self.startmapping()  # Function call to start the multithreading to update the distances and quad in parrallel
-        self.xy = [-1, -1]
+        xy = [-1, -1]
 
     def speak(self, words: str):
         self.engine.say(words)
