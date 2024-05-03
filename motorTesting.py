@@ -110,6 +110,7 @@ class Robot:
 
         X, Y = symbols('X Y')
         ldist2 = 3.0  # length of two squares in sensor val
+        solutions = []
 
         match min:
             case 0:
@@ -118,46 +119,60 @@ class Robot:
                         Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                         Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
                     ]
+                    solutions = solve(equations)
+
                 elif min2 == 3:
                     equations = [
                         Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
                     ]
+                    solutions = solve(equations)
+
             case 1:
                 if min2 == 0:
                     equations = [
                         Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                         Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
                     ]
+                    solutions = solve(equations)
+
                 elif min2 == 2:
                     equations = [
                         Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
                     ]
+                    solutions = solve(equations)
+
             case 2:
                 if min2 == 1:
                     equations = [
                         Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
                     ]
+                    solutions = solve(equations)
+
                 elif min2 == 3:
                     equations = [
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
                     ]
+                    solutions = solve(equations)
+
             case 3:
                 if min2 == 2:
                     equations = [
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
                     ]
+                    solutions = solve(equations)
+
                 elif min2 == 0:
                     equations = [
                         Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
                     ]
+                solutions = solve(equations)
 
-        solutions = solve(equations)
         if solutions == []:
             print("---No XY Solutions!---")
             return

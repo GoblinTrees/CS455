@@ -268,7 +268,7 @@ class Robot:
                 self.distances = [round(num, 2) for num in self.distances]
                 # print("\nDist: ", self.distances)
 
-                self.locate()
+                # self.locate()
                 return [num1, num2, num3, num4]
             finally:
                 # print("findDist() finally")
