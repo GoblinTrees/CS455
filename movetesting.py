@@ -342,6 +342,16 @@ class Robot:
         self.rot_left_45()
         self.rot_left_45()
 
+    def forward(self):
+        self.setmotor(5400, 7000)#forward
+        time.sleep(1)
+        self.stop()
+
+    def backward(self):
+        robot.setmotor(6600, 5000)#back
+        time.sleep(1)
+        self.stop()
+
 if __name__ == "__main__":
     robot = Robot()
     # mapThread = threading.Thread(target=robot.startmapping())
@@ -357,24 +367,26 @@ if __name__ == "__main__":
     # time.sleep(1)
     #
     # robot.setmotor(6000)
+    #
+    # robot.rot_right_45()
+    # time.sleep(1)
+    # robot.stop()
+    # time.sleep(1)
+    # robot.rot_left_45()
+    # time.sleep(1)
+    # robot.stop()
+    #
+    # robot.rot_right_90()
+    # time.sleep(1)
+    # robot.stop()
+    # time.sleep(1)
+    # robot.rot_left_90()
+    # time.sleep(1)
+    # robot.stop()
 
-    robot.rot_right_45()
+    robot.backward()
     time.sleep(1)
-    robot.stop()
-    time.sleep(1)
-    robot.rot_left_45()
-    time.sleep(1)
-    robot.stop()
-
-    robot.rot_right_90()
-    time.sleep(1)
-    robot.stop()
-    time.sleep(1)
-    robot.rot_left_90()
-    time.sleep(1)
-    robot.stop()
-
-
+    robot.forward()
 
 
     #TODO test heading2 and map data collection, then figure out motor mappings for rotation, etc
