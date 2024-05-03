@@ -306,6 +306,8 @@ if __name__ == "__main__":
     mapThread = threading.Thread(target=robot.startmapping())
     mapThread.start()
     robot.setmotor(6500)
+    time.sleep(1)
+    robot.setmotor(6000)
 
 
     #TODO test heading2 and map data collection, then figure out motor mappings for rotation, etc
