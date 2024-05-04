@@ -203,7 +203,7 @@ class Robot:
                     solutions.remove(sol)
 
         if len(solutions) == 1:                 #only one solution should remain, set the XY coordinates to it
-            xy = [round(float(solutions[0].get(X)), 2), round(float(solutions[0].get(Y)), 2)]
+            xy = ["{:.2f}".format(float(solutions[0].get(X))), "{:.2f}".format(float(solutions[0].get(Y)))]
             # print(f"XY: "+str(xy[0]) + "-"+str(xy[1]))
             time.sleep(1.5)
 
