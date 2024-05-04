@@ -359,7 +359,7 @@ class Robot:
         self.stop()
         
 def rot_angle(self, angle):
-        self.setmotor(5400, 5050)
+        self.setmotor(5000, 5000)
         time.sleep(.1)
         # t = angle / .347 # these need to be figured out
         # time.sleep(t)
