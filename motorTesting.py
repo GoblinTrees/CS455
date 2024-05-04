@@ -106,19 +106,21 @@ class Robot:
     def findxy(self):
         global xy
         if self.quad == -1:
-            print("--CANT FIND XY WHEN OUT OF BOUNDS---")
+            print("---CANT FIND XY WHEN OUT OF BOUNDS---")
+
         temp = self.distances.copy()
         min = np.argmin(temp)
         temp.remove(temp[min])
         min2 = np.argmin(temp)
-
+        print(f"Min: {min} - Min2: {min2}")
         X, Y = symbols('X Y')
-        ldist2 = 3.0  # length of two squares in sensor val
+        ldist2 = 2.8  # length of two squares in sensor val
         solutions = []
 
         match min:
             case 0:
                 if min2 == 1:
+                    print("Pylons:01")
                     equations = [
                         Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                         Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
@@ -126,6 +128,8 @@ class Robot:
                     solutions = solve(equations)
 
                 elif min2 == 3:
+                    print("Pylons:03")
+
                     equations = [
                         Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
@@ -133,14 +137,17 @@ class Robot:
                     solutions = solve(equations)
 
             case 1:
+                print("Pylons:10")
                 if min2 == 0:
                     equations = [
-                        Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                         Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
+                        Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                     ]
                     solutions = solve(equations)
 
                 elif min2 == 2:
+                    print("Pylons:12")
+
                     equations = [
                         Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
@@ -149,13 +156,18 @@ class Robot:
 
             case 2:
                 if min2 == 1:
+                    print("Pylons:21")
+
                     equations = [
-                        Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
+                        Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
+
                     ]
                     solutions = solve(equations)
 
                 elif min2 == 3:
+                    print("Pylons:23")
+
                     equations = [
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
@@ -163,17 +175,22 @@ class Robot:
                     solutions = solve(equations)
 
             case 3:
+                print("Pylons:32")
+
                 if min2 == 2:
                     equations = [
                         Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
-                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
+                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3]),
                     ]
                     solutions = solve(equations)
 
                 elif min2 == 0:
+                    print("Pylons:30")
+
                     equations = [
+                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3]),
                         Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
-                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
+
                     ]
                 solutions = solve(equations)
 
@@ -192,6 +209,7 @@ class Robot:
         if len(solutions) == 1:                 #only one solution should remain, set the XY coordinates to it
             xy = [round(float(solutions[0].get(X)), 2), round(float(solutions[0].get(Y)), 2)]
             # print(f"XY: "+str(xy[0]) + "-"+str(xy[1]))
+            time.sleep(1.5)
 
             return
         else:
