@@ -360,7 +360,7 @@ class Robot:
         
 def rot_angle(self, angle):
     temp = round(angle/13.855)
-    for i inrange(temp):
+    for i in range(temp):
         self.setmotor(5000, 5000)
         time.sleep(.1)
         self.setmotor(6000)
