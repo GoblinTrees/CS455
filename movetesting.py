@@ -359,16 +359,15 @@ class Robot:
         self.stop()
         
 def rot_angle(self, angle):
+    temp = round(angle/13.855)
+    for i inrange(temp):
         self.setmotor(5000, 5000)
-        time.sleep(.05)
-        # t = angle / .347 # these need to be figured out
-        # time.sleep(t)
+        time.sleep(.1)
         self.setmotor(6000)
         
 if __name__ == "__main__":
     robot = Robot()
-    for i in range(13):
-        rot_angle(robot, 34)
+    rot_angle(robot, 34)
     
     # mapThread = threading.Thread(target=robot.startmapping())
     # mapThread.start()
