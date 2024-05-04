@@ -299,7 +299,7 @@ class Robot:
                     self.distances = [num1, num2, num3, num4]
                 else:
                     self.distances = [num1, num2, num3, num4]
-                self.distances = [round(num, 2) for num in self.distances]
+                self.distances = ["{:.2f}".format(num) for num in self.distances]
                 # print("\nDist: ", self.distances)
 
                 # self.locate()
