@@ -328,13 +328,6 @@ class Robot:
         # t = distance / .347 # these need to be figured out
         # time.sleep(t)
         self.setmotor(6000)
-    
-    def rot_angle(self, angle):
-        self.setmotor(5400, 5050)
-        time.sleep(.1)
-        # t = angle / .347 # these need to be figured out
-        # time.sleep(t)
-        self.setmotor(6000)
 
     def rot_right_45(self):
         self.setmotor(5400, 5050) #right rotate
@@ -364,7 +357,14 @@ class Robot:
         robot.setmotor(6600, 5000)#back
         time.sleep(1)
         self.stop()
-
+        
+def rot_angle(self, angle):
+        self.setmotor(5400, 5050)
+        time.sleep(.1)
+        # t = angle / .347 # these need to be figured out
+        # time.sleep(t)
+        self.setmotor(6000)
+        
 if __name__ == "__main__":
     robot = Robot()
     for i in range(10):
