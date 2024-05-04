@@ -1,13 +1,9 @@
 import time
 import serial
-import time as t
 import numpy as np
-import pyttsx3
 import sympy
-
 from maestro import Controller
 import math
-import RPi.GPIO as GPIO
 import threading
 import pyttsx3
 from sympy import symbols, Eq, solve
@@ -324,6 +320,6 @@ if __name__ == "__main__":
     mapThread = threading.Thread(target=robot.startmapping)
     mapThread.start()
 
-    robot.getHeading2()
+    # robot.getHeading2()
 
     #TODO test heading2 and map data collection, then figure out motor mappings for rotation, etc
