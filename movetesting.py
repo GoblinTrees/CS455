@@ -367,7 +367,7 @@ def rot_angle(self, angle):
         
 if __name__ == "__main__":
     robot = Robot()
-    for i in range(12):
+    for i in range(14):
         rot_angle(robot, 34)
     
     # mapThread = threading.Thread(target=robot.startmapping())
