@@ -84,7 +84,6 @@ class Robot:
 
     def startmapping(self):
         while True:
-
             self.findDistances()
             self.findQuad()
             self.findxy()
@@ -322,6 +321,20 @@ class Robot:
         self.l_motors = 6000
         self.r_motors = 6000
         pass
+    
+    def drive_distance(self, distance):
+        self.setmotor(5400, 7000)
+        time.sleep(1)
+        # t = distance / .347 # these need to be figured out
+        # time.sleep(t)
+        self.setmotor(6000)
+    
+    def rot_angle(self, angle):
+        self.setmotor(5400, 5400)
+        time.sleep(1)
+        # t = angle / .347 # these need to be figured out
+        # time.sleep(t)
+        self.setmotor(6000)
 
     def rot_right_45(self):
         self.setmotor(5400, 5050) #right rotate
