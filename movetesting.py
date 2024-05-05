@@ -324,15 +324,8 @@ class Robot:
     
     def drive_distance(self, distance):
         self.setmotor(5400, 7000)
-        time.sleep(1)
+        time.sleep(.1)
         # t = distance / .347 # these need to be figured out
-        # time.sleep(t)
-        self.setmotor(6000)
-    
-    def rot_angle(self, angle):
-        self.setmotor(5400, 5400)
-        time.sleep(1)
-        # t = angle / .347 # these need to be figured out
         # time.sleep(t)
         self.setmotor(6000)
 
@@ -364,9 +357,18 @@ class Robot:
         robot.setmotor(6600, 5000)#back
         time.sleep(1)
         self.stop()
-
+        
+def rot_angle(self, angle):
+    temp = round(angle/13.855)
+    for i in range(temp):
+        self.setmotor(5000, 5000)
+        time.sleep(.1)
+        self.setmotor(6000)
+        
 if __name__ == "__main__":
     robot = Robot()
+    rot_angle(robot, 270)
+    
     # mapThread = threading.Thread(target=robot.startmapping())
     # mapThread.start()
 
@@ -397,11 +399,6 @@ if __name__ == "__main__":
     # time.sleep(1)
     # robot.stop()
 
-    robot.backward()
-    time.sleep(1)
-    robot.stop()
-    time.sleep(1)
-    robot.forward()
-    robot.stop()
+    
 
     #TODO test heading2 and map data collection, then figure out motor mappings for rotation, etc
