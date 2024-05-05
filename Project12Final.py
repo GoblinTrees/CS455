@@ -192,6 +192,30 @@ class Robot:
 
     def getDistanceMoveVector(self):
         return [x - y for x, y in zip(self.distances, self.previous)]
+    
+    def drive_distance(self, distance):
+        self.setmotor(5400, 7000)
+        time.sleep(1)
+        # t = distance / .347 # these need to be figured out
+        # time.sleep(t)
+        self.setmotor(6000)
+    
+    def rot_angle(self, angle):
+        self.setmotor(5400, 5400)
+        time.sleep(1)
+        # t = angle / .347 # these need to be figured out
+        # time.sleep(t)
+        self.setmotor(6000)
+
+    def drive_by(self, quadrant):
+        self.reportMap()
+        self.findxy()
+        lookVector = self.getVector()
+        targetVector = self.getDistanceMoveVector()
+        angle = math.atan(lookVector/targetVector)  # need to look at this im not sure what angle im looking for
+        distance = targetVector # need to look at this, not sure what distance im grabbing
+        self.rot_angle(angle)
+        self.drive_distance(distance)
 
     # findDistances modified to run on parrallel thread soas to constanstly update position of system
     def findDistances(self):
@@ -325,7 +349,7 @@ def getObject():
     return distance
 
 
-def inquiry():
+def inquiry(self):
     user_input = talk_to()
     user_input = user_input.strip()
     parts = user_input.lower().split(" ")
@@ -356,16 +380,12 @@ def inquiry():
 
     if (desiredQuadrant != None):
         # get quadrant
-        drive_by(desiredQuadrant)
+        self.drive_by(desiredQuadrant)
         robot.speak("Goodbye")
         drive_by(0)
         robot.speak("I need to charge")
         drive_by(1)
         robot.speak("Charging activiated")
-
-
-def drive_by(quadrant):
-    print("f")
 
 def talk_to() -> str:
     # alt solution
@@ -425,8 +445,13 @@ def chat_with_openai(input: dict):
 
 
 def main():
+    robot = Robot()
+    # wait for someone to walk up
     interrupt()
-    
+    # ask them where they would like to go and go there
+    inquiry(robot)
+
+main()   
 ##Get direction
 ##wait for person to be detected by ultrasonic
 ##speak, then wait for human response, reply with chat gpt (detect "go to" with speech recognition, send to function instead of ai)
