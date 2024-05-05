@@ -136,7 +136,7 @@ class Robot:
                 print("Pylons:10")
                 if min2 == 0:
                     equations = [
-                        Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
+                        Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), float(self.distances[1])),
                         Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                     ]
                     solutions = solve(equations)

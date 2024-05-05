@@ -20,6 +20,12 @@ client = OpenAI()
 
 engine = pyttsx3.init()
 
+ldist1 = 1.5  # length of one square in sensor val
+ldist2 = 2 * ldist1  # length of two squares in sensor val
+
+quadVectors = {0: [ldist2 * .25, ldist2 * .25], 1: [ldist2 * .25, ldist2 * .75], 2: [ldist2 * .75, ldist2 * .75],
+               3: [ldist2 * .75, ldist2 * .25], }
+
 
 class Robot:
     def __init__(self):
@@ -34,6 +40,7 @@ class Robot:
         self.quad = -1  # Holds Quadrant info
         self.startmapping()  # Function call to start the multithreading to update the distances and quad in parrallel
         self.xy = [-1, -1]
+        self.heading = [0, 0]
 
     def speak(self, words: str):
         self.engine.say(words)
@@ -71,36 +78,26 @@ class Robot:
             self.reportMap()
 
     def getHeading(self):
-        firstquad = self.quad
-        self.previous = self.distances  # store current location
-        self.setmotor(6400, 5600)  # Go forward for one second
-        time.sleep(1)
-        self.setmotor(6000, 6000)
-        time.sleep(1)  # Delay to get a better distance val
-        if self.quad() == -1:
-            print("---OUT OF BOUNDS---")
-            return -1
-        curDist = self.distances
-        #TODO keep working here
-
-    def getHeading2(self):
         priorxy = self.xy.copy()
         self.setmotor(6400, 5600)  # Go forward for one second
         time.sleep(1)
         self.setmotor(6000, 6000)
         time.sleep(1)  # Delay to get a better distance val
-        moveVector = self.getVector(priorxy,self.xy)
-        theata = math.atan(moveVector[1],moveVector[0])
-        print(f"Theata: {theata}")      #This is angle from "East" between pylons 2,3 with origin at 0
-        alpha = 0
-        if moveVector[0] < 0:
-            alpha = theata - math.pi*.5
-        else:
-            alpha - math.pi*.5 - theata
-        print(f"Alpha: {alpha} ") #This is angle off of "North" from between pylons 1, 2
-
-
-
+        moveVector = self.getVector(priorxy, self.xy)
+        # theata = math.atan(moveVector[1],moveVector[0])
+        # print(f"Theata: {theata}")      #This is angle from "East" between pylons 2,3 with origin at 0
+        # alpha = 0
+        # if moveVector[0] < 0:
+        #     alpha = theata - math.pi*.5
+        # else:
+        #     alpha = math.pi*.5 - theata
+        # print(f"Alpha: {alpha} ") #This is angle off of "North" from between pylons 1, 2
+        time.sleep(1)
+        robot.setmotor(6600, 5000)  # back
+        time.sleep(1)
+        self.setmotor(6000, 6000)
+        self.heading = moveVector
+        return moveVector
 
     def findxy(self):
         if self.quad == -1:
@@ -111,7 +108,6 @@ class Robot:
         min2 = np.argmin(self.distances)
 
         X, Y = symbols('X Y')
-        ldist2 = 3.0  # length of two squares in sensor val
 
         match min:
             case 0:
@@ -171,11 +167,11 @@ class Robot:
                 elif sol[key] > ldist2:
                     solutions.remove(sol)
 
-        if len(solutions) == 1:                 #only one solution should remain, set the XY coordinates to it
+        if len(solutions) == 1:  # only one solution should remain, set the XY coordinates to it
             self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
-            return
+            return self.xy
         else:
-            print("---ERR in findxy() return---")
+            print("---ERR in findxy() return, xy unchanged---")
 
     def findQuad(self):
         for d in self.distances:  # for check to see if the bot is out of bounds
@@ -190,16 +186,16 @@ class Robot:
     def getVector(self, startList: list, endList: list):
         return [x - y for x, y in zip(endList, startList)]
 
-    def getDistanceMoveVector(self):
-        return [x - y for x, y in zip(self.distances, self.previous)]
-    
+    # def getDistanceMoveVector(self):
+    #     return [x - y for x, y in zip(self.distances, self.previous)]
+
     def drive_distance(self, distance):
         self.setmotor(5400, 7000)
         time.sleep(1)
         # t = distance / .347 # these need to be figured out
         # time.sleep(t)
         self.setmotor(6000)
-    
+
     def rot_angle(self, angle):
         self.setmotor(5400, 5400)
         time.sleep(1)
@@ -207,19 +203,24 @@ class Robot:
         # time.sleep(t)
         self.setmotor(6000)
 
-    def drive_by(self, quadrant):
+    def drive_by(self, quadrant: int):
         # print out current quadrant and distances to pylons
         self.reportMap()
+
         # find xy location in the grid
-        self.findxy()
-        #calculate look vector (the direction the robot is facing)
-        lookVector = self.getVector()
-        #calculate the targetVector (the direction we want the robot to go)
-        targetVector = self.getDistanceMoveVector()
+        self.findxy() #This may be redundant? self.xy is supposed to update, but i made the findxy() just return the value as well
+
+        # calculate look vector (the direction the robot is facing)
+        lookVector = self.getHeading()  # This now goes forward then back to where you were, but keeps the heading
+
+        # calculate the targetVector (the direction we want the robot to go)
+        targetVector = self.getVector(self.xy,quadVectors.get(quadrant))    #I added a dict with quad ints as keys to get xy locations for the vectors.
+
         # use the previous vectors to calculate the angle the robot needs to turn
-        angle = math.atan(lookVector/targetVector)  # need to look at this im not sure what angle im looking for
+        angle = self.get_angle_between_vectors(lookVector,targetVector)  # need to look at this im not sure what angle im looking for
+
         # use the targetVector length to determine the distance the robot needs to travel
-        distance = targetVector # need to look at this, not sure what distance im grabbing
+        distance = self.getVectorDistance(targetVector)  # need to look at this, not sure what distance im grabbing
 
         # perform those rotations and drives to get to location
         self.rot_angle(angle)
@@ -310,6 +311,29 @@ class Robot:
         self.r_motors = 6000
         pass
 
+    def get_angle_between_vectors(vecarr1, vecarr2):
+        if len(vecarr1) != len(vecarr2):
+            raise ValueError("Input vectors must have the same length")
+
+        if len(vecarr1) != 2 or len(vecarr2) != 2:
+            raise ValueError("Input vectors must be 2D")
+
+        vec1 = np.array(vecarr1)
+        vec2 = np.array(vecarr2)
+
+        dot_product = np.dot(vec1, vec2)
+        magnitude_product = np.linalg.norm(vec1) * np.linalg.norm(vec2)
+        angle_radians = np.arccos(dot_product / magnitude_product)
+        return np.degrees(angle_radians)  # Convert radians to degrees
+
+    def getVectorDistance(self, vecarr):
+        if len(vecarr) != 2:
+            print("Input vector must be 2D")
+            return [-1,-1]
+        vec = np.array(vecarr)
+        return np.linalg.norm(vec)
+
+
 
 def interrupt():
     global allStop
@@ -324,7 +348,9 @@ def interrupt():
             inquiry()
             break
 
+
 robot = Robot()
+
 
 def getObject():
     GPIO.setmode(GPIO.BCM)
@@ -376,7 +402,7 @@ def inquiry(self):
         # add dialog engine script here
         inp = {"role": "user", "content": user_input}
         # response setup for the chat
-        
+
         response = chat_with_openai(inp)
 
         words = response.split()  # Split the text into words
@@ -395,11 +421,13 @@ def inquiry(self):
         self.drive_by(1)
         robot.speak("Charging activiated")
 
+
 def talk_to() -> str:
     # alt solution
     phrase = input("Human input: ")
     return phrase
-    
+
+
 ##    with sr.Microphone() as source:
 ##        r = sr.Recognizer()
 ##        # Adjust for backround -> maybe can use speaker for ready ambient?
@@ -459,7 +487,8 @@ def main():
     # ask them where they would like to go and go there
     inquiry(robot)
 
-main()   
+
+main()
 ##Get direction
 ##wait for person to be detected by ultrasonic
 ##speak, then wait for human response, reply with chat gpt (detect "go to" with speech recognition, send to function instead of ai)
