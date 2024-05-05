@@ -47,7 +47,6 @@ class Robot:
         self.engine.runAndWait()
 
     def setmotor(self, *args):
-        X, Y = symbols('X Y')
 
         if len(args) == 0:
             self.tango.setTarget(1, self.l_motors)
@@ -75,33 +74,28 @@ class Robot:
         while True:
             self.findDistances()
             self.findQuad()
+            self.findxy()
             self.reportMap()
 
     def getHeading(self):
+        self.setmotor(6000, 6000)
         priorxy = self.xy.copy()
-        self.setmotor(6400, 5600)  # Go forward for one second
+        self.setmotor(5400, 7000)#forward
         time.sleep(1)
         self.setmotor(6000, 6000)
         time.sleep(1)  # Delay to get a better distance val
         moveVector = self.getVector(priorxy, self.xy)
-        # theata = math.atan(moveVector[1],moveVector[0])
-        # print(f"Theata: {theata}")      #This is angle from "East" between pylons 2,3 with origin at 0
-        # alpha = 0
-        # if moveVector[0] < 0:
-        #     alpha = theata - math.pi*.5
-        # else:
-        #     alpha = math.pi*.5 - theata
-        # print(f"Alpha: {alpha} ") #This is angle off of "North" from between pylons 1, 2
         time.sleep(1)
         robot.setmotor(6600, 5000)  # back
         time.sleep(1)
         self.setmotor(6000, 6000)
         self.heading = moveVector
-        return moveVector
+        return self.heading
 
     def findxy(self):
         if self.quad == -1:
             print("--CANT FIND XY WHEN OUT OF BOUNDS---")
+            return
         temp = self.distances.copy()
         min = np.argmin(temp)
         temp[min] =9999.99
@@ -175,9 +169,11 @@ class Robot:
 
     def findQuad(self):
         for d in self.distances:  # for check to see if the bot is out of bounds
-            if d > 3.5:
+            if d > math.sqrt(2) * ldist2:
+                self.quad = -1
                 return -1
-        return np.argmin(self.distances)
+        self.quad = np.argmin(self.distances)
+        return self.quad
 
     def reportMap(self):
         print(
@@ -226,7 +222,7 @@ class Robot:
         self.rot_angle(angle)
         self.drive_distance(distance)
 
-    # findDistances modified to run on parrallel thread soas to constanstly update position of system
+    # findDistances modified to run on parallel thread soas to constantly update position of system
     def findDistances(self):
 
         while True:
