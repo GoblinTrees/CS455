@@ -208,12 +208,20 @@ class Robot:
         self.setmotor(6000)
 
     def drive_by(self, quadrant):
+        # print out current quadrant and distances to pylons
         self.reportMap()
+        # find xy location in the grid
         self.findxy()
+        #calculate look vector (the direction the robot is facing)
         lookVector = self.getVector()
+        #calculate the targetVector (the direction we want the robot to go)
         targetVector = self.getDistanceMoveVector()
+        # use the previous vectors to calculate the angle the robot needs to turn
         angle = math.atan(lookVector/targetVector)  # need to look at this im not sure what angle im looking for
+        # use the targetVector length to determine the distance the robot needs to travel
         distance = targetVector # need to look at this, not sure what distance im grabbing
+
+        # perform those rotations and drives to get to location
         self.rot_angle(angle)
         self.drive_distance(distance)
 
@@ -382,9 +390,9 @@ def inquiry(self):
         # get quadrant
         self.drive_by(desiredQuadrant)
         robot.speak("Goodbye")
-        drive_by(0)
+        self.drive_by(0)
         robot.speak("I need to charge")
-        drive_by(1)
+        self.drive_by(1)
         robot.speak("Charging activiated")
 
 def talk_to() -> str:
