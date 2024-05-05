@@ -103,9 +103,9 @@ class Robot:
         if self.quad == -1:
             print("--CANT FIND XY WHEN OUT OF BOUNDS---")
         temp = self.distances.copy()
-        min = np.argmin(self.distances)
-        temp.remove(min)
-        min2 = np.argmin(self.distances)
+        min = np.argmin(temp)
+        temp[min] =9999.99
+        min2 = np.argmin(temp)
 
         X, Y = symbols('X Y')
 
@@ -124,8 +124,8 @@ class Robot:
             case 1:
                 if min2 == 0:
                     equations = [
-                        Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                         Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
+                        Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
                     ]
                 elif min2 == 2:
                     equations = [
