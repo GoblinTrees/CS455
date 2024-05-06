@@ -223,9 +223,9 @@ class Robot:
 
     def drive_distance(self, distance):
         self.setmotor(5400, 7000)
-        time.sleep(1)
-        # t = distance / .347 # these need to be figured out
-        # time.sleep(t)
+        time.sleep(.1)
+        t = distance / .347  # these need to be figured out
+        time.sleep(t)
         self.setmotor(6000)
 
     def rot_angle(self, angle):
