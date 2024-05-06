@@ -154,12 +154,16 @@ class Robot:
                     ]
 
         solutions = solve(equations)
+        for sol in solutions:
+            for key in sol:
+                print(f"key: {type(key)}")
         if solutions == []:
             print("---No XY Solutions!---")
             return
 
         for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
             for key in sol.keys():
+
                 sol[key] = float(sol[key])
 
 
