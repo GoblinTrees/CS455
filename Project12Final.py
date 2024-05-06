@@ -129,6 +129,7 @@ class Robot:
         # Handle other cases similarly...
 
         solutions = solve(equations)
+        print(f"solutiong:: {solutions}")
 
         if not solutions:
             # print("---No XY Solutions!---")
@@ -153,7 +154,7 @@ class Robot:
         if not valid_solutions:
             print("---No Valid XY Solutions!---")
             return
-
+        print(f"valid_sols: {valid_solutions}")
         x = valid_solutions[0].get(X)
         y = valid_solutions[0].get(Y)
 
