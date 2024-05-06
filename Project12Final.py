@@ -229,11 +229,11 @@ class Robot:
         self.setmotor(6000)
 
     def rot_angle(self, angle):
-        self.setmotor(5400, 5400)
-        time.sleep(1)
-        # t = angle / .347 # these need to be figured out
-        # time.sleep(t)
-        self.setmotor(6000)
+        temp = round(angle / 13.855)
+        for i in range(temp):
+            self.setmotor(5000, 5000)
+            time.sleep(.1)
+            self.setmotor(6000)
 
     def drive_by(self, quadrant: int):
         # print out current quadrant and distances to pylons
