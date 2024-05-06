@@ -214,7 +214,7 @@ class Robot:
             print("GetVector list length not matched")
             return
         finList = []
-        for x in range(len(startList))-1:
+        for x in range(len(startList)-1):
             print(f"finlist x: {x}")
             finList[x] = endList[x] - startList[x]
 
