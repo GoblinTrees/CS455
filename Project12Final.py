@@ -79,7 +79,7 @@ class Robot:
             self.findDistances()
             self.findQuad()
             self.findxy()
-            self.reportMap()
+            # self.reportMap()
 
     def getHeading(self):
         self.setmotor(6000, 6000)
