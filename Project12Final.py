@@ -481,10 +481,11 @@ def main():
     mapThread = threading.Thread(target=robot.startmapping)
     mapThread.start()
 
+
     # wait for someone to walk up
     robot.interrupt()
     # ask them where they would like to go and go there
-    inquiry(robot)
+    robot.inquiry()
 
 
 main()
