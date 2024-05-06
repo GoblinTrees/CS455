@@ -225,6 +225,7 @@ class Robot:
         self.setmotor(5400, 7000)
         time.sleep(.1)
         t = distance / .347  # these need to be figured out
+        t = round(t)
         time.sleep(t)
         self.setmotor(6000)
 
