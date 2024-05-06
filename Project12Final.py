@@ -251,7 +251,7 @@ class Robot:
         angle = self.get_angle_between_vectors(lookVector,
                                                targetVector)  # need to look at this im not sure what angle im looking for
         print(f"angle: before sub: {angle} ")
-        angle -= 180
+        angle = 180 - angle
         print(f"angle: after sub: {angle} ")
 
 
