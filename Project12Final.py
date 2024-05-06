@@ -83,7 +83,7 @@ class Robot:
 
     def getHeading(self):
         self.setmotor(6000, 6000)
-        priorxy = self.xy.copy()
+        priorxy = self.xy
         print(f"priorxy: {priorxy}")
         self.setmotor(5400, 7000)  # forward
         time.sleep(1)
@@ -91,7 +91,6 @@ class Robot:
         time.sleep(1)  # Delay to get a better distance val
         moveVector = self.getVector(priorxy, self.xy)
         print(f"moveVector: {moveVector}")
-
         time.sleep(1)
         robot.setmotor(6600, 5000)  # back
         time.sleep(1)
