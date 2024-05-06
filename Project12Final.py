@@ -185,6 +185,9 @@ class Robot:
 
         if len(solutions) == 1:  # only one solution should remain, set the XY coordinates to it
             self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
+            x= solutions[0].get("X")
+            y = solutions[0].get("Y")
+            print(f"x: {x} - y: {y}")
             return self.xy
         else:
             print("---ERR in findxy() return, xy unchanged---")
