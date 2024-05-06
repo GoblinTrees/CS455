@@ -250,9 +250,8 @@ class Robot:
         # use the previous vectors to calculate the angle the robot needs to turn
         angle = self.get_angle_between_vectors(lookVector,
                                                targetVector)  # need to look at this im not sure what angle im looking for
-        print(f"angle: before sub: {angle} ")
-        angle = 180 - angle
-        print(f"angle: after sub: {angle} ")
+        print(f"angle: {angle} ")
+
 
 
         # use the targetVector length to determine the distance the robot needs to travel
