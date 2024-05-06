@@ -187,7 +187,7 @@ class Robot:
         # # print(f'solutionsgetx type: {type(solutions[0].get("X"))}')
         # self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
 
-        keys = solutions[0].keys()
+        keys = list(solutions[0].keys())
         x= solutions[0].get(keys[0])
         y = solutions[0].get(keys[1])
         print(f"\nx: {x} - y: {y}")
