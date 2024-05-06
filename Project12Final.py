@@ -163,22 +163,18 @@ class Robot:
 
         for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
             for key in sol.keys():
+                sol[key] = sol[key].real
 
-                sol[key] = float(sol[key])
 
-        for sol in solutions:  # Iterate over each solution
-            for key in sol.keys():  # Iterate over each key in the solution
-                sol[key] = float(sol[key])  # Convert the value associated with the key to float
+        for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
+            for key in sol.keys():
+                if sol[key] < 0:
+                    solutions.remove(sol)
+                elif sol[key] > ldist2:
+                    solutions.remove(sol)
 
-        # Now, remove solutions that don't meet your criteria
-        valid_solutions = []
-        for sol in solutions:
-            if all(0 <= sol[key] <= ldist2 for key in sol):
-                valid_solutions.append(sol)
-
-        # Now, check if there's only one valid solution left
-        if len(valid_solutions) == 1:
-            self.xy = [valid_solutions[0].get("X"), valid_solutions[0].get("Y")]
+        if len(solutions) == 1:  # only one solution should remain, set the XY coordinates to it
+            self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
             return self.xy
         else:
             print("---ERR in findxy() return, xy unchanged---")
