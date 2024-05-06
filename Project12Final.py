@@ -187,10 +187,11 @@ class Robot:
         # # print(f'solutionsgetx type: {type(solutions[0].get("X"))}')
         # self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
 
+
         keys = list(solutions[0].keys())
         x= solutions[0].get(keys[0])
         y = solutions[0].get(keys[1])
-        print(f"\nx: {x} - y: {y}")
+        # print(f"\nx: {x} - y: {y}")
         return self.xy
 
 
@@ -211,7 +212,8 @@ class Robot:
             print("GetVector list length not matched")
             return
         finList = []
-        for x in range(len(startList)):
+        for x in range(len(startList))-1:
+            print(f"finlist x: {x}")
             finList[x] = endList[x] - startList[x]
 
         return finList
