@@ -105,64 +105,102 @@ class Robot:
         if self.quad == -1:
             print("--CANT FIND XY WHEN OUT OF BOUNDS---")
             return
-
-        temp = self.distances
-        print(f"temp: {temp}")
-        min_index = np.argmin(temp)
-        temp[min_index] = 9999.99
-        min2_index = np.argmin(temp)
+        temp = self.distances.copy()
+        min = np.argmin(temp)
+        temp[min] = 9999.99
+        min2 = np.argmin(temp)
 
         X, Y = symbols('X Y')
 
-        equations = []
-
-        if min_index == 0:
-            if min2_index == 1:
-                equations = [
-                    Eq(((X) ** 2 + (Y) ** 2), self.distances[0] ** 2),
-                    Eq(((X) ** 2 + (Y - ldist2) ** 2), self.distances[1] ** 2),
-                ]
-            elif min2_index == 3:
-                equations = [
-                    Eq(((X) ** 2 + (Y) ** 2), self.distances[0] ** 2),
-                    Eq(((X - ldist2) ** 2 + (Y) ** 2), self.distances[3] ** 2)
-                ]
-        # Handle other cases similarly...
+        match min:
+            case 0:
+                if min2 == 1:
+                    equations = [
+                        Eq(((X) ** 2 + (Y) ** 2), self.distances[0] ** 2),
+                        Eq(((X) ** 2 + (Y - ldist2) ** 2), self.distances[1] ** 2),
+                    ]
+                elif min2 == 3:
+                    equations = [
+                        Eq(((X) ** 2 + (Y) ** 2), self.distances[0] ** 2),
+                        Eq(((X - ldist2) ** 2 + (Y) ** 2), self.distances[3] ** 2)
+                    ]
+            case 1:
+                if min2 == 0:
+                    equations = [
+                        Eq(((X) ** 2 + (Y - ldist2) ** 2), self.distances[1] ** 2),
+                        Eq(((X) ** 2 + (Y) ** 2), self.distances[0] ** 2),
+                    ]
+                elif min2 == 2:
+                    equations = [
+                        Eq(((X) ** 2 + (Y - ldist2) ** 2), self.distances[1] ** 2),
+                        Eq(((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2] ** 2),
+                    ]
+            case 2:
+                if min2 == 1:
+                    equations = [
+                        Eq(((X) ** 2 + (Y - ldist2) ** 2), self.distances[1] ** 2),
+                        Eq(((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2] ** 2),
+                    ]
+                elif min2 == 3:
+                    equations = [
+                        Eq(((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2] ** 2),
+                        Eq(((X - ldist2) ** 2 + (Y) ** 2), self.distances[3] ** 2)
+                    ]
+            case 3:
+                if min2 == 2:
+                    equations = [
+                        Eq(((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2] ** 2),
+                        Eq(((X - ldist2) ** 2 + (Y) ** 2), self.distances[3] ** 2)
+                    ]
+                elif min2 == 0:
+                    equations = [
+                        Eq(((X) ** 2 + (Y) ** 2), self.distances[0] ** 2),
+                        Eq(((X - ldist2) ** 2 + (Y) ** 2), self.distances[3] ** 2),
+                    ]
 
         solutions = solve(equations)
-        print(f"solutions:: {solutions}")
+        # for sol in solutions:
+        #     for x,y in sol:
+        #         print(f"key: {x}")
+        #         print(f"val: {y}")
 
-        if not solutions:
-            # print("---No XY Solutions!---")
+        if solutions == []:
+            print("---No XY Solutions!---")
             return
 
-        valid_solutions = []
-        for sol in solutions:
-            x_val = sol.get(X)
-            y_val = sol.get(Y)
+        for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
+            for key in sol.keys():
+                try:
+                    # print(f"sol: {sol} - key: {(key)} - getkey {sol.get(key)}")
 
-            if x_val is None or y_val is None:
-                continue
+                    if isinstance(sol.get(key), complex):
+                        solutions.remove(sol)
+                        continue
 
-            if isinstance(x_val, complex) or isinstance(y_val, complex):
-                continue
+                    if sol.get(key) < 0:
+                        solutions.remove(sol)
+                        continue
 
-            if x_val < 0 or x_val > ldist2 or y_val < 0 or y_val > ldist2:
-                continue
+                    elif sol[key] > ldist2:
+                        solutions.remove(sol)
+                        continue
+                except:
+                    print("findxy except")
+                    continue
 
-            valid_solutions.append(sol)
+        # # print(f"\nsolutions: {solutions}")
+        # # print(f'solutionsgetx type: {type(solutions[0].get("X"))}')
+        # self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
 
-        if not valid_solutions:
-            print("---No Valid XY Solutions!---")
-            return
-        print(f"valid_sols: {valid_solutions}")
-        x = valid_solutions[0].get(X)
-        y = valid_solutions[0].get(Y)
-
-        print(f"finxy return: x:{x} - y:{y}")
+        keys = list(solutions[0].keys())
+        x = solutions[0].get(keys[0])
+        y = solutions[0].get(keys[1])
+        # print(f"\nx: {x} - y: {y}")
         self.xy = [x, y]
 
-        return [x,y]
+
+
+        return self.xy
 
     def findQuad(self):
         for d in self.distances:  # for check to see if the bot is out of bounds
