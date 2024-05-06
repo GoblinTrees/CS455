@@ -5,14 +5,23 @@ import numpy as np
 import pyttsx3
 import sympy
 import os
+
 from maestro import Controller
 import math
 import RPi.GPIO as GPIO
 import threading
+import openai
 from sympy import symbols, Eq, solve
 import speech_recognition as sr
 
 
+# Load API key from environment variable
+api_key = "sk-proj-pAOIgWbDlsm5iyCLwzxIT3BlbkFJAEQkQK7AtJ7t8hx5kyxJ"
+
+# Create OpenAI client
+client = openai.Api(api_key=api_key)
+from openai import OpenAI
+# client = OpenAI()  # Automatically uses API key from environment variables
 
 engine = pyttsx3.init()
 
