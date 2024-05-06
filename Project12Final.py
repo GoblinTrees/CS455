@@ -344,8 +344,46 @@ class Robot:
         while True:
             dist = getObject()
             if dist < disSet:
-                inquiry()
+                self.inquiry()
                 break
+
+    def inquiry(self):
+        user_input = talk_to()
+        user_input = user_input.strip()
+        parts = user_input.lower().split(" ")
+        desiredQuadrant = None
+        if (parts[0] == "go" & parts[1] == "to"):
+            match parts[2]:
+                case "starting":
+                    desiredQuadrant = 0
+                case "charging":
+                    desiredQuadrant = 1
+                case "hunters":
+                    desiredQuadrant = 2
+                case "restroom":
+                    desiredQuadrant = 3
+        if (desiredQuadrant == None):
+            # add dialog engine script here
+            inp = {"role": "user", "content": user_input}
+            # response setup for the chat
+
+            response = chat_with_openai(inp)
+
+            words = response.split()  # Split the text into words
+            cleaned_words = [word.strip() for word in words]  # Remove extra spaces from each word
+            response_cleaned = ' '.join(cleaned_words)  # Join the cleaned words back together
+
+            self.speak(response_cleaned)
+            self.inquiry()
+
+        if (desiredQuadrant != None):
+            # get quadrant
+            self.drive_by(desiredQuadrant)
+            self.speak("Goodbye")
+            self.drive_by(0)
+            self.speak("I need to charge")
+            self.drive_by(1)
+            self.speak("Charging activiated")
 
 
 robot = Robot()
@@ -381,44 +419,6 @@ def getObject():
     distance = float(round(distance, 2))
     return distance
 
-
-def inquiry(self):
-    user_input = talk_to()
-    user_input = user_input.strip()
-    parts = user_input.lower().split(" ")
-    desiredQuadrant = None
-    if (parts[0] == "go" & parts[1] == "to"):
-        match parts[2]:
-            case "starting":
-                desiredQuadrant = 0
-            case "charging":
-                desiredQuadrant = 1
-            case "hunters":
-                desiredQuadrant = 2
-            case "restroom":
-                desiredQuadrant = 3
-    if (desiredQuadrant == None):
-        # add dialog engine script here
-        inp = {"role": "user", "content": user_input}
-        # response setup for the chat
-
-        response = chat_with_openai(inp)
-
-        words = response.split()  # Split the text into words
-        cleaned_words = [word.strip() for word in words]  # Remove extra spaces from each word
-        response_cleaned = ' '.join(cleaned_words)  # Join the cleaned words back together
-
-        self.speak(response_cleaned)
-        self.inquiry()
-
-    if (desiredQuadrant != None):
-        # get quadrant
-        self.drive_by(desiredQuadrant)
-        self.speak("Goodbye")
-        self.drive_by(0)
-        self.speak("I need to charge")
-        self.drive_by(1)
-        self.speak("Charging activiated")
 
 
 def talk_to() -> str:
