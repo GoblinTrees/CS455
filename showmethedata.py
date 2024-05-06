@@ -78,6 +78,7 @@ def findDistances():
         else:
             distances = [num1, num2, num3, num4]
         distances = [round(num, 2) for num in distances]
+        print(distances)
 
         return distances
     finally:
