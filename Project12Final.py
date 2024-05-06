@@ -158,18 +158,15 @@ class Robot:
             print("---No XY Solutions!---")
             return
 
-        for sol in solutions:
+        for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
             for key in sol.keys():
-                # Check if the value is a symbolic expression
-                if isinstance(sol[key], sympy.Expr):
-                    # Evaluate the expression numerically
-                    value = float(sol[key].evalf())
-                else:
-                    # If it's already a numeric value, just use it
-                    value = sol[key]
+                sol[key] = float(sol[key])
 
-                if value < 0 or value > ldist2:
-                    # Remove the solution if it's out of bounds
+        for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
+            for key in sol.keys():
+                if sol[key] < 0:
+                    solutions.remove(sol)
+                elif sol[key] > ldist2:
                     solutions.remove(sol)
 
         if len(solutions) == 1:  # only one solution should remain, set the XY coordinates to it
