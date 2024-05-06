@@ -345,7 +345,7 @@ class Robot:
         self.r_motors = 6000
         pass
 
-    def get_angle_between_vectors(vecarr1, vecarr2):
+    def get_angle_between_vectors(self, vecarr1, vecarr2):
         if len(vecarr1) != len(vecarr2):
             raise ValueError("Input vectors must have the same length")
 
