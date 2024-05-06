@@ -113,46 +113,46 @@ class Robot:
             case 0:
                 if min2 == 1:
                     equations = [
-                        Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
-                        Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
+                        Eq(((X) ** 2 + (Y) ** 2), self.distances[0]**2),
+                        Eq(((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]**2),
                     ]
                 elif min2 == 3:
                     equations = [
-                        Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
-                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
+                        Eq(((X) ** 2 + (Y) ** 2), self.distances[0]**2),
+                        Eq(((X - ldist2) ** 2 + (Y) ** 2), self.distances[3]**2)
                     ]
             case 1:
                 if min2 == 0:
                     equations = [
-                        Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
-                        Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
+                        Eq(((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]**2),
+                        Eq(((X) ** 2 + (Y) ** 2), self.distances[0]**2),
                     ]
                 elif min2 == 2:
                     equations = [
-                        Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
-                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
+                        Eq(((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]**2),
+                        Eq(((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]**2),
                     ]
             case 2:
                 if min2 == 1:
                     equations = [
-                        Eq(sympy.sqrt((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]),
-                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
+                        Eq(((X) ** 2 + (Y - ldist2) ** 2), self.distances[1]**2),
+                        Eq(((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]**2),
                     ]
                 elif min2 == 3:
                     equations = [
-                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
-                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
+                        Eq(((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]**2),
+                        Eq(((X - ldist2) ** 2 + (Y) ** 2), self.distances[3]**2)
                     ]
             case 3:
                 if min2 == 2:
                     equations = [
-                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]),
-                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
+                        Eq(((X - ldist2) ** 2 + (Y - ldist2) ** 2), self.distances[2]**2),
+                        Eq(((X - ldist2) ** 2 + (Y) ** 2), self.distances[3]**2)
                     ]
                 elif min2 == 0:
                     equations = [
-                        Eq(sympy.sqrt((X) ** 2 + (Y) ** 2), self.distances[0]),
-                        Eq(sympy.sqrt((X - ldist2) ** 2 + (Y) ** 2), self.distances[3])
+                        Eq(((X) ** 2 + (Y) ** 2), self.distances[0]**2),
+                        Eq(((X - ldist2) ** 2 + (Y) ** 2), self.distances[3]**2),
                     ]
 
         solutions = solve(equations)
