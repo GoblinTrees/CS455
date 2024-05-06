@@ -38,7 +38,6 @@ class Robot:
         self.distances = [-1.0, -1.0, -1.0, -1.0]  # This holds most current location data
         self.previous = [-999.1, -999.1, -999.1, -999.1]  # This holds previous location
         self.quad = -1  # Holds Quadrant info
-        self.startmapping()  # Function call to start the multithreading to update the distances and quad in parrallel
         self.xy = [-1, -1]
         self.heading = [0, 0]
 
@@ -80,7 +79,7 @@ class Robot:
     def getHeading(self):
         self.setmotor(6000, 6000)
         priorxy = self.xy.copy()
-        self.setmotor(5400, 7000)#forward
+        self.setmotor(5400, 7000)  # forward
         time.sleep(1)
         self.setmotor(6000, 6000)
         time.sleep(1)  # Delay to get a better distance val
@@ -98,7 +97,7 @@ class Robot:
             return
         temp = self.distances.copy()
         min = np.argmin(temp)
-        temp[min] =9999.99
+        temp[min] = 9999.99
         min2 = np.argmin(temp)
 
         X, Y = symbols('X Y')
@@ -204,16 +203,18 @@ class Robot:
         self.reportMap()
 
         # find xy location in the grid
-        self.findxy() #This may be redundant? self.xy is supposed to update, but i made the findxy() just return the value as well
+        self.findxy()  # This may be redundant? self.xy is supposed to update, but i made the findxy() just return the value as well
 
         # calculate look vector (the direction the robot is facing)
         lookVector = self.getHeading()  # This now goes forward then back to where you were, but keeps the heading
 
         # calculate the targetVector (the direction we want the robot to go)
-        targetVector = self.getVector(self.xy,quadVectors.get(quadrant))    #I added a dict with quad ints as keys to get xy locations for the vectors.
+        targetVector = self.getVector(self.xy, quadVectors.get(
+            quadrant))  # I added a dict with quad ints as keys to get xy locations for the vectors.
 
         # use the previous vectors to calculate the angle the robot needs to turn
-        angle = self.get_angle_between_vectors(lookVector,targetVector)  # need to look at this im not sure what angle im looking for
+        angle = self.get_angle_between_vectors(lookVector,
+                                               targetVector)  # need to look at this im not sure what angle im looking for
 
         # use the targetVector length to determine the distance the robot needs to travel
         distance = self.getVectorDistance(targetVector)  # need to look at this, not sure what distance im grabbing
@@ -225,82 +226,80 @@ class Robot:
     # findDistances modified to run on parallel thread soas to constantly update position of system
     def findDistances(self):
 
-        while True:
-            # print(">> findDist <<\n")
+        try:
+            # print("in try")
+            ser = serial.Serial()
+            ser.port = '/dev/ttyUSB0'
+            ser.baudrate = 115200
+            ser.bytesize = serial.EIGHTBITS
+            ser.parity = serial.PARITY_NONE
+            ser.stopbits = serial.STOPBITS_ONE
+            ser.timeout = 1
+            ser.open()
+
+            num1 = 0
+            num2 = 0
+            num3 = 0
+            num4 = 0
+
+            confidenceInt = 0
             try:
-                # print("in try")
-                ser = serial.Serial()
-                ser.port = '/dev/ttyUSB0'
-                ser.baudrate = 115200
-                ser.bytesize = serial.EIGHTBITS
-                ser.parity = serial.PARITY_NONE
-                ser.stopbits = serial.STOPBITS_ONE
-                ser.timeout = 1
-                ser.open()
+                while confidenceInt < 5:
 
-                num1 = 0
-                num2 = 0
-                num3 = 0
-                num4 = 0
+                    # print("ConInt: ", confidenceInt)
+                    temp = ser.readline()
 
-                confidenceInt = 0
-                try:
-                    while confidenceInt < 5:
+                    dataentry = str(ser.readline()).split(",")
+                    # print("Dataentry: ",dataentry)
 
-                        # print("ConInt: ", confidenceInt)
-                        temp = ser.readline()
+                    data = [dataentry[1], dataentry[2], dataentry[3], dataentry[4]]
+                    # print("Data: ", data)
 
-                        dataentry = str(ser.readline()).split(",")
-                        # print("Dataentry: ",dataentry)
+                    if str(data[0]) == 'null' or str(data[1]) == 'null' or str(data[2]) == 'null' or str(
+                            data[3]) == 'null':
+                        # print("bad data1, trying again")
+                        continue  # added by forrest, but unknown if needed
+                    elif str(data[0]) == 'nan' or str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(
+                            data[3]) == 'nan':
+                        # print("bad data2, trying again")
+                        continue  # added by forrest, but unknown if needed
+                    elif (data[0] == 0 or data[1] == 0 or data[2] == 0 or data[3] == 0):
+                        # print("bad data3, zeros, trying again ")
+                        continue  # added by forrest, but unknown if needed
+                    else:
+                        confidenceInt += 1
+                        num1 += float(data[0])
+                        num2 += float(data[1])
+                        num3 += float(data[2])
+                        num4 += float(data[3])
+                        # 2nd data validation
+                        # print(data[0])
+                        # print(data[1])
+                        # print(data[2])
+                        # print(data[3])
 
-                        data = [dataentry[1], dataentry[2], dataentry[3], dataentry[4]]
-                        # print("Data: ", data)
+                num1 = num1 / 5
+                num2 = num2 / 5
+                num3 = num3 / 5
+                num4 = num4 / 5
 
-                        if str(data[0]) == 'null' or str(data[1]) == 'null' or str(data[2]) == 'null' or str(
-                                data[3]) == 'null':
-                            # print("bad data1, trying again")
-                            continue  # added by forrest, but unknown if needed
-                        elif str(data[0]) == 'nan' or str(data[1]) == 'nan' or str(data[2]) == 'nan' or str(
-                                data[3]) == 'nan':
-                            # print("bad data2, trying again")
-                            continue  # added by forrest, but unknown if needed
-                        elif (data[0] == 0 or data[1] == 0 or data[2] == 0 or data[3] == 0):
-                            # print("bad data3, zeros, trying again ")
-                            continue  # added by forrest, but unknown if needed
-                        else:
-                            confidenceInt += 1
-                            num1 += float(data[0])
-                            num2 += float(data[1])
-                            num3 += float(data[2])
-                            num4 += float(data[3])
-                            # 2nd data validation
-                            # print(data[0])
-                            # print(data[1])
-                            # print(data[2])
-                            # print(data[3])
-
-                    num1 = num1 / 5
-                    num2 = num2 / 5
-                    num3 = num3 / 5
-                    num4 = num4 / 5
-
-                    # print("got data")
-                    ser.close()
-                except:
-                    pass
-
-                if num1 + num2 + num3 + num4 == 0:
-                    self.distances = [num1, num2, num3, num4]
-                else:
-                    self.distances = [num1, num2, num3, num4]
-                self.distances = [round(num, 2) for num in self.distances]
-                # print("\nDist: ", self.distances)
-
-                # self.locate()
-                return [num1, num2, num3, num4]
-            finally:
-                # print("findDist() finally")
+                # print("got data")
                 ser.close()
+            except:
+                pass
+
+            if num1 + num2 + num3 + num4 == 0:
+                self.distances = [num1, num2, num3, num4]
+            else:
+                self.distances = [num1, num2, num3, num4]
+            self.distances = [round(num, 2) for num in self.distances]
+            # print("\nDist: ", self.distances)
+
+            # self.locate()
+            return [num1, num2, num3, num4]
+        finally:
+            # print("findDist() finally")
+            ser.close()
 
     def stop(self):
         self.l_motors = 6000
@@ -325,10 +324,9 @@ class Robot:
     def getVectorDistance(self, vecarr):
         if len(vecarr) != 2:
             print("Input vector must be 2D")
-            return [-1,-1]
+            return [-1, -1]
         vec = np.array(vecarr)
         return np.linalg.norm(vec)
-
 
 
 def interrupt():
@@ -478,6 +476,9 @@ def chat_with_openai(input: dict):
 
 def main():
     robot = Robot()
+    mapThread = threading.Thread(target=robot.startmapping)
+    mapThread.start()
+
     # wait for someone to walk up
     interrupt()
     # ask them where they would like to go and go there
