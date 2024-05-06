@@ -15,8 +15,6 @@ from sympy import symbols, Eq, solve
 import speech_recognition as sr
 
 from openai import OpenAI
-a = "sk-proj-"
-b="pAOIgWbDlsm5iyCLwzxIT3BlbkFJAEQkQK7AtJ7t8hx5kyxJ"
 # client = OpenAI()  # Automatically uses API key from environment variables
 
 engine = pyttsx3.init()
@@ -36,7 +34,7 @@ class Robot:
         self.l_motors = 6000
         self.tango = Controller()
         self.engine = pyttsx3.init()
-        self.distances = [-1.0, -1.0, -1.0, -1.0]  # This holds most current location data
+        self.distances = [0.0, 0.0, 0.0, 0.0]  # This holds most current location data
         self.previous = [-999.1, -999.1, -999.1, -999.1]  # This holds previous location
         self.quad = -1  # Holds Quadrant info
         self.xy = [-1, -1]
@@ -330,18 +328,18 @@ class Robot:
         return np.linalg.norm(vec)
 
 
-def interrupt():
-    global allStop
-    global notExited
-    global runcount
-    global disSet
-    disSet = 50
+    def interrupt(self):
+        global allStop
+        global notExited
+        global runcount
+        global disSet
+        disSet = 50
 
-    while True:
-        dist = getObject()
-        if dist < disSet:
-            inquiry()
-            break
+        while True:
+            dist = getObject()
+            if dist < disSet:
+                inquiry()
+                break
 
 
 robot = Robot()
@@ -404,17 +402,17 @@ def inquiry(self):
         cleaned_words = [word.strip() for word in words]  # Remove extra spaces from each word
         response_cleaned = ' '.join(cleaned_words)  # Join the cleaned words back together
 
-        robot.speak(response_cleaned)
-        inquiry()
+        self.speak(response_cleaned)
+        self.inquiry()
 
     if (desiredQuadrant != None):
         # get quadrant
         self.drive_by(desiredQuadrant)
-        robot.speak("Goodbye")
+        self.speak("Goodbye")
         self.drive_by(0)
-        robot.speak("I need to charge")
+        self.speak("I need to charge")
         self.drive_by(1)
-        robot.speak("Charging activiated")
+        self.speak("Charging activiated")
 
 
 def talk_to() -> str:
@@ -481,7 +479,7 @@ def main():
     mapThread.start()
 
     # wait for someone to walk up
-    interrupt()
+    robot.interrupt()
     # ask them where they would like to go and go there
     inquiry(robot)
 
