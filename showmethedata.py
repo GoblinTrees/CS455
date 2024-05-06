@@ -79,7 +79,7 @@ def findDistances():
             distances = [num1, num2, num3, num4]
         distances = [round(num, 2) for num in distances]
 
-        return [num1, num2, num3, num4]
+        return distances
     finally:
         ser.close()
 
