@@ -183,6 +183,7 @@ class Robot:
                 elif sol[key] > ldist2:
                     solutions.remove(sol)
 
+        print(f"\nsolutions: {solutions}")
         self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
         x= solutions[0].get("X")
         y = solutions[0].get("Y")
