@@ -96,7 +96,7 @@ class Robot:
         time.sleep(1)
         self.setmotor(6000, 6000)
         self.heading = moveVector
-        return self.heading
+        return moveVector
 
     import numpy as np
     from sympy import symbols, Eq, solve
