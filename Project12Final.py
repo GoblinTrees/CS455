@@ -10,12 +10,10 @@ from maestro import Controller
 import math
 import RPi.GPIO as GPIO
 import threading
-import openai
 from sympy import symbols, Eq, solve
 import speech_recognition as sr
 
-from openai import OpenAI
-# client = OpenAI()  # Automatically uses API key from environment variables
+
 
 engine = pyttsx3.init()
 
