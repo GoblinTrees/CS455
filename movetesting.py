@@ -325,8 +325,8 @@ class Robot:
     def drive_distance(self, distance):
         self.setmotor(5400, 7000)
         time.sleep(.1)
-        # t = distance / .347 # these need to be figured out
-        # time.sleep(t)
+        t = distance / .347 # these need to be figured out
+        time.sleep(t)
         self.setmotor(6000)
 
     def rot_right_45(self):
@@ -367,7 +367,10 @@ def rot_angle(self, angle):
         
 if __name__ == "__main__":
     robot = Robot()
-    rot_angle(robot, 270)
+
+    robot.drive_distance(1.1)
+
+    # rot_angle(robot, 270)
     
     # mapThread = threading.Thread(target=robot.startmapping())
     # mapThread.start()
