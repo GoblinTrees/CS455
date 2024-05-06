@@ -203,10 +203,8 @@ class Robot:
 
     def drive_by(self, quadrant: int):
         # print out current quadrant and distances to pylons
-        self.reportMap()
+        # self.reportMap()
 
-        # find xy location in the grid
-        self.findxy()  # This may be redundant? self.xy is supposed to update, but i made the findxy() just return the value as well
 
         # calculate look vector (the direction the robot is facing)
         lookVector = self.getHeading()  # This now goes forward then back to where you were, but keeps the heading
