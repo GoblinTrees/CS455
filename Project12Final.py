@@ -185,6 +185,7 @@ class Robot:
                     solutions.remove(sol)
 
         print(f"\nsolutions: {solutions}")
+        print(f"solutionsinside type : {type(solutions[0])}")
         self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
         x= solutions[0].get("X")
         y = solutions[0].get("Y")
