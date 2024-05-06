@@ -353,10 +353,13 @@ class Robot:
 
         dot_product = np.dot(vec1, vec2)
         magnitude_product = np.linalg.norm(vec1) * np.linalg.norm(vec2)
-        angle_radians = np.arccos(dot_product / magnitude_product)
-        print(f"getanglereturn type: {type(np.degrees(angle_radians))}")
-        return np.degrees(angle_radians)  # Convert radians to degrees
 
+        # Check if vectors are parallel (or close to it)
+        if abs(dot_product - magnitude_product) < 1e-10:
+            return 0  # Vectors are parallel, angle is 0
+
+        angle_radians = np.arccos(np.clip(dot_product / magnitude_product, -1.0, 1.0))
+        return np.degrees(angle_radians)  # Convert radians to degrees
     def getVectorDistance(self, vecarr):
         if len(vecarr) != 2:
             print("Input vector must be 2D")
