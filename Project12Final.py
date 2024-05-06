@@ -359,12 +359,8 @@ class Robot:
         print(f"angle {angle}")
         return angle  # Convert radians to degrees
     def getVectorDistance(self, vecarr):
-        if len(vecarr) != 2:
-            print("Input vector must be 2D")
-            return [-1, -1]
-        vec = np.array(vecarr)
-        return np.linalg.norm(vec)
-
+        length = ((vecarr[0]**2+vecarr[1]**2)**.5)/2
+        return length
 
     def interrupt(self):
         global allStop
