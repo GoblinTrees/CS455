@@ -4,6 +4,7 @@ import time as t
 import numpy as np
 import pyttsx3
 import sympy
+import os
 
 from maestro import Controller
 import math
@@ -14,9 +15,8 @@ from sympy import symbols, Eq, solve
 import speech_recognition as sr
 
 from openai import OpenAI
-
+a = "sk-proj-pAOIgWbDlsm5iyCLwzxIT3BlbkFJAEQkQK7AtJ7t8hx5kyxJ"
 # client = OpenAI()  # Automatically uses API key from environment variables
-client = OpenAI()
 
 engine = pyttsx3.init()
 
