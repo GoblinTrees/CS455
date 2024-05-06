@@ -61,7 +61,7 @@ class Robot:
             self.tango.setTarget(0, 12000 - val)
         elif len(args) == 2:
             self.tango.setTarget(1, args[0])
-            self.tango.setTarget(0, args[2])
+            self.tango.setTarget(0, args[1])
         else:
             print("SETMOTOR() ERROR, TOO MANY ARGS")
             return
