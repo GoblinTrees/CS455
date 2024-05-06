@@ -253,7 +253,7 @@ class Robot:
 
         # use the targetVector length to determine the distance the robot needs to travel
         distance = self.getVectorDistance(targetVector)  # need to look at this, not sure what distance im grabbing
-
+        print(f"distance: {distance}")
         # perform those rotations and drives to get to location
         self.rot_angle(angle)
         self.drive_distance(distance)
