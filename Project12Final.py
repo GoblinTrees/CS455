@@ -350,7 +350,7 @@ class Robot:
 
 
         tempdot = ((vecarr1[0]*vecarr2[0])+(vecarr1[1]*vecarr2[1]))
-        denom = [((vecarr1[0]**2 +vecarr1[1]**2)**.5)*((vecarr2[0]**2 +vecarr2[1]**2)**.5)]
+        denom = ((vecarr1[0]**2 +vecarr1[1]**2)**.5)*((vecarr2[0]**2 +vecarr2[1]**2)**.5)
 
 
         angle = math.acos(tempdot/denom)
