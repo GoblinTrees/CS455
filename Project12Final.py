@@ -321,6 +321,7 @@ class Robot:
         dot_product = np.dot(vec1, vec2)
         magnitude_product = np.linalg.norm(vec1) * np.linalg.norm(vec2)
         angle_radians = np.arccos(dot_product / magnitude_product)
+        print(f"getanglereturn type: {type(np.degrees(angle_radians))}")
         return np.degrees(angle_radians)  # Convert radians to degrees
 
     def getVectorDistance(self, vecarr):
