@@ -160,9 +160,9 @@ class Robot:
 
         for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
             for key in sol.keys():
-                if sol[key] < 0:
+                if float(sol[key]) < 0:
                     solutions.remove(sol)
-                elif sol[key] > ldist2:
+                elif float(sol[key]) > ldist2:
                     solutions.remove(sol)
 
         if len(solutions) == 1:  # only one solution should remain, set the XY coordinates to it
