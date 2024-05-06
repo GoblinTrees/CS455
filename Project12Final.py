@@ -155,8 +155,11 @@ class Robot:
 
         solutions = solve(equations)
         for sol in solutions:
-            for key in sol:
-                print(f"key: {key}")
+            for x,y in sol:
+                print(f"key: {x}")
+                print(f"val: {y}")
+
+
         if solutions == []:
             print("---No XY Solutions!---")
             return
