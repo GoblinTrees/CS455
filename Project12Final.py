@@ -168,25 +168,23 @@ class Robot:
 
         for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
             for key in sol.keys():
-                print(f"sol: {sol} - keytype: {type(key)}")
+                # print(f"sol: {sol} - keytype: {type(key)}")
 
                 if isinstance(sol.get(key),complex):
                    solutions.remove(sol)
+                   continue
 
-        # for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
-        #     for key in sol.keys():
-        #         # print(f"sol[key]: {sol[key]}")
-        #         sol[key] = round(float(sol[key]),2)
-
-        for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
-            for key in sol.keys():
                 if sol.get(key) < 0:
                     solutions.remove(sol)
+                    continue
                 elif sol[key] > ldist2:
                     solutions.remove(sol)
+                    continue
 
-        print(f"\nsolutions: {solutions}")
-        print(f'solutionsgetx type: {type(solutions[0].get("X"))}')
+
+
+        # print(f"\nsolutions: {solutions}")
+        # print(f'solutionsgetx type: {type(solutions[0].get("X"))}')
         self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
         x= solutions[0].get("X")
         y = solutions[0].get("Y")
