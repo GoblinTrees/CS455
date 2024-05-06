@@ -107,6 +107,7 @@ class Robot:
             return
 
         temp = self.distances
+        print(f"temp: {temp}")
         min_index = np.argmin(temp)
         temp[min_index] = 9999.99
         min2_index = np.argmin(temp)
