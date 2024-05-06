@@ -157,6 +157,7 @@ class Robot:
         x = valid_solutions[0].get(X)
         y = valid_solutions[0].get(Y)
 
+        print(f"finxy return: x:{x} - y:{y}")
         self.xy = [x, y]
 
         return [x,y]
