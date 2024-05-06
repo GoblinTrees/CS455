@@ -168,7 +168,7 @@ class Robot:
 
         for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
             for key in sol.keys():
-                # print(f"sol: {sol} - keytype: {type(key)}")
+                print(f"sol: {sol} - key: {(key)} - getkey {sol.get[key]}")
 
                 if isinstance(sol.get(key),complex):
                    solutions.remove(sol)
@@ -177,6 +177,7 @@ class Robot:
                 if sol.get(key) < 0:
                     solutions.remove(sol)
                     continue
+
                 elif sol[key] > ldist2:
                     solutions.remove(sol)
                     continue
