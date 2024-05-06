@@ -106,7 +106,7 @@ class Robot:
             print("--CANT FIND XY WHEN OUT OF BOUNDS---")
             return
 
-        temp = self.distances.copy()
+        temp = self.distances
         min_index = np.argmin(temp)
         temp[min_index] = 9999.99
         min2_index = np.argmin(temp)
@@ -129,7 +129,7 @@ class Robot:
         # Handle other cases similarly...
 
         solutions = solve(equations)
-        print(f"solutiong:: {solutions}")
+        print(f"solutions:: {solutions}")
 
         if not solutions:
             # print("---No XY Solutions!---")
