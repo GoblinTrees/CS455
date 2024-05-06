@@ -83,7 +83,7 @@ class Robot:
 
     def getHeading(self):
         self.setmotor(6000, 6000)
-        priorxy = self.xy
+        priorxy = self.findxy()
         print(f"priorxy: {priorxy}")
         self.setmotor(5400, 7000)  # forward
         time.sleep(1)
