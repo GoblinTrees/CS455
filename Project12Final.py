@@ -131,7 +131,7 @@ class Robot:
         solutions = solve(equations)
 
         if not solutions:
-            print("---No XY Solutions!---")
+            # print("---No XY Solutions!---")
             return
 
         valid_solutions = []
