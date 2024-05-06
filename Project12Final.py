@@ -17,7 +17,7 @@ import speech_recognition as sr
 
 # Load API key from environment variable
 api_key = "sk-proj-pAOIgWbDlsm5iyCLwzxIT3BlbkFJAEQkQK7AtJ7t8hx5kyxJ"
-
+#lolso
 # Create OpenAI client
 client = openai.Api(api_key=api_key)
 from openai import OpenAI
