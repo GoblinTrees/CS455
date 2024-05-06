@@ -171,10 +171,10 @@ class Robot:
                if isinstance(sol[key],complex):
                    solutions.remove(sol)
 
-        for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
-            for key in sol.keys():
-                # print(f"sol[key]: {sol[key]}")
-                sol[key] = round(float(sol[key]),2)
+        # for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
+        #     for key in sol.keys():
+        #         # print(f"sol[key]: {sol[key]}")
+        #         sol[key] = round(float(sol[key]),2)
 
         for sol in solutions:  # check every key-value for X,Y, and if they're less than 0 or greater than the side length of the large square then toss the data
             for key in sol.keys():
