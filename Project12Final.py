@@ -239,7 +239,7 @@ class Robot:
         # print out current quadrant and distances to pylons
         # self.reportMap()
 
-
+        print(f"driveby quad: {quadrant}")
         # calculate look vector (the direction the robot is facing)
         lookVector = self.getHeading()  # This now goes forward then back to where you were, but keeps the heading
 
@@ -250,6 +250,10 @@ class Robot:
         # use the previous vectors to calculate the angle the robot needs to turn
         angle = self.get_angle_between_vectors(lookVector,
                                                targetVector)  # need to look at this im not sure what angle im looking for
+        print(f"angle: before sub: {angle} ")
+        angle -= 180
+        print(f"angle: after sub: {angle} ")
+
 
         # use the targetVector length to determine the distance the robot needs to travel
         distance = self.getVectorDistance(targetVector)  # need to look at this, not sure what distance im grabbing
