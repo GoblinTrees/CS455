@@ -348,18 +348,16 @@ class Robot:
         if len(vecarr1) != 2 or len(vecarr2) != 2:
             raise ValueError("Input vectors must be 2D")
 
-        vec1 = np.array(vecarr1)
-        vec2 = np.array(vecarr2)
 
-        dot_product = np.dot(vec1, vec2)
-        magnitude_product = np.linalg.norm(vec1) * np.linalg.norm(vec2)
+        tempdot = ((vecarr1[0]*vecarr2[0])+(vecarr1[1]*vecarr2[1]))
+        denom = [((vecarr1[0]**2 +vecarr1[1]**2)**.5)*((vecarr2[0]**2 +vecarr2[1]**2)**.5)]
 
-        # Check if vectors are parallel (or close to it)
-        if abs(dot_product - magnitude_product) < 1e-10:
-            return 0  # Vectors are parallel, angle is 0
 
-        angle_radians = np.arccos(np.clip(dot_product / magnitude_product, -1.0, 1.0))
-        return np.degrees(angle_radians)  # Convert radians to degrees
+        angle = math.acos(tempdot/denom)
+
+        angle = angle *180/math.pi
+        print(f"angle {angle}")
+        return angle  # Convert radians to degrees
     def getVectorDistance(self, vecarr):
         if len(vecarr) != 2:
             print("Input vector must be 2D")
