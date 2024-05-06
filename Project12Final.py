@@ -352,7 +352,7 @@ class Robot:
         user_input = user_input.strip()
         parts = user_input.lower().split(" ")
         desiredQuadrant = None
-        if (parts[0] == "go" & parts[1] == "to"):
+        if (parts[0] == "go" and parts[1] == "to"):
             match parts[2]:
                 case "starting":
                     desiredQuadrant = 0
