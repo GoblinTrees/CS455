@@ -184,7 +184,14 @@ class Robot:
             f"Quad: {self.quad} :: Dist-> [{self.distances[0]},{self.distances[1]},{self.distances[2]},{self.distances[3]}]")
 
     def getVector(self, startList: list, endList: list):
-        return [x - y for x, y in zip(endList, startList)]
+        if len(startList) != len(endList):
+            print("GetVector list length not matched")
+            return
+        finList = []
+        for x in range(len(startList)):
+            finList[x] = endList[x] - startList[x]
+
+        return finList
 
     # def getDistanceMoveVector(self):
     #     return [x - y for x, y in zip(self.distances, self.previous)]
