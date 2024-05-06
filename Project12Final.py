@@ -11,7 +11,7 @@ import math
 import RPi.GPIO as GPIO
 import threading
 import openai
-from sympy import symbols, Eq, solve
+from sympy import symbols, Eq, solve, re, im
 import speech_recognition as sr
 
 
@@ -173,10 +173,6 @@ class Robot:
                 try:
                     # print(f"sol: {sol} - key: {(key)} - getkey {sol.get(key)}")
 
-                    if isinstance(sol.get(key), complex):
-                        solutions.remove(sol)
-                        continue
-
                     if sol.get(key) < 0:
                         solutions.remove(sol)
                         continue
@@ -193,12 +189,10 @@ class Robot:
         # self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
 
         keys = list(solutions[0].keys())
-        x = solutions[0].get(keys[0])
-        y = solutions[0].get(keys[1])
+        x = re(solutions[0].get(keys[0]))
+        y = re(solutions[0].get(keys[1]))
         # print(f"\nx: {x} - y: {y}")
         self.xy = [x, y]
-
-
 
         return self.xy
 
