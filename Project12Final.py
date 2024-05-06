@@ -183,14 +183,12 @@ class Robot:
                 elif sol[key] > ldist2:
                     solutions.remove(sol)
 
-        if len(solutions) == 1:  # only one solution should remain, set the XY coordinates to it
-            self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
-            x= solutions[0].get("X")
-            y = solutions[0].get("Y")
-            print(f"x: {x} - y: {y}")
-            return self.xy
-        else:
-            print("---ERR in findxy() return, xy unchanged---")
+        self.xy = [solutions[0].get("X"), solutions[0].get("Y")]
+        x= solutions[0].get("X")
+        y = solutions[0].get("Y")
+        print(f"\nx: {x} - y: {y}")
+        return self.xy
+
 
     def findQuad(self):
         for d in self.distances:  # for check to see if the bot is out of bounds
